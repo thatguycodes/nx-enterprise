@@ -1,96 +1,97 @@
-# NxEnterprise
+# 🚀 Enterprise Nx Monorepo
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Welcome to the **Nx Enterprise** monorepo. This project is a production-ready, scalable workspace designed for modern web development, utilizing a modular architecture to share code effectively between applications.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+## 🏗️ Architecture Overview
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+Our monorepo is structured to maximize code reuse and maintainability:
 
-## Run tasks
+- **`apps/`**: Contains our end-user applications.
+  - **`web`**: A high-performance Next.js 16 (TypeScript) application.
+  - **`web-e2e`**: Automated end-to-end tests using Playwright.
+- **`libs/`**: Shared libraries and business logic.
+  - **`shared/ui`**: A curated library of React components styled with SCSS Modules and documented via Storybook.
 
-To run tasks with Nx use:
+## 🛠️ Tech Stack
 
-```sh
-npx nx <target> <project-name>
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Monorepo Tooling**: [Nx](https://nx.dev/)
+- **Styling**: SCSS Modules
+- **Component Documentation**: [Storybook](https://storybook.js.org/)
+- **Testing**: [Jest](https://jestjs.io/) (Unit) & [Playwright](https://playwright.dev/) (E2E)
+- **Language**: TypeScript
+
+---
+
+## 🏁 Getting Started
+
+### 1. Prerequisites
+Ensure you have the following installed:
+- **Node.js**: v18.x or higher
+- **npm**: v9.x or higher
+
+### 2. Installation
+Clone the repository and install dependencies:
+```bash
+npm install
 ```
 
-For example:
+### 3. Running the Application
+To start the `web` application in development mode:
+```bash
+npx nx dev web
+```
+The app will be available at [http://localhost:3000](http://localhost:3000).
 
-```sh
-npx nx build myproject
+### 4. Exploring Components
+Documentation for our shared UI components is handled by Storybook:
+```bash
+npx nx storybook ui
+```
+This will launch the Storybook dashboard locally.
+
+---
+
+## ⚡ Powering Up with Nx
+
+Nx is the engine that drives this monorepo. Here is how to get the most out of it:
+
+### 🔍 Project Graph
+Visualize how projects and libraries depend on each other:
+```bash
+npx nx graph
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+### 🏃 Running Tasks
+Nx uses a consistent syntax: `npx nx <target> <project>`.
+- **Build**: `npx nx build web`
+- **Test**: `npx nx test ui`
+- **Lint**: `npx nx lint web`
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### 🏗️ Generating Code
+Use generators to create boilerplate-free code that follows our standards:
+- **New Library**: `npx nx g @nx/react:lib libs/my-new-lib`
+- **New Component**: `npx nx g @nx/react:component my-button --project=shared-ui`
 
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-To install a new plugin you can use the `nx add` command. Here's an example of adding the React plugin:
-```sh
-npx nx add @nx/react
+### 🏎️ Affected Commands
+Only run tasks for projects changed in your current branch:
+```bash
+npx nx affected -t test
+npx nx affected -t build
 ```
 
-Use the plugin's generator to create new projects. For example, to create a new React app or library:
+### 📦 Caching
+Nx caches every task. If you run the same command twice without changing code, the second run will be near-instant!
 
-```sh
-# Generate an app
-npx nx g @nx/react:app demo
+---
 
-# Generate a library
-npx nx g @nx/react:lib some-lib
-```
+## 📝 Development Guidelines
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+1. **Shared Components**: Always check `libs/shared/ui` before creating a new component. If it's reusable, put it there!
+2. **Styling**: Use SCSS Modules (`.module.scss`). Avoid global styles unless absolutely necessary.
+3. **Type Safety**: Avoid `any`. Use TypeScript interfaces and types for all props and data structures.
+4. **Testing**: Every new component in `shared/ui` should have a corresponding `.spec.tsx` and `.stories.tsx` file.
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
 
-## Set up CI!
-
-### Step 1
-
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
-```
-
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
-
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Built with ❤️ by the Enterprise Team.
