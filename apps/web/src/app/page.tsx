@@ -1,4 +1,4 @@
-import styles from './page.module.scss';
+import styles from './page.module.css';
 import { Button } from '@nx-enterprise/ui';
 
 export default function Index() {

@@ -1,3 +1,4 @@
+import '../../../../libs/shared/tokens/generated/css/variables.css';
 import './global.css';
 
 export const metadata = {

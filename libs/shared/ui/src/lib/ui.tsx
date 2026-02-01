@@ -1,4 +1,4 @@
-import styles from './ui.module.scss';
+import styles from './ui.module.css';
 
 export function Ui() {
   return (

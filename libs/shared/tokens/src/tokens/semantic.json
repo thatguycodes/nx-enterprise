@@ -1,0 +1,34 @@
+{
+    "brand": {
+        "primary": {
+            "value": "{color.blue.600}"
+        },
+        "hover": {
+            "value": "{color.blue.700}"
+        }
+    },
+    "surface": {
+        "base": {
+            "value": "{color.white}"
+        },
+        "muted": {
+            "value": "{color.gray.100}"
+        }
+    },
+    "text": {
+        "base": {
+            "value": "{color.gray.700}"
+        },
+        "muted": {
+            "value": "{color.gray.500}"
+        },
+        "on-brand": {
+            "value": "{color.white}"
+        }
+    },
+    "border": {
+        "default": {
+            "value": "{color.gray.200}"
+        }
+    }
+}
