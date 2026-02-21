@@ -1,4 +1,4 @@
-import '../../tokens/generated/css/variables.css';
+import '@thatguycodes/design-tokens/css';
 
 import type { Preview } from '@storybook/react';
 
