@@ -1,0 +1,220 @@
+name: Figma Token Sync (On-Demand)
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: 'Branch name suffix for sync (default: auto-generated)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-tokens:
+    name: Sync Tokens from Figma
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci --prefer-offline --ignore-scripts
+
+      - name: Check for Existing Open PR
+        id: check_pr
+        run: |
+          PR_NUMBER=$(gh pr list \
+            --head tokens/figma-sync \
+            --base main \
+            --state open \
+            --json number \
+            --jq '.[0].number' \
+            2>/dev/null || echo "")
+
+          if [ -z "$PR_NUMBER" ]; then
+            echo "pr_number=" >> $GITHUB_OUTPUT
+          else
+            echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+            echo "Found open PR: #$PR_NUMBER"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Close Existing PR
+        if: steps.check_pr.outputs.pr_number != ''
+        run: |
+          gh pr close ${{ steps.check_pr.outputs.pr_number }} \
+            --comment "🔄 New sync triggered. Closing stale PR in favor of fresh sync."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Git Commit Hash
+        id: commit_hash
+        run: |
+          COMMIT_HASH=$(git rev-parse HEAD)
+          echo "hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
+          echo "Current commit: $COMMIT_HASH"
+
+      - name: Fetch Tokens from Figma
+        run: npx ts-node -T libs/shared/tokens/scripts/fetch-from-figma.ts
+        env:
+          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
+          FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
+
+      - name: Check for Changes
+        id: check_changes
+        run: |
+          if git diff --quiet libs/shared/tokens/src/tokens/; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No token changes detected"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Token changes detected"
+          fi
+
+      - name: Configure Git
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git config user.name "design-automation[bot]"
+          git config user.email "design-automation@users.noreply.github.com"
+
+      - name: Create Commit with Git Hash
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git add libs/shared/tokens/src/tokens/
+          git add -f .figma-violations.json 2>/dev/null || true
+
+          COMMIT_MSG="chore(tokens): sync from Figma
+
+          Synced at: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          Git commit hash: ${{ steps.commit_hash.outputs.hash }}"
+
+          git commit -m "$COMMIT_MSG"
+
+      - name: Push to tokens/figma-sync Branch
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git push --force origin HEAD:tokens/figma-sync
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read Violations
+        id: violations
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          if [ -f ".figma-violations.json" ]; then
+            VIOLATIONS=$(cat .figma-violations.json)
+            echo "violations<<EOF" >> $GITHUB_OUTPUT
+            echo "$VIOLATIONS" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.check_changes.outputs.has_changes == 'true'
+        id: create_pr
+        run: |
+          VIOLATION_COUNT=$(if [ -f ".figma-violations.json" ]; then jq 'length' .figma-violations.json; else echo 0; fi)
+
+          PR_BODY="# 🎨 Figma Token Sync
+
+          **Source**: Figma
+          **Triggered**: On-demand sync
+          **Timestamp**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+
+          ## Audit Trail
+
+          **Git Commit Hash**: \`${{ steps.commit_hash.outputs.hash }}\`
+          \`\`\`
+          $(git show --format=fuller -s)
+          \`\`\`
+
+          ## Changes
+
+          - Updated design tokens from Figma
+          - Generated new CSS variables and TypeScript constants
+          - Violations found: **$VIOLATION_COUNT**
+
+          ## Instructions
+
+          1. **Review the changes** in the Files tab
+          2. **Check for violations** below (if any)
+          3. **Approve and merge** when ready
+
+          > ⚠️ **Merge before next sync**: The next Figma sync will close this PR. Ensure all changes are merged before triggering another sync.
+
+          ---
+
+          ## Naming Convention Violations
+
+          "
+
+          if [ "$VIOLATION_COUNT" -gt 0 ]; then
+            PR_BODY+="The following tokens don't follow the naming convention (kebab-case with groups):
+
+          \`\`\`json
+          ${{ steps.violations.outputs.violations }}
+          \`\`\`
+
+          💡 **Next steps**:
+          - Fix these tokens in Figma, or
+          - Approve this PR to accept as-is
+          "
+          else
+            PR_BODY+="✅ All tokens follow naming conventions!"
+          fi
+
+          PR_URL=$(gh pr create \
+            --head tokens/figma-sync \
+            --base main \
+            --title "🎨 Figma Token Sync - $(date +%Y-%m-%d\ %H:%M)" \
+            --body "$PR_BODY" \
+            --draft=false \
+            2>&1)
+
+          echo "PR created: $PR_URL"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Request Review from Design Team
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          PR_NUMBER=$(gh pr list \
+            --head tokens/figma-sync \
+            --base main \
+            --state open \
+            --json number \
+            --jq '.[0].number')
+
+          # Request review from design team (via CODEOWNERS)
+          # CODEOWNERS will auto-assign, but we can also explicitly request
+          gh pr edit "$PR_NUMBER" \
+            --add-assignee "@design-team" 2>/dev/null || true
+
+          echo "✅ PR #$PR_NUMBER ready for design team review"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Sync Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.check_changes.outputs.has_changes }}" = "true" ]; then
+            echo "✅ **Changes detected and PR created**" >> $GITHUB_STEP_SUMMARY
+            echo "- Git commit: ${{ steps.commit_hash.outputs.hash }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ **No changes detected** - Figma tokens are already in sync" >> $GITHUB_STEP_SUMMARY
+          fi
+

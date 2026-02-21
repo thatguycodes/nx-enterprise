@@ -11,6 +11,14 @@
       "options": {
         "command": "npx ts-node -T libs/shared/tokens/scripts/build-tokens.ts"
       }
+    },
+    "publish": {
+      "dependsOn": ["build"],
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm publish --access public --otp=$NPM_OTP",
+        "cwd": "libs/shared/tokens"
+      }
     }
   }
 }

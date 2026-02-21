@@ -5,6 +5,7 @@ Welcome to the **Nx Enterprise** monorepo. This project is a production-ready, s
 ## 📚 Documentation
 
 - **[ARCHITECTURE.md](./ARCHITECTURE.md)**: Comprehensive architecture documentation explaining how the system works and why it's designed this way
+- **[Figma Setup Guide](./docs/FIGMA_SETUP.md)**: Complete setup instructions for Figma token sync
 - **[Implementation Guide](./docs/IMPLEMENTATION_GUIDE.md)**: Step-by-step guides for common development tasks
 
 ## 🏗️ Architecture Overview
@@ -22,7 +23,7 @@ Our monorepo is structured to maximize code reuse and maintainability through a 
 
 - **Framework**: [Next.js](https://nextjs.org/) (App Router)
 - **Monorepo Tooling**: [Nx](https://nx.dev/)
-- **Design Tokens**: [Style Dictionary](https://styledictionary.com/)
+- **Design Tokens**: [Figma API](https://www.figma.com/developers/api) → [Style Dictionary](https://styledictionary.com/)
 - **Styling**: Vanilla CSS with Native Variables (CSS-in-CSS)
 - **Component Documentation**: [Storybook](https://storybook.js.org/)
 - **Testing**: [Jest](https://jestjs.io/) (Unit) & [Playwright](https://playwright.dev/) (E2E)
@@ -32,14 +33,32 @@ Our monorepo is structured to maximize code reuse and maintainability through a 
 
 ## � The Design System (Tokens)
 
-We use a Token-First approach. Styles are driven by variables generated from `shared/tokens`.
+We use a **Figma-first** token management approach where Figma is the single source of truth:
+
+### Token Workflow
+
+```
+Figma (Design) → GitHub Actions (Sync) → PR (Review) → Merge (Build)
+```
 
 ### How it works:
-1. **Define**: Tokens are defined in `libs/shared/tokens/src/tokens/` as JSON files.
-2. **Build**: Running `npx nx build tokens` processes these JSONs through Style Dictionary.
-3. **Generate**: It outputs:
-   - `generated/css/variables.css`: Native CSS custom properties (e.g., `--brand-primary`).
-   - `generated/ts/tokens.ts`: TypeScript constants for use in JS/TS logic.
+1. **Design**: Designers maintain tokens in Figma using kebab-case naming
+2. **Sync**: Trigger automated sync from GitHub Actions
+3. **Review**: Design team reviews PR for correctness and approves
+4. **Build**: Merge automatically runs Style Dictionary to generate outputs
+
+### Outputs Generated
+
+- `generated/css/variables.css`: Native CSS custom properties (e.g., `--brand-primary`)
+- `generated/ts/tokens.ts`: TypeScript constants for use in JS/TS logic
+
+### Setup Required
+
+See the [Figma Setup Guide](./docs/FIGMA_SETUP.md) to:
+- Create Figma API token
+- Add GitHub secrets
+- Configure design team CODEOWNERS
+- Trigger first sync
 
 ### Usage in CSS:
 ```css
@@ -55,14 +74,18 @@ We use a Token-First approach. Styles are driven by variables generated from `sh
 
 ## 🔄 Layered Contribution Workflows
 
-To maintain a consistent and beautiful design system, follow these workflows when introducing changes:
+To maintain a consistent and beautiful design system:
 
 ### Level 1: Design Tokens (The Core)
 *Use this when: You need to introduce a new color, spacing, or global variable.*
-1. **Source**: Open `libs/shared/tokens/src/tokens/`.
-2. **Edit**: Modify `core.json` (primitives) or `semantic.json` (aliases).
-3. **Build**: Run `npx nx build tokens`.
-4. **Verify**: Check `libs/shared/tokens/generated/css/variables.css` to see your new variable.
+
+**New approach (Figma-first)**:
+1. **Edit in Figma**: Modify tokens in Figma using kebab-case naming (e.g., `color-primary`, `spacing-md`)
+2. **Trigger Sync**: Go to Actions → "Figma Token Sync" → Run workflow
+3. **Review PR**: Design team reviews the token sync PR
+4. **Merge**: After approval, merge to `main` to trigger build
+
+⚠️ **Do not manually edit** `libs/shared/tokens/src/tokens/core.json` or `semantic.json` - these are auto-generated from Figma
 
 ### Level 2: UI Library (The Components)
 *Use this when: You need to build a new reusable UI element or update an existing one.*
@@ -96,7 +119,15 @@ To maintain a consistent and beautiful design system, follow these workflows whe
 ## 💡 Troubleshooting & FAQs
 
 ### "My token changes aren't showing up in the browser."
-**Fix**: Ensure you ran `npx nx build tokens`. If you are in Storybook or the Web App, you might need to restart the process to pick up changes in the generated files, although HMR usually handles CSS updates.
+**Fix**: Make sure your token changes were merged to `main`. Token sync PRs must be approved and merged by the design team before changes take effect. Check the Actions tab to see if the sync workflow has completed.
+
+### "I edited the token JSON files but nothing changed."
+**Fix**: Token JSON files are now auto-generated from Figma. Don't edit them manually! Instead:
+1. Make changes in Figma
+2. Trigger sync from Actions → "Figma Token Sync"
+3. Design team reviews and merges PR
+
+See [Figma Setup Guide](./docs/FIGMA_SETUP.md) for complete instructions.
 
 ### "Nx is acting weird (Cache issues)."
 **Fix**: Sometimes the Nx daemon or cache can get out of sync. Use the reset command:

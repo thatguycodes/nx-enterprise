@@ -11,7 +11,8 @@
 7. [Application Layer](#application-layer)
 8. [Build Pipeline](#build-pipeline)
 9. [Development Workflow](#development-workflow)
-10. [Architectural Decision Records](#architectural-decision-records)
+10. [Figma-First Token Sync](#figma-first-token-sync) ⭐ **NEW**
+11. [Architectural Decision Records](#architectural-decision-records)
 
 ---
 
@@ -51,14 +52,11 @@ Our architecture addresses these challenges through:
 - Designers and developers reference the same token definitions
 
 #### 2. **Layered Abstraction**
-```
-Primitive Tokens (core.json)
-       ↓
-Semantic Tokens (semantic.json)
-       ↓
-UI Components (Button, Card, etc.)
-       ↓
-Applications (Web, Mobile, etc.)
+```mermaid
+graph TD
+    A["Primitive Tokens<br/>(core.json)"] -->|defines values| B["Semantic Tokens<br/>(semantic.json)"]
+    B -->|used by| C["UI Components<br/>(Button, Card, etc.)"]
+    C -->|consumed by| D["Applications<br/>(Web, Mobile, etc.)"]
 ```
 
 #### 3. **Monorepo Benefits**
@@ -145,41 +143,42 @@ libs/           # Shared libraries
 
 ### High-Level Architecture Diagram
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Applications Layer                       │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │   Next.js    │  │   Mobile     │  │   Future     │      │
-│  │   Web App    │  │     App      │  │     Apps     │      │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘      │
-└─────────┼──────────────────┼──────────────────┼─────────────┘
-          │                  │                  │
-          └──────────────────┴──────────────────┘
-                             │
-┌────────────────────────────┼─────────────────────────────────┐
-│                   Shared Libraries Layer                      │
-│  ┌────────────────────────┴──────────────────────────┐       │
-│  │          @nx-enterprise/ui                        │       │
-│  │  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐ │       │
-│  │  │ Button │  │  Card  │  │  Input │  │  ...   │ │       │
-│  │  └────────┘  └────────┘  └────────┘  └────────┘ │       │
-│  └───────────────────────┬───────────────────────────┘       │
-│                          │ imports                           │
-│  ┌───────────────────────┴───────────────────────────┐       │
-│  │        @nx-enterprise/tokens                      │       │
-│  │  ┌──────────────────────────────────────────┐    │       │
-│  │  │       Generated Assets (Build-time)      │    │       │
-│  │  │  - variables.css (CSS Custom Properties) │    │       │
-│  │  │  - tokens.ts (TypeScript constants)      │    │       │
-│  │  └──────────────────────────────────────────┘    │       │
-│  │                      ↑                            │       │
-│  │  ┌──────────────────────────────────────────┐    │       │
-│  │  │         Source Tokens (JSON)             │    │       │
-│  │  │  - core.json (Primitives)                │    │       │
-│  │  │  - semantic.json (Semantic aliases)      │    │       │
-│  │  └──────────────────────────────────────────┘    │       │
-│  └───────────────────────────────────────────────────┘       │
-└───────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph apps["Applications Layer"]
+        web["Next.js Web App"]
+        mobile["Mobile App"]
+        future["Future Apps"]
+    end
+    
+    subgraph shared["Shared Libraries Layer"]
+        subgraph ui["@nx-enterprise/ui"]
+            button["Button"]
+            card["Card"]
+            input["Input"]
+            more["..."]
+        end
+        
+        subgraph tokens["@nx-enterprise/tokens"]
+            subgraph generated["Generated Assets<br/>(Build-time)"]
+                css["variables.css<br/>(CSS Custom Properties)"]
+                ts["tokens.ts<br/>(TypeScript constants)"]
+            end
+            
+            subgraph source["Source Tokens<br/>(JSON)"]
+                core["core.json<br/>(Primitives)"]
+                semantic["semantic.json<br/>(Semantic aliases)"]
+            end
+            
+            source -->|processes| generated
+        end
+    end
+    
+    web -->|imports| ui
+    mobile -->|imports| ui
+    future -->|imports| ui
+    
+    ui -->|imports| tokens
 ```
 
 ### Data Flow
@@ -494,12 +493,15 @@ Nx intelligently manages task execution with:
 
 ### Build Graph
 
-```
-tokens:build
-     ↓
-   ui:build (depends on tokens)
-     ↓
-   web:build (depends on ui, tokens)
+```mermaid
+graph TD
+    tokens["tokens:build"]
+    ui["ui:build<br/>(depends on tokens)"]
+    web["web:build<br/>(depends on ui, tokens)"]
+    
+    tokens --> ui
+    tokens --> web
+    ui --> web
 ```
 
 ### Key Commands
@@ -614,6 +616,248 @@ Nx optimizes builds through:
 
 ---
 
+## Figma-First Token Sync
+
+### Overview
+
+Tokens are now managed exclusively in **Figma as the source of truth**. Token changes flow from Figma → GitHub PR → Design team review → Production via an automated, on-demand sync workflow.
+
+### Architecture
+
+```mermaid
+graph LR
+    figma["🎨 Figma<br/>(Source of Truth)"]
+    trigger["🚀 Trigger Sync<br/>(On-Demand)"]
+    fetch["📡 Fetch Tokens<br/>(Figma API)"]
+    validate["✅ Validate<br/>(Naming Conventions)"]
+    pr["📝 Create PR<br/>(tokens/figma-sync)"]
+    review["👥 Design Team Review<br/>(via CODEOWNERS)"]
+    merge["✔️ Merge to main"]
+    build["🔨 Auto-Build<br/>(Style Dictionary)"]
+    deploy["🚀 Deploy"]
+    
+    figma --> trigger
+    trigger --> fetch
+    fetch --> validate
+    validate --> pr
+    pr --> review
+    review --> merge
+    merge --> build
+    build --> deploy
+```
+
+### Token Naming Conventions
+
+All tokens in Figma **must follow kebab-case naming with at least one group**:
+
+**Approved Format**: `group-subgroup-name`
+
+**Examples**:
+- ✅ `color-primary`
+- ✅ `color-brand-blue-600`
+- ✅ `spacing-md`
+- ✅ `typography-heading-lg`
+- ❌ `primary` (missing group)
+- ❌ `ColorPrimary` (not kebab-case)
+- ❌ `color_primary` (using underscores)
+
+**Naming Violation Handling**:
+- Violations are logged as **non-blocking warnings** in the PR
+- Design team reviews warnings and decides to:
+  - Fix tokens in Figma and re-trigger sync, or
+  - Approve PR to accept violations
+- Sync workflow never blocks on naming violations
+
+### Triggering a Sync
+
+#### Method 1: GitHub UI
+
+1. Navigate to **Actions** → **"Figma Token Sync (On-Demand)"**
+2. Click **"Run workflow"**
+3. Leave optional inputs blank (auto-generates branch)
+4. Workflow executes immediately
+
+#### Method 2: GitHub CLI
+
+```bash
+gh workflow run figma-token-sync.yml --repo your-org/nx-enterprise
+```
+
+### What Happens During Sync
+
+1. **Fetch from Figma API**: Retrieves all tokens from Figma file
+2. **Validate Naming**: Checks conventions, logs violations as warnings
+3. **Check for Existing PRs**: Closes any open `tokens/figma-sync` PR
+4. **Generate Token Files**: Creates updated `core.json` and `semantic.json`
+5. **Create PR**: Opens pull request on `tokens/figma-sync` branch with:
+   - Detailed changes and violations (if any)
+   - Git commit hash for audit trail
+   - Automatic assignment to design team via CODEOWNERS
+6. **Design Team Review**: Team reviews, tests, and approves
+7. **Merge & Deploy**: Merges to `main`, triggers token build, deploys
+
+### PR Contents
+
+Each Figma sync PR includes:
+
+**Title**: `🎨 Figma Token Sync - 2026-02-20 15:30`
+
+**Body** contains:
+- Source: Figma
+- Timestamp of sync
+- **Audit Trail**: Git commit hash of when sync was triggered
+- Changes summary
+- Naming violations (if any) with action items
+- Merge deadline reminder
+
+**Example PR Body**:
+```
+# 🎨 Figma Token Sync
+
+**Source**: Figma  
+**Triggered**: On-demand sync  
+**Timestamp**: 2026-02-20T15:30:00Z
+
+## Audit Trail
+
+**Git Commit Hash**: `a3f8b92c1d4e5f6g7h8i9j0k1l2m3n4o`
+
+## Changes
+
+- Updated design tokens from Figma
+- Generated new CSS variables and TypeScript constants
+- Violations found: **2**
+
+## Instructions
+
+1. Review the changes in the Files tab
+2. Check for violations below (if any)
+3. Approve and merge when ready
+
+> ⚠️ **Merge before next sync**: The next Figma sync will close this PR. Ensure all changes are merged before triggering another sync.
+
+## Naming Convention Violations
+
+The following tokens don't follow the naming convention (kebab-case with groups):
+
+```json
+[
+  { "token": "primary", "issue": "Missing token group. Expected: group-name, got: primary" },
+  { "token": "ButtonSize", "issue": "Not in kebab-case format. Expected: lowercase-with-dashes, got: ButtonSize" }
+]
+```
+
+💡 **Next steps**:
+- Fix these tokens in Figma, or
+- Approve this PR to accept as-is
+```
+
+### Auto-Close Policy (Stale PRs)
+
+To prevent conflicts, token sync PRs are **automatically closed if unmerged for 7+ days**.
+
+**Why**:
+- Ensures clear merge-before-next-sync workflow
+- Prevents long-lived branches with potential conflicts
+- Encourages timely design team review
+
+**What Happens**:
+1. Daily automated check finds open `tokens/figma-sync` PRs older than 7 days
+2. PR is closed with explanatory comment
+3. Design team can re-trigger sync if needed
+
+**Example Auto-Close Comment**:
+```
+🧹 **Auto-closed stale PR**
+
+This PR was open for more than 7 days without being merged. To maintain a clean workflow and prevent conflicts, stale token sync PRs are automatically closed.
+
+## What does this mean?
+
+Per the token sync policy:
+- ✅ **Merge before next sync**: Token changes must be merged before the next Figma sync is triggered
+- 🔄 **Auto-close policy**: PRs older than 7 days are closed to prevent conflicts
+
+## Next steps
+
+If you still need these token changes:
+1. Trigger a new Figma sync from the Actions tab
+2. A fresh PR will be created with the latest Figma tokens
+
+**Created**: 2026-02-13 14:22  
+**Closed by**: Automated stale PR cleanup
+```
+
+### Audit Trail & Rollback
+
+Each sync PR includes a **git commit hash** for complete audit trail:
+
+**In PR Body**:
+```
+**Git Commit Hash**: `a3f8b92c1d4e5f6g7h8i9j0k1l2m3n4o`
+```
+
+**In Commit Message**:
+```
+chore(tokens): sync from Figma
+
+Synced at: 2026-02-20T15:30:00Z
+Git commit hash: a3f8b92c1d4e5f6g7h8i9j0k1l2m3n4o
+```
+
+**To Rollback**:
+1. Revert the merge commit in git
+2. Or trigger a new sync after fixing tokens in Figma
+
+### Migration from Manual JSON Editing
+
+Previous workflow (manual):
+```
+Edit core.json → Run npx nx build tokens → Commit → Create PR
+```
+
+**New workflow (Figma-first)**:
+```
+Edit in Figma → Trigger sync from GitHub UI → Design team reviews PR → Merge → Auto-build & deploy
+```
+
+**Key differences**:
+- ❌ **Never manually edit** `libs/shared/tokens/src/tokens/*.json` - these are now auto-generated
+- ✅ **All changes start in Figma**
+- ✅ **Automatic PR creation** with design team auto-assigned
+- ✅ **Non-blocking validation** of naming conventions
+- ✅ **Full audit trail** with git commit hashes
+
+### Team Responsibilities
+
+#### Design Team
+- Maintain tokens in Figma
+- Follow naming conventions (kebab-case with groups)
+- Review token sync PRs for correctness
+- Approve changes before merge
+
+#### Development Team
+- Use generated tokens in components
+- Never manually edit token JSON files
+- Report token sync issues
+- Monitor token builds in CI/CD
+
+### Troubleshooting
+
+**Q: I triggered sync but no PR appeared**
+- A: Check if changes were actually made in Figma. Sync only creates PR if there are changes.
+
+**Q: My tokens have naming violations**
+- A: Fix in Figma and re-trigger sync, or approve PR with violations (design team decides).
+
+**Q: PR was auto-closed due to stale policy**
+- A: Trigger a fresh sync from Actions tab. New PR will be created with latest Figma tokens.
+
+**Q: I need to rollback a merged token change**
+- A: Revert the token in Figma → Trigger sync → New PR created with rollback → Merge.
+
+---
+
 ## Architectural Decision Records
 
 ### ADR-001: Style Dictionary for Token Management
@@ -709,6 +953,39 @@ Nx optimizes builds through:
 - Learning curve for RSC and App Router paradigms
 - Some third-party libraries may not be compatible
 - Migration path from older Next.js versions
+
+### ADR-006: Figma as Single Source of Truth for Tokens
+
+**Decision**: Use Figma (via REST API) as the authoritative source for design tokens, with on-demand automated sync to repository.
+
+**Context**: Need to close the designer-developer gap for token management while maintaining version control and automated deployments.
+
+**Rationale**:
+- **Designer Workflow**: Designers work in Figma natively without context switching
+- **Single Source**: One place for design decisions, eliminating duplication
+- **Automated Sync**: GitHub Actions ensures tokens are always in sync, no manual steps
+- **Governance**: On-demand sync with required review enforces design intent
+- **Audit Trail**: Git commit hashes track when changes were synced
+- **Conflict Prevention**: Auto-close stale PRs prevent long-lived merge conflicts
+
+**Alternatives Considered**:
+- **Manual JSON editing**: Developers edit token files manually (slower, error-prone)
+- **Tokens Studio plugin**: Figma plugin for exports (less control over process)
+- **Continuous sync**: Automatic sync on every Figma change (too aggressive, no approval gate)
+
+**Implementation Details**:
+- On-demand workflow triggered from GitHub Actions UI
+- Figma API fetches tokens from design file
+- Naming conventions validated (kebab-case with groups, non-blocking warnings)
+- PR auto-assigned to design team via CODEOWNERS
+- Stale PRs auto-close after 7 days to maintain clean workflow
+
+**Consequences**:
+- Requires Figma access token in GitHub secrets
+- Design team must maintain naming conventions in Figma
+- Manual JSON edits are ignored (source of truth moves to Figma)
+- Developers cannot directly change tokens (must go through Figma + sync)
+- Sync workflow depends on GitHub Actions and Figma API availability
 
 ---
 

@@ -47,3 +47,14 @@ out
 
 
 storybook-static
+
+# Figma Sync
+.figma-violations.json
+libs/shared/tokens/src/tokens/.figma-sync-metadata.json
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+.env.production.local
+
