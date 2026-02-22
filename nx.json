@@ -52,7 +52,25 @@
     }
   ],
   "release": {
-    "projects": ["tokens", "ui"]
+    "projectsRelationship": "independent",
+    "groups": {
+      "design-system": {
+        "projects": ["tokens", "ui"],
+        "version": {
+          "generatorOptions": {
+            "currentVersionResolver": "git-tag",
+            "specifierSource": "conventional-commits"
+          }
+        },
+        "changelog": {
+          "workspaceChangelog": false,
+          "projectChangelogs": true
+        }
+      }
+    },
+    "version": {
+      "preVersionCommand": "npx nx run-many -t build --projects tokens,ui"
+    }
   },
   "generators": {
     "@nx/next": {

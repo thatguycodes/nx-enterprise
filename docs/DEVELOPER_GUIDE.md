@@ -171,34 +171,36 @@ Update all component stylesheets accordingly.
 
 ## Release
 
-Releases are managed via Nx release config in `nx.json`. Build only what you plan to release (tokens or ui), or both when needed.
+Releases are strictly managed via **Nx Release** and our CI/CD pipeline.
 
-### Preferred flow (per-package):
+### 🤖 Automated Release (Recommended)
 
-1. Ensure working tree is clean and up to date with `main`.
-2. Build the package(s):
-   - Tokens only: `npx nx run tokens:build`
-   - UI only: `npx nx run ui:build`
-   - Both: `npx nx run-many -t build --projects tokens,ui`
-3. Version the package you are releasing:
-   - Tokens: `npx nx release version --projects tokens`
-   - UI: `npx nx release version --projects ui`
-4. Publish the package you are releasing (uses npm automation token, or OTP if prompted):
-   - Tokens: `npx nx release publish --projects tokens`
-   - UI: `npx nx release publish --projects ui`
+Releases are automatically triggered when merging to `main`. The CI pipeline will:
 
-### Manual publish (emergency only):
+1.  Calculate new versions based on [Conventional Commits](https://www.conventionalcommits.org/).
+2.  Generate CHANGELOGs.
+3.  Create git tags.
+4.  Publish packages to npm.
 
-```bash
-# Build the specific package(s)
-npx nx run tokens:build    # or ui:build, or run-many
+**To trigger a release:**
+Simply merge a Pull Request to `main` with a meaningful conventional commit message (e.g., `feat:`, `fix:`).
 
-# Bump version in the package.json you are publishing
+### 🛠️ Manual Release (Maintainers Only)
 
-# Publish with MFA/automation token
-cd dist/libs/shared/tokens && npm publish --access public --otp=<your-otp>
-cd dist/libs/shared/ui && npm publish --access public --otp=<your-otp>
-```
+Local release commands should **only** be used by maintainers in emergency situations or for debugging.
+
+1.  **Ensure Clean State**: Pull latest `main` and ensure working tree is clean.
+2.  **Dry Run**: Always verify what will happen first.
+    ```bash
+    npx nx release --dry-run
+    ```
+3.  **Perform Release**:
+    ```bash
+    # This will prompt for version bumps and OTPs
+    npx nx release
+    ```
+
+> **Note**: You must have a valid `NPM_TOKEN` or be logged in to npm with access to the `@thatguycodes` organization.
 
 ### Nx cache
 

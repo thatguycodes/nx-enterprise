@@ -2,6 +2,9 @@
   "name": "@thatguycodes/design-tokens",
   "version": "0.1.0",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "private": false,
   "sideEffects": false,
   "files": [
