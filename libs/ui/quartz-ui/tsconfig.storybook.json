@@ -2,7 +2,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "emitDecoratorMetadata": true,
-    "outDir": ""
+    "outDir": "",
+    "module": "esnext",
+    "moduleResolution": "bundler"
   },
   "exclude": [
     "src/**/*.spec.ts",

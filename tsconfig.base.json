@@ -10,21 +10,17 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "node16",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@thatguycodes/quartz-ui": ["libs/ui/quartz-ui/src/index.ts"],
       "@thatguycodes/design-tokens": ["libs/tokens/design-tokens/src/index.ts"],
-      "@thatguycodes/design-tokens/css": ["libs/tokens/design-tokens/src/generated/css/variables.css"]
+      "@thatguycodes/design-tokens/css": [
+        "libs/tokens/design-tokens/src/generated/css/variables.css"
+      ]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

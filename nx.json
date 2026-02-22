@@ -11,7 +11,9 @@
       "!{projectRoot}/test-setup.[jt]s",
       "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
       "!{projectRoot}/.storybook/**/*",
-      "!{projectRoot}/tsconfig.storybook.json"
+      "!{projectRoot}/tsconfig.storybook.json",
+      "!{projectRoot}/**/*.md",
+      "!{projectRoot}/**/*.mdx"
     ],
     "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
   },
@@ -19,20 +21,15 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "test": {
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+    },
+    "build-storybook": {
+      "inputs": ["production", "^production"]
     }
   },
   "plugins": [
-    {
-      "plugin": "@nx/next/plugin",
-      "options": {
-        "startTargetName": "start",
-        "buildTargetName": "build",
-        "devTargetName": "dev",
-        "serveStaticTargetName": "serve-static",
-        "buildDepsTargetName": "build-deps",
-        "watchDepsTargetName": "watch-deps"
-      }
-    },
     {
       "plugin": "@nx/playwright/plugin",
       "options": {
@@ -62,12 +59,7 @@
     "groups": {
       "design-system": {
         "projects": ["design-tokens", "quartz-ui"],
-        "version": {
-          "generatorOptions": {
-            "currentVersionResolver": "git-tag",
-            "specifierSource": "conventional-commits"
-          }
-        },
+        "version": {},
         "releaseTagPattern": "{projectName}@{version}",
         "changelog": {
           "workspaceChangelog": false,
@@ -80,12 +72,6 @@
     }
   },
   "generators": {
-    "@nx/next": {
-      "application": {
-        "style": "css",
-        "linter": "none"
-      }
-    },
     "@nx/react": {
       "library": {
         "unitTestRunner": "jest"

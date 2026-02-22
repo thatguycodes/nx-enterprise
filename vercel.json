@@ -1,7 +1,7 @@
 {
-  "buildCommand": "npx nx build docs",
-  "outputDirectory": "dist/apps/docs/.next",
-  "framework": "nextjs",
-  "devCommand": "npx nx dev docs"
+  "buildCommand": "npx nx build-storybook quartz-ui",
+  "outputDirectory": "libs/ui/quartz-ui/storybook-static",
+  "installCommand": "npm install",
+  "framework": null
 }
 
