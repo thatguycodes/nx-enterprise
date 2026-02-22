@@ -52,10 +52,7 @@
     }
   ],
   "release": {
-    "projects": ["tokens", "ui"],
-    "version": {
-      "preVersionCommand": "npx nx run-many -t build --projects tokens,ui"
-    }
+    "projects": ["tokens", "ui"]
   },
   "generators": {
     "@nx/next": {

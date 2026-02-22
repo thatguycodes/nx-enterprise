@@ -171,27 +171,31 @@ Update all component stylesheets accordingly.
 
 ## Release
 
-Releases are managed via Nx release config in `nx.json`. Tokens and UI are published packages and must run builds before versioning.
+Releases are managed via Nx release config in `nx.json`. Build only what you plan to release (tokens or ui), or both when needed.
 
-### Preferred flow (Nx release for tokens and UI):
+### Preferred flow (per-package):
 
 1. Ensure working tree is clean and up to date with `main`.
-2. Builds run automatically via Nx preVersion command (`nx run-many -t build --projects tokens,ui`).
-3. Run `npx nx release version` to bump versions and tag.
-4. Run `npx nx release publish` to publish packages (tokens + quartz-ui). MFA/OTP required unless using an automation token.
+2. Build the package(s):
+   - Tokens only: `npx nx run tokens:build`
+   - UI only: `npx nx run ui:build`
+   - Both: `npx nx run-many -t build --projects tokens,ui`
+3. Version the package you are releasing:
+   - Tokens: `npx nx release version --projects tokens`
+   - UI: `npx nx release version --projects ui`
+4. Publish the package you are releasing (uses npm automation token, or OTP if prompted):
+   - Tokens: `npx nx release publish --projects tokens`
+   - UI: `npx nx release publish --projects ui`
 
 ### Manual publish (emergency only):
 
 ```bash
-# 1. Build tokens via Nx
-npx nx run tokens:build
+# Build the specific package(s)
+npx nx run tokens:build    # or ui:build, or run-many
 
-# 2. Build UI via Nx
-npx nx run ui:build
+# Bump version in the package.json you are publishing
 
-# 3. Bump versions in the respective package.json files if needed
-
-# 4. Publish with MFA OTP
+# Publish with MFA/automation token
 cd dist/libs/shared/tokens && npm publish --access public --otp=<your-otp>
 cd dist/libs/shared/ui && npm publish --access public --otp=<your-otp>
 ```
