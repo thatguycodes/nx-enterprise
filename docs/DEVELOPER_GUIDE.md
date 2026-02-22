@@ -107,6 +107,7 @@ This project uses a **trunk-based** workflow with short-lived feature branches.
 - Keep branches short-lived — open a PR within a day or two
 - Delete branches after merging
 - Rebase on main before opening a PR if your branch is behind
+- Do not introduce AI agents or automation services into the codebase (configs, secrets, or code). You may use AI assistants locally for coding help, but all committed changes must be reviewed like any other contribution.
 
 ---
 
@@ -170,20 +171,14 @@ Update all component stylesheets accordingly.
 
 ## Release
 
-Releases are triggered automatically by `semantic-release` on every merge to `main`. The release version is determined by the commit messages:
-
-| Commit type | Version bump |
-|---|---|
-| `fix` | Patch — `0.0.1 → 0.0.2` |
-| `feat` | Minor — `0.0.1 → 0.1.0` |
-| `BREAKING CHANGE` | Major — `0.0.1 → 1.0.0` |
+Releases are managed via Nx release config in `nx.json`. Tokens are the only published project and must run `npx nx run tokens:build` before versioning.
 
 ### Publishing the tokens package manually
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for full instructions. The short version:
+Preferred: use Nx release (`nx.json` release block) so builds run before versioning. Manual publish is only for emergencies. See [DEPLOYMENT.md](./DEPLOYMENT.md) for full instructions. The short version:
 
 ```bash
-# 1. Build tokens
+# 1. Build tokens via Nx
 npx nx run tokens:build
 
 # 2. Bump version in libs/shared/tokens/package.json
@@ -219,4 +214,3 @@ npx nx run ui:storybook
 
 **CSS variables not defined**
 Confirm `variables.css` is imported in `apps/web/src/app/layout.tsx` and in `.storybook/preview.ts`.
-

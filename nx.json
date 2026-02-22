@@ -51,6 +51,12 @@
       }
     }
   ],
+  "release": {
+    "projects": ["tokens"],
+    "version": {
+      "preVersionCommand": "npx nx run tokens:build"
+    }
+  },
   "generators": {
     "@nx/next": {
       "application": {
