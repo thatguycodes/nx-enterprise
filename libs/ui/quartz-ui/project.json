@@ -1,22 +1,22 @@
 {
-  "name": "ui",
+  "name": "quartz-ui",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/ui/src",
+  "sourceRoot": "libs/ui/quartz-ui/src",
   "projectType": "library",
   "tags": ["type:ui", "scope:shared"],
   "targets": {
     "build": {
       "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/dist/libs/shared/ui"],
+      "outputs": ["{workspaceRoot}/dist/libs/ui/quartz-ui"],
       "dependsOn": ["^build"],
       "options": {
         "parallel": false,
         "commands": [
-          "mkdir -p dist/libs/shared/ui/src/lib",
-          "npx tsc -p libs/shared/ui/tsconfig.lib.json --outDir dist/libs/shared/ui",
-          "cp libs/shared/ui/package.json dist/libs/shared/ui/package.json",
-          "cp libs/shared/ui/README.md dist/libs/shared/ui/README.md",
-          "cp -R libs/shared/ui/src/lib dist/libs/shared/ui/src/lib"
+          "mkdir -p dist/libs/ui/quartz-ui/src/lib",
+          "npx tsc -p libs/ui/quartz-ui/tsconfig.lib.json --outDir dist/libs/ui/quartz-ui",
+          "cp libs/ui/quartz-ui/package.json dist/libs/ui/quartz-ui/package.json",
+          "cp libs/ui/quartz-ui/README.md dist/libs/ui/quartz-ui/README.md",
+          "cp -R libs/ui/quartz-ui/src/lib dist/libs/ui/quartz-ui/src/lib"
         ]
       }
     },
@@ -25,7 +25,7 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "npm publish --access public --otp=$NPM_OTP",
-        "cwd": "dist/libs/shared/ui"
+        "cwd": "dist/libs/ui/quartz-ui"
       }
     },
     "nx-release-publish": {

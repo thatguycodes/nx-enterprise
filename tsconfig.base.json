@@ -16,7 +16,11 @@
     ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@thatguycodes/quartz-ui": ["libs/ui/quartz-ui/src/index.ts"],
+      "@thatguycodes/design-tokens": ["libs/tokens/design-tokens/src/index.ts"]
+    }
   },
   "exclude": [
     "node_modules",

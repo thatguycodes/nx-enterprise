@@ -1,0 +1,37 @@
+{
+  "name": "docs",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/docs",
+  "projectType": "application",
+  "tags": ["type:app", "scope:docs"],
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/docs",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/docs/public",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "dist/apps/docs",
+          "assets": [
+            {
+              "glob": "**/*",
+              "input": "apps/docs/public",
+              "output": "."
+            }
+          ]
+        },
+        "production": {}
+      }
+    }
+  }
+}

@@ -61,7 +61,7 @@
     "projectsRelationship": "independent",
     "groups": {
       "design-system": {
-        "projects": ["tokens", "ui"],
+        "projects": ["design-tokens", "quartz-ui"],
         "version": {
           "generatorOptions": {
             "currentVersionResolver": "git-tag",
@@ -76,7 +76,7 @@
       }
     },
     "version": {
-      "preVersionCommand": "npx nx run-many -t build --projects tokens,ui"
+      "preVersionCommand": "npx nx run-many -t build --projects design-tokens,quartz-ui"
     }
   },
   "generators": {
