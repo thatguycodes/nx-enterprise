@@ -26,21 +26,17 @@ jobs:
       - run: npm ci --legacy-peer-deps
       - run: npx playwright install --with-deps
 
-      - name: Calculate Affected Args
-        id: set-shas
-        uses: nrwl/nx-set-shas@v4
-
       - name: Run Lint
-        run: npx nx affected -t lint --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        run: npx nx affected -t lint --base=origin/main --head=HEAD
 
       - name: Run Test
-        run: npx nx affected -t test --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        run: npx nx affected -t test --base=origin/main --head=HEAD
 
       - name: Run Build
-        run: npx nx affected -t build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        run: npx nx affected -t build --base=origin/main --head=HEAD
 
       - name: Run E2E
-        run: npx nx affected -t e2e --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        run: npx nx affected -t e2e --base=origin/main --head=HEAD
 
   release:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

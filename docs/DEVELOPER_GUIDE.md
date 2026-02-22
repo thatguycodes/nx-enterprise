@@ -59,7 +59,7 @@ nx-enterprise/
 │       └── ui/           # React component library
 ├── docs/                 # All project documentation
 └── .github/
-    ├── CODEOWNERS        # Auto-assigns reviewers
+
     └── workflows/        # CI/CD pipelines
 ```
 

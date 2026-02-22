@@ -631,7 +631,7 @@ graph LR
     fetch["📡 Fetch Tokens<br/>(Figma API)"]
     validate["✅ Validate<br/>(Naming Conventions)"]
     pr["📝 Create PR<br/>(tokens/figma-sync)"]
-    review["👥 Design Team Review<br/>(via CODEOWNERS)"]
+    review["👥 Design Team Review"]
     merge["✔️ Merge to main"]
     build["🔨 Auto-Build<br/>(Style Dictionary)"]
     deploy["🚀 Deploy"]
@@ -692,7 +692,7 @@ gh workflow run figma-token-sync.yml --repo your-org/nx-enterprise
 5. **Create PR**: Opens pull request on `tokens/figma-sync` branch with:
    - Detailed changes and violations (if any)
    - Git commit hash for audit trail
-   - Automatic assignment to design team via CODEOWNERS
+   - Automatic assignment to design team via GitHub rules
 6. **Design Team Review**: Team reviews, tests, and approves
 7. **Merge & Deploy**: Merges to `main`, triggers token build, deploys
 
@@ -977,7 +977,7 @@ Edit in Figma → Trigger sync from GitHub UI → Design team reviews PR → Mer
 - On-demand workflow triggered from GitHub Actions UI
 - Figma API fetches tokens from design file
 - Naming conventions validated (kebab-case with groups, non-blocking warnings)
-- PR auto-assigned to design team via CODEOWNERS
+- PR auto-assigned to design team via GitHub rules
 - Stale PRs auto-close after 7 days to maintain clean workflow
 
 **Consequences**:

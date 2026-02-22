@@ -6,11 +6,33 @@
   "tags": ["type:tokens", "scope:shared"],
   "// targets": "to see all targets run: nx show project design-tokens --web",
   "targets": {
-    "build": {
+    "generate": {
       "executor": "nx:run-commands",
       "options": {
+        "command": "rm -rf libs/tokens/design-tokens/src/generated && node libs/tokens/design-tokens/scripts/build-tokens.mjs"
+      }
+    },
+    "build": {
+      "dependsOn": ["generate"],
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
         "outputPath": "dist/libs/tokens/design-tokens",
-        "command": "node libs/tokens/design-tokens/scripts/build-tokens.mjs && rm -rf dist/libs/tokens/design-tokens && mkdir -p dist/libs/tokens/design-tokens/generated && cp libs/tokens/design-tokens/package.json dist/libs/tokens/design-tokens/package.json && cp libs/tokens/design-tokens/README.md dist/libs/tokens/design-tokens/README.md && cp -R libs/tokens/design-tokens/src/generated/* dist/libs/tokens/design-tokens/generated/"
+        "main": "libs/tokens/design-tokens/src/index.ts",
+        "tsConfig": "libs/tokens/design-tokens/tsconfig.lib.json",
+        "assets": [
+          "libs/tokens/design-tokens/README.md",
+          {
+            "input": "libs/tokens/design-tokens",
+            "glob": "package.json",
+            "output": "."
+          },
+          {
+            "input": "libs/tokens/design-tokens/src/generated/css",
+            "glob": "*.css",
+            "output": "generated/css"
+          }
+        ]
       },
       "configurations": {},
       "parallelism": false

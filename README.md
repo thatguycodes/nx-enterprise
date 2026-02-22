@@ -63,7 +63,7 @@ Figma (Design) → GitHub Actions (Sync) → PR (Review) → Merge (Build)
 See the [Figma Setup Guide](./docs/FIGMA_SETUP.md) to:
 - Create Figma API token
 - Add GitHub secrets
-- Configure design team CODEOWNERS
+
 - Trigger first sync
 
 ### Usage in CSS:

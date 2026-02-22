@@ -70,7 +70,7 @@ Before opening a PR, verify:
 ## Review Process
 
 - At least **one approval** is required to merge
-- Token sync PRs require approval from the **design team** (auto-assigned via CODEOWNERS)
+- Token sync PRs require approval from the **design team** via GitHub rules
 - Address all review comments before merging
 - Use squash merge to keep the history clean
 

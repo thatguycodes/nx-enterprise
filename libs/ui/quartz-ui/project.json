@@ -6,17 +6,25 @@
   "tags": ["type:ui", "scope:shared"],
   "targets": {
     "build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/dist/libs/ui/quartz-ui"],
       "dependsOn": ["^build"],
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "parallel": false,
-        "commands": [
-          "mkdir -p dist/libs/ui/quartz-ui/src/lib",
-          "npx tsc -p libs/ui/quartz-ui/tsconfig.lib.json --outDir dist/libs/ui/quartz-ui",
-          "cp libs/ui/quartz-ui/package.json dist/libs/ui/quartz-ui/package.json",
-          "cp libs/ui/quartz-ui/README.md dist/libs/ui/quartz-ui/README.md",
-          "cp -R libs/ui/quartz-ui/src/lib dist/libs/ui/quartz-ui/src/lib"
+        "outputPath": "dist/libs/ui/quartz-ui",
+        "main": "libs/ui/quartz-ui/src/index.ts",
+        "tsConfig": "libs/ui/quartz-ui/tsconfig.lib.json",
+        "assets": [
+          "libs/ui/quartz-ui/*.md",
+          {
+            "input": "libs/ui/quartz-ui",
+            "glob": "package.json",
+            "output": "."
+          },
+          {
+            "input": "libs/ui/quartz-ui/src/lib",
+            "glob": "*.css",
+            "output": "src/lib"
+          }
         ]
       }
     },
