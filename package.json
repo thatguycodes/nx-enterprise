@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "publish:tokens": "nx run tokens:publish"
+    "publish:tokens": "nx run tokens:publish",
+    "postinstall": "nx reset && rm -rf node_modules/.cache"
   },
   "private": true,
   "overrides": {

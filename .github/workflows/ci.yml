@@ -62,11 +62,9 @@ jobs:
       - run: npm ci
       - run: git config --global user.email "github-actions[bot]@users.noreply.github.com"
       - run: git config --global user.name "github-actions[bot]"
-      - run: npx nx release --skip-publish # version and changelog first
+      - run: npx nx release --yes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npx nx release publish
-        env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
 

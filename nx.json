@@ -15,6 +15,12 @@
     ],
     "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
   },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    }
+  },
   "plugins": [
     {
       "plugin": "@nx/next/plugin",
@@ -62,6 +68,7 @@
             "specifierSource": "conventional-commits"
           }
         },
+        "releaseTagPattern": "{projectName}@{version}",
         "changelog": {
           "workspaceChangelog": false,
           "projectChangelogs": true
