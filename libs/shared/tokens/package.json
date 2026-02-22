@@ -1,6 +1,6 @@
 {
   "name": "@thatguycodes/design-tokens",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "license": "MIT",
   "private": false,
   "sideEffects": false,
@@ -20,4 +20,3 @@
   "types": "./generated/ts/tokens.d.ts",
   "main": "./generated/ts/tokens.ts"
 }
-
