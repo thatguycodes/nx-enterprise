@@ -9,16 +9,16 @@ As a designer, Figma is your workspace. You own the design tokens — the colour
 ## Token Workflow
 
 ```
-Figma (your changes) → Sync (GitHub Actions) → PR review → Merge → Live in the product
+Figma (your changes) → Export JSON (free plugin) → Developer updates token files → PR review → Merge → Live in the product
 ```
 
-You never touch code. Everything starts in Figma.
+Figma API access is not required. All token updates are done by exporting a JSON file from a free Figma community plugin and having a developer apply it.
 
 ---
 
 ## Naming Tokens in Figma
 
-Tokens must follow **kebab-case with at least one group**. This is required for the sync to work correctly.
+Tokens must follow **kebab-case with at least one group**. This is required for the import to work correctly.
 
 **Format:** `group-name` or `group-subgroup-name`
 
@@ -57,28 +57,57 @@ Components use semantic tokens. A rebrand means updating the semantic layer only
 
 ---
 
-## Triggering a Token Sync
+## Exporting Tokens from Figma
 
-When you're happy with your token changes in Figma:
+Use any free Figma community plugin that exports design tokens as JSON. Recommended options:
 
-1. Go to the repository on GitHub
-2. Click the **Actions** tab
-3. Select **"Figma Token Sync (On-Demand)"**
-4. Click **"Run workflow"** → **"Run workflow"**
+- **[Tokens Studio for Figma](https://www.figma.com/community/plugin/843461159747178978)** — exports a `tokens.json` file with named sets (e.g. `global`, `semantic`).
+- **[Design Tokens (by Jan Six)](https://www.figma.com/community/plugin/888356646278934516)** — exports W3C DTCG–style JSON.
 
-A pull request will be created automatically and assigned to you for review.
+### Steps
+
+1. Install the plugin in Figma (one-time).
+2. Make your token changes in Figma.
+3. Open the plugin and export/download the JSON file.
+4. Share the JSON file with a developer (Slack, email, or attach to a GitHub issue).
 
 ---
 
-## Reviewing the Sync PR
+## Applying Token Changes (Developer Steps)
 
-After triggering a sync you'll receive a GitHub notification. In the PR you'll find:
+Once you receive the exported JSON file from the designer:
 
-- A diff of every changed token
+1. Run the import script to convert the plugin JSON into `core.json` / `semantic.json`:
+
+   ```bash
+   npx nx run design-tokens:import-tokens -- --input path/to/figma-export.json
+   ```
+
+   Pass `--core <group>` and/or `--semantic <group>` if the plugin exported different group names than `global` / `semantic`.
+
+2. Verify the diff in `libs/tokens/design-tokens/src/tokens/`.
+
+3. Rebuild the generated CSS and TypeScript artefacts:
+
+   ```bash
+   npx nx run design-tokens:generate
+   ```
+
+4. Commit all changes (`core.json`, `semantic.json`, and the rebuilt `src/generated/` files) and open a pull request for review.
+
+Alternatively, after committing only the updated `core.json` / `semantic.json` files, trigger the **"Token Import (On-Demand)"** GitHub Actions workflow — it will rebuild the generated artefacts and open a PR automatically.
+
+> **Note:** The GitHub Actions workflow does **not** run the import script; it only rebuilds the generated CSS / TypeScript files from already-committed `core.json` / `semantic.json`. Always run the import script locally first (step 2 above) to convert the Figma plugin export into these source files.
+
+---
+
+## Reviewing the Token PR
+
+In the PR you'll find:
+
+- A diff of every changed token in `core.json` / `semantic.json`
+- A diff of the rebuilt CSS variables and TypeScript constants
 - The git commit hash for audit purposes
-- A list of any naming convention violations (if found)
-
-**If violations appear:** They are warnings, not blockers. You can either fix the token names in Figma and re-trigger, or approve the PR as-is.
 
 **When ready:** Approve and merge. The tokens will be live in the next deployment.
 
@@ -86,23 +115,19 @@ After triggering a sync you'll receive a GitHub notification. In the PR you'll f
 
 ## Merge Policy
 
-- A new sync **closes the previous open PR** and creates a fresh one
-- PRs that are open for more than **7 days** are automatically closed with an explanatory comment
-- If a PR is auto-closed, just trigger a new sync
+- A new workflow run **closes the previous open PR** and creates a fresh one.
+- If a PR is auto-closed, just trigger a new run after committing your latest token files.
 
 ---
 
 ## Reverting a Token Change
 
-Reverting is done through Figma — not through git.
-
-1. Update the token in Figma to its previous value
-2. Trigger a new sync from GitHub Actions
-3. A new PR will be created — review and merge it
+1. Update the token in Figma to its previous value.
+2. Export the JSON file and share it with a developer.
+3. The developer runs the import script, rebuilds, and opens a new PR.
 
 ---
 
 ## Questions
 
 For anything token-related, tag `@design-team` in the PR or open an issue in the repository.
-
