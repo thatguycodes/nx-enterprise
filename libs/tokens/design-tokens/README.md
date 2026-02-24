@@ -178,7 +178,7 @@ Tokens are managed in Figma via the **Variables to JSON** free plugin. Changes f
 
 ```
 Figma (Variables to JSON plugin export)
-  → commit figma.json → GitHub Actions (auto-triggered)
+  → commit src/tokens/figma.json → GitHub Actions (auto-triggered)
   → PR review → Merge → Rebuild
 ```
 

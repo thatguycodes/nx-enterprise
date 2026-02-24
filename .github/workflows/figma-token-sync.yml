@@ -3,7 +3,7 @@ name: Figma Token Sync (On-Demand)
 on:
   push:
     paths:
-      - 'libs/tokens/design-tokens/src/generated/figma.json'
+      - 'libs/tokens/design-tokens/src/tokens/figma.json'
     branches-ignore:
       - main
   workflow_dispatch:
@@ -84,7 +84,7 @@ jobs:
       - name: Check for Changes
         id: check_changes
         run: |
-          if git diff --quiet libs/tokens/design-tokens/src/tokens/ libs/tokens/design-tokens/src/generated/css/ libs/tokens/design-tokens/src/generated/ts/; then
+          if git diff --quiet libs/tokens/design-tokens/src/generated/; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
             echo "No token changes detected"
           else
@@ -101,9 +101,7 @@ jobs:
       - name: Create Commit with Git Hash
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
-          git add libs/tokens/design-tokens/src/tokens/
-          git add libs/tokens/design-tokens/src/generated/css/
-          git add libs/tokens/design-tokens/src/generated/ts/
+          git add libs/tokens/design-tokens/src/generated/
 
           COMMIT_MSG="chore(tokens): transform Figma export and rebuild
 
@@ -125,7 +123,7 @@ jobs:
         run: |
           PR_BODY="# 🎨 Figma Token Sync
 
-          **Source**: \`src/generated/figma.json\` (Figma plugin export)
+          **Source**: \`src/tokens/figma.json\` (Figma plugin export)
           **Triggered**: On-demand sync
           **Timestamp**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
 

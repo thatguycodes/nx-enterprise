@@ -31,13 +31,13 @@ Use the free **Variables to JSON** plugin (no subscription required).
 3. Click **Export** to download `figma.json`.
 4. In the repository, replace the file at:
    ```
-   libs/tokens/design-tokens/src/generated/figma.json
+   libs/tokens/design-tokens/src/tokens/figma.json
    ```
 5. Commit the file to a new branch (e.g. `tokens/my-update`) and push it.
 
 GitHub Actions will detect the change, run the transformation and build scripts automatically, and open a pull request for review.
 
-> **Tip:** Do not edit any other files under `src/tokens/` or `src/generated/` manually — those are generated automatically from `figma.json`.
+> **Tip:** Do not edit any other files under `src/generated/` manually — those are generated automatically from `src/tokens/figma.json`.
 
 ---
 

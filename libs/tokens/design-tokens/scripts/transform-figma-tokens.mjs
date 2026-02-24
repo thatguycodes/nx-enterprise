@@ -1,27 +1,27 @@
 /**
- * Transform Figma plugin JSON export (DTCG format) to Style Dictionary format.
+ * Transform Figma plugin JSON export (DTCG format) into per-mode DTCG files
+ * consumed by Style Dictionary.
  *
- * Input:  src/generated/figma.json  — committed by designers after Figma plugin export
- * Output: src/tokens/core.json      — global/core raw values
- *         src/tokens/semantic.json  — default semantic mappings
- *         src/tokens/<mode>.json    — per-brand overrides, one file per additional mode
+ * Input:  src/tokens/figma.json       — committed by designers after Figma plugin export
+ * Output: src/generated/core.json     — global/core raw values (DTCG format)
+ *         src/generated/semantic.json — default semantic mappings (DTCG format)
+ *         src/generated/brands/<mode>.json — per-brand overrides (DTCG format)
  *
  * Usage:
  *   node scripts/transform-figma-tokens.mjs
  *
- * The input file is produced by a free Figma plugin such as "Variables to JSON" or
- * "TokensBrücke". Export the variables from Figma, save the JSON to
- * src/generated/figma.json, and commit it. This script (and the subsequent
- * generate/build steps) will handle the rest.
+ * The input file is produced by a free Figma plugin such as "Variables to JSON".
+ * Export the variables from Figma, save the JSON to src/tokens/figma.json, and
+ * commit it. This script splits the monolithic multi-mode export into separate
+ * DTCG files that Style Dictionary's build step can consume.
  *
  * Top-level keys in figma.json map to output files as follows:
- *   "global"           → src/tokens/core.json       (raw primitive values)
- *   "semantic/default" → src/tokens/semantic.json   (default semantic aliases)
- *   any other key      → src/tokens/<key>.json      (brand/mode override)
+ *   "global"           → src/generated/core.json       (raw primitive values)
+ *   "semantic/default" → src/generated/semantic.json   (default semantic aliases)
+ *   any other key      → src/generated/brands/<key>.json  (brand/mode override)
  *
- * DTCG token objects use "$value" / "$type"; Style Dictionary uses "value".
- * References like "{color.blue.600}" are preserved verbatim — Style Dictionary
- * resolves them during its build step.
+ * DTCG format ($value/$type) is preserved verbatim — Style Dictionary v5 resolves
+ * it natively when usesDtcg is set to true.
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
@@ -32,25 +32,28 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const projectRoot = join(__dirname, '..');
-const figmaJsonPath = join(projectRoot, 'src/generated/figma.json');
-const tokensDir = join(projectRoot, 'src/tokens');
+const figmaJsonPath = join(projectRoot, 'src/tokens/figma.json');
+const generatedDir = join(projectRoot, 'src/generated');
 
 /**
- * Recursively convert DTCG token objects ($value/$type) to Style Dictionary
- * format (value). Top-level metadata keys starting with "$" are skipped.
+ * Recursively pass through a DTCG token tree, stripping top-level metadata
+ * keys (those starting with "$") that are not part of a token node itself.
+ * Token leaf nodes ($value present) are kept intact with their $value and $type.
  */
-function dtcgToStyleDictionary(obj) {
+function extractDtcg(obj) {
     if (typeof obj !== 'object' || obj === null) return obj;
 
     if ('$value' in obj) {
-        // Token leaf node: convert $value → value, drop $type and other DTCG keys
-        return { value: obj['$value'] };
+        // Token leaf node — preserve $value and $type, drop any other DTCG metadata
+        const token = { $value: obj['$value'] };
+        if ('$type' in obj) token.$type = obj['$type'];
+        return token;
     }
 
     const result = {};
     for (const [key, val] of Object.entries(obj)) {
-        if (key.startsWith('$')) continue; // skip DTCG metadata ($schema, $description, etc.)
-        result[key] = dtcgToStyleDictionary(val);
+        if (key.startsWith('$')) continue; // skip file-level DTCG metadata ($schema, $metadata, etc.)
+        result[key] = extractDtcg(val);
     }
     return result;
 }
@@ -59,7 +62,7 @@ function writeJsonFile(filePath, data) {
     writeFileSync(filePath, JSON.stringify(data, null, 4) + '\n', 'utf-8');
 }
 
-console.log('🔄 Transforming Figma token export to Style Dictionary format...\n');
+console.log('🔄 Splitting Figma token export into per-mode DTCG files...\n');
 
 let figmaJson;
 try {
@@ -68,36 +71,37 @@ try {
     console.error(`❌ Could not read ${figmaJsonPath}`);
     console.error(err);
     console.error(
-        '   Ensure a Figma plugin export exists at src/generated/figma.json\n' +
+        '   Ensure a Figma plugin export exists at src/tokens/figma.json\n' +
         '   Export Figma variables using a free plugin (e.g. "Variables to JSON")\n' +
         '   and commit the resulting JSON to that path.'
     );
     process.exit(1);
 }
 
-mkdirSync(tokensDir, { recursive: true });
+mkdirSync(generatedDir, { recursive: true });
 
 for (const [modeKey, modeTokens] of Object.entries(figmaJson)) {
     if (modeKey.startsWith('$')) continue; // skip metadata keys ($schema, $metadata)
 
-    const transformed = dtcgToStyleDictionary(modeTokens);
+    const dtcg = extractDtcg(modeTokens);
 
     if (modeKey === 'global') {
-        writeJsonFile(join(tokensDir, 'core.json'), transformed);
-        console.log('✅ Written: src/tokens/core.json');
+        writeJsonFile(join(generatedDir, 'core.json'), dtcg);
+        console.log('✅ Written: src/generated/core.json');
     } else if (modeKey === 'semantic/default') {
-        writeJsonFile(join(tokensDir, 'semantic.json'), transformed);
-        console.log('✅ Written: src/tokens/semantic.json');
+        writeJsonFile(join(generatedDir, 'semantic.json'), dtcg);
+        console.log('✅ Written: src/generated/semantic.json');
     } else {
-        // Additional brand/mode overrides — stored under src/tokens/brands/
+        // Additional brand/mode overrides — stored under src/generated/brands/
         // They are not included in the default Style Dictionary build to avoid
         // token collisions. Use them as the source for per-brand build configurations.
-        const brandsDir = join(tokensDir, 'brands');
+        const brandsDir = join(generatedDir, 'brands');
         mkdirSync(brandsDir, { recursive: true });
         const filename = modeKey.replace(/\//g, '-') + '.json';
-        writeJsonFile(join(brandsDir, filename), transformed);
-        console.log(`✅ Written: src/tokens/brands/${filename}`);
+        writeJsonFile(join(brandsDir, filename), dtcg);
+        console.log(`✅ Written: src/generated/brands/${filename}`);
     }
 }
 
 console.log('\n✨ Transformation complete!');
+
