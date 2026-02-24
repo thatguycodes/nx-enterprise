@@ -2,102 +2,174 @@
 
 ## Overview
 
-As a designer, Figma is your workspace. You own the design tokens — the colours, spacing, radii, and other visual values that the entire product is built from. This guide explains how your Figma changes flow into code.
+As a designer, Figma is your workspace. You own the design tokens — the colours, spacing, radii, and other visual values that the entire product is built from. This guide explains how your Figma Variable changes flow into code.
 
 ---
 
 ## Token Workflow
 
 ```
-Figma (your changes) → Export JSON (free plugin) → Developer updates token files → PR review → Merge → Live in the product
+Figma Variables (your changes)
+  → Export JSON via Variables 9000 plugin
+    → Manually upload JSON to the codebase
+      → Developer runs import + build scripts
+        → PR review → Merge → Live in the product
 ```
 
-Figma API access is not required. All token updates are done by exporting a JSON file from a free Figma community plugin and having a developer apply it.
+There is **no automated API integration**. All token updates are fully manual: export from Figma, upload the file, run the build.
 
 ---
 
-## Naming Tokens in Figma
+## Naming Variables in Figma
 
-Tokens must follow **kebab-case with at least one group**. This is required for the import to work correctly.
+Variable names use **forward-slash as a path separator** in Figma (e.g. `color/primary`). After import, slashes are converted to nested objects for Style Dictionary.
 
-**Format:** `group-name` or `group-subgroup-name`
+Each segment of the path must be **lowercase and may contain numbers or hyphens**. If you use uppercase or spaces in Figma, the import script will automatically normalise them to lowercase with hyphens and log a warning, so you know which names to fix in Figma.
 
-| ✅ Valid | ❌ Invalid | Reason |
+| ✅ Valid (or auto-normalised) | ❌ Rejected | Reason |
 |---|---|---|
-| `color-primary` | `primary` | Missing group |
-| `spacing-md` | `SpacingMd` | Must be lowercase |
-| `typography-heading-lg` | `color_primary` | Use dashes, not underscores |
-| `border-radius-sm` | `color--primary` | No double dashes |
+| `color/primary` | `primary` | Missing group |
+| `color/Primary` → normalised to `color/primary` | `color//primary` | Empty segment |
+| `Color/Blue 500` → normalised to `color/blue-500` | `color_primary` | Use slashes, not underscores |
+| `border/radius/sm` | *(none of the above)* | Conforms as-is |
+
+> **Best practice**: Use lowercase and hyphens in Figma variable names to match conventions and avoid normalisation warnings.
 
 ---
 
 ## Token Layers
 
-Tokens are organised in two layers. You should only need to touch **semantic tokens** for day-to-day work.
+Variables are organised in two Figma collections. You should only need to touch **semantic/brand tokens** for day-to-day work.
 
-| Layer | Example | Rule |
-|---|---|---|
-| **Core** | `color-blue-600 = #2563eb` | Raw values. Rarely change. |
-| **Semantic** | `brand-primary = {color-blue-600}` | Purposeful names. Reference core tokens. |
+| Layer | Figma Collection | Example variable | Rule |
+|---|---|---|---|
+| **Core** | Global | `color/blue/600 = #2563eb` | Raw values. Rarely change. |
+| **Semantic** | Brand | `brand/primary = {color/blue/600}` | Purposeful names. Reference core tokens. |
 
-Components use semantic tokens. A rebrand means updating the semantic layer only — without touching any component.
-
----
-
-## Available Token Categories
-
-| Category | Example tokens |
-|---|---|
-| Brand colours | `brand-primary`, `brand-hover` |
-| Surface colours | `surface-base`, `surface-muted` |
-| Text colours | `text-base`, `text-muted`, `text-on-brand` |
-| Border | `border-default` |
-| Spacing | `spacing-xs`, `spacing-sm`, `spacing-md`, `spacing-lg`, `spacing-xl` |
-| Border radius | `border-radius-sm`, `border-radius-md`, `border-radius-lg` |
+Components use semantic tokens. A rebrand means updating the semantic collection only — without touching any component.
 
 ---
 
-## Exporting Tokens from Figma
+## Exporting Tokens from Figma (Variables 9000)
 
-Use any free Figma community plugin that exports design tokens as JSON. Recommended options:
+We use the **[Variables 9000](https://www.figma.com/community/plugin/1242548062635934255)** Figma community plugin to export Variables as JSON.
 
-- **[Tokens Studio for Figma](https://www.figma.com/community/plugin/843461159747178978)** — exports a `tokens.json` file with named sets (e.g. `global`, `semantic`).
-- **[Design Tokens (by Jan Six)](https://www.figma.com/community/plugin/888356646278934516)** — exports W3C DTCG–style JSON.
+### One-time setup
 
-### Steps
+1. In Figma, open **Plugins** → **Browse plugins in Community**.
+2. Search for **Variables 9000** and install it.
 
-1. Install the plugin in Figma (one-time).
-2. Make your token changes in Figma.
-3. Open the plugin and export/download the JSON file.
-4. Share the JSON file with a developer (Slack, email, or attach to a GitHub issue).
+### Exporting
+
+1. In your Figma file, open the plugin: **Plugins** → **Variables 9000**.
+2. Select the collections and modes you want to export.
+3. Click **Export** and download the JSON file.
+
+The exported JSON has this structure:
+
+```json
+{
+  "Global": {
+    "Default": {
+      "color/blue/500": "#3b82f6",
+      "spacing/sm": "8"
+    }
+  },
+  "Brand": {
+    "Light": {
+      "color/primary": "#2563eb",
+      "color/surface": "#ffffff"
+    },
+    "Dark": {
+      "color/primary": "#60a5fa",
+      "color/surface": "#1f2937"
+    }
+  }
+}
+```
+
+- **Top-level keys** = collection names (e.g. `Global`, `Brand`)
+- **Second-level keys** = mode names (e.g. `Light`, `Dark`, `Default`)
+- **Values** = flat key→value pairs with `/` as path separator
 
 ---
 
-## Applying Token Changes (Developer Steps)
+## Updating Tokens (Step-by-step)
 
-Once you receive the exported JSON file from the designer:
+### Step 1 — Make changes in Figma
 
-1. Run the import script to convert the plugin JSON into `core.json` / `semantic.json`:
+Update variable values or add new variables in your Figma file.
 
-   ```bash
-   npx nx run design-tokens:import-tokens -- --input path/to/figma-export.json
-   ```
+### Step 2 — Export from Variables 9000
 
-   Pass `--core <group>` and/or `--semantic <group>` if the plugin exported different group names than `global` / `semantic`.
+Follow the **Exporting** steps above. Download the JSON file (e.g. `variables-9000-export.json`).
 
-2. Verify the diff in `libs/tokens/design-tokens/src/tokens/`.
+### Step 3 — Upload to the repository
 
-3. Rebuild the generated CSS and TypeScript artefacts:
+Commit or upload the JSON file to:
 
-   ```bash
-   npx nx run design-tokens:generate
-   ```
+```
+libs/tokens/design-tokens/src/tokens/figma-exports/variables-9000-export.json
+```
 
-4. Commit all changes (`core.json`, `semantic.json`, and the rebuilt `src/generated/` files) and open a pull request for review.
+> Create the `figma-exports/` directory if it doesn't exist. This directory holds the raw plugin exports for reference and is **not** read by the build directly.
 
-Alternatively, after committing only the updated `core.json` / `semantic.json` files, trigger the **"Token Import (On-Demand)"** GitHub Actions workflow — it will rebuild the generated artefacts and open a PR automatically.
+### Step 4 — Run the import script
 
-> **Note:** The GitHub Actions workflow does **not** run the import script; it only rebuilds the generated CSS / TypeScript files from already-committed `core.json` / `semantic.json`. Always run the import script locally first (step 2 above) to convert the Figma plugin export into these source files.
+Convert the Variables 9000 JSON into Style Dictionary–compatible token files:
+
+```bash
+node libs/tokens/design-tokens/scripts/import-from-figma-plugin.mjs \
+  --input libs/tokens/design-tokens/src/tokens/figma-exports/variables-9000-export.json
+```
+
+This writes one JSON file per collection/mode under `src/tokens/`:
+
+```
+src/tokens/
+  global/
+    default.json      ← converted from "Global / Default"
+  brand/
+    light.json        ← converted from "Brand / Light"
+    dark.json         ← converted from "Brand / Dark"
+```
+
+**Filtering (optional):** To import only one collection or mode:
+
+```bash
+# Import only the "Brand" collection
+node ... --collection "Brand"
+
+# Import only "Light" modes across all collections
+node ... --mode "Light"
+```
+
+### Step 5 — Run the token build
+
+Rebuild the generated CSS variables and TypeScript constants:
+
+```bash
+node libs/tokens/design-tokens/scripts/build-tokens.mjs
+```
+
+Or via nx:
+
+```bash
+npx nx run design-tokens:generate
+```
+
+### Step 6 — Commit and open a pull request
+
+Commit all changes:
+- `src/tokens/figma-exports/` — the raw plugin export (for audit)
+- `src/tokens/{collection}/{mode}.json` — converted token files
+- `src/generated/` — rebuilt CSS and TypeScript artefacts
+
+Open a pull request for review.
+
+Alternatively, after committing the converted token files, trigger the **"Token Import (On-Demand)"** GitHub Actions workflow — it will rebuild the generated artefacts and open a PR automatically.
+
+> **Note:** The GitHub Actions workflow only rebuilds from already-committed token files. Always run the import script locally first (steps 4–5 above).
 
 ---
 
@@ -105,7 +177,7 @@ Alternatively, after committing only the updated `core.json` / `semantic.json` f
 
 In the PR you'll find:
 
-- A diff of every changed token in `core.json` / `semantic.json`
+- A diff of every changed token JSON file under `src/tokens/`
 - A diff of the rebuilt CSS variables and TypeScript constants
 - The git commit hash for audit purposes
 
@@ -122,9 +194,9 @@ In the PR you'll find:
 
 ## Reverting a Token Change
 
-1. Update the token in Figma to its previous value.
-2. Export the JSON file and share it with a developer.
-3. The developer runs the import script, rebuilds, and opens a new PR.
+1. Update the variable in Figma to its previous value.
+2. Re-export from Variables 9000.
+3. Follow steps 3–6 above.
 
 ---
 

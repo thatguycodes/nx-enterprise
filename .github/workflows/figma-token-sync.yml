@@ -1,10 +1,10 @@
-name: Token Import (On-Demand)
+name: Token Build (On-Demand)
 
 on:
   workflow_dispatch:
     inputs:
       branch_name:
-        description: 'Branch name suffix for the sync PR (default: auto-generated)'
+        description: 'Branch name suffix for the build PR (default: auto-generated)'
         required: false
         type: string
 
@@ -16,6 +16,15 @@ jobs:
   import-tokens:
     name: Build & PR Design Tokens
     runs-on: ubuntu-latest
+    # -----------------------------------------------------------------------
+    # Manual workflow — triggered after a developer has:
+    #   1. Exported variables from Figma using the Variables 9000 plugin
+    #   2. Run the import script locally to convert the export into token JSON
+    #   3. Committed the updated token files to this branch
+    #
+    # This job rebuilds the generated CSS / TypeScript artefacts from the
+    # committed token files and opens a pull request for review.
+    # -----------------------------------------------------------------------
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -111,8 +120,8 @@ jobs:
         run: |
           PR_BODY="# 🎨 Design Token Build
 
-          **Source**: Manually updated \`core.json\` / \`semantic.json\` (exported from Figma plugin)
-          **Triggered**: On-demand workflow
+          **Source**: Variables 9000 Figma plugin export → manually committed token files
+          **Triggered**: On-demand workflow (manual step after uploading token files)
           **Timestamp**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
 
           ## Audit Trail

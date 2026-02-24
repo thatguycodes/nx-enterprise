@@ -2,7 +2,7 @@
 
 Design tokens are the single source of truth for all visual design decisions — colors, spacing, typography, border radii, and more. Instead of hard-coding values like `#2563eb` or `16px` directly in your styles, you reference a named token like `--brand-primary` or `spacingMd`. When a value changes, it changes once and propagates everywhere automatically.
 
-This package is processed through [Style Dictionary](https://styledictionary.com/) from token source files (`core.json` / `semantic.json`) that are updated by exporting a JSON file from a free Figma community plugin. It ships two consumable formats:
+This package is processed through [Style Dictionary](https://styledictionary.com/) from token source files that are updated by exporting a JSON file from the **[Variables 9000](https://www.figma.com/community/plugin/1242548062635934255)** Figma community plugin and running the import script. It ships two consumable formats:
 
 | Format | File | Use case |
 |---|---|---|
@@ -174,25 +174,26 @@ This means a rebrand or theme change only requires updating semantic token mappi
 
 ## Updating Tokens
 
-Tokens are managed in Figma and exported as JSON using a free community plugin. Changes flow via a manual import process:
+Tokens are managed as Figma Variables and exported manually using the **[Variables 9000](https://www.figma.com/community/plugin/1242548062635934255)** Figma plugin. Changes flow through a fully manual process:
 
 ```
-Figma → Export JSON (free plugin) → import-tokens script → core.json / semantic.json → build → PR review → Merge
+Figma Variables → Export JSON (Variables 9000) → Upload to repo → import script → build → PR review → Merge
 ```
 
-1. Export a JSON file from Figma using a free community plugin (e.g. Tokens Studio).
-2. Run the import script to update `core.json` and `semantic.json`:
+1. Export a JSON file from Figma using Variables 9000.
+2. Upload the JSON to `src/tokens/figma-exports/` and run the import script:
 
    ```bash
-   npx nx run design-tokens:import-tokens -- --input path/to/figma-export.json
+   node libs/tokens/design-tokens/scripts/import-from-figma-plugin.mjs \
+     --input libs/tokens/design-tokens/src/tokens/figma-exports/variables-9000-export.json
    ```
 
 3. Rebuild generated files:
 
    ```bash
-   npx nx run design-tokens:generate
+   node libs/tokens/design-tokens/scripts/build-tokens.mjs
    ```
 
-4. Commit and open a pull request.
+4. Commit all changes and open a pull request.
 
 See the [Designer Guide](../../docs/DESIGNER_GUIDE.md) for full details.
