@@ -12,7 +12,8 @@ const outputPath = join(projectRoot, 'src');
 (async () => {
     try {
         const sd = new StyleDictionary({
-            source: [join(projectRoot, 'src/tokens/**/*.json')],
+            usesDtcg: true,
+            source: [join(projectRoot, 'src/generated/*.json')],
             hooks: {
                 transforms: {
                     'name/cti/camel': {

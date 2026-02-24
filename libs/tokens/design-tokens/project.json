@@ -6,10 +6,17 @@
   "tags": ["type:tokens", "scope:shared"],
   "// targets": "to see all targets run: nx show project design-tokens --web",
   "targets": {
-    "generate": {
+    "transform": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "rm -rf libs/tokens/design-tokens/src/generated && node libs/tokens/design-tokens/scripts/build-tokens.mjs"
+        "command": "node libs/tokens/design-tokens/scripts/transform-figma-tokens.mjs"
+      }
+    },
+    "generate": {
+      "dependsOn": ["transform"],
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "rm -rf libs/tokens/design-tokens/src/generated/css libs/tokens/design-tokens/src/generated/ts && node libs/tokens/design-tokens/scripts/build-tokens.mjs"
       }
     },
     "build": {

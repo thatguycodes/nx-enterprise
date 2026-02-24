@@ -1,0 +1,42 @@
+{
+    "brand": {
+        "primary": {
+            "$value": "{color.blue.600}",
+            "$type": "color"
+        },
+        "hover": {
+            "$value": "{color.blue.700}",
+            "$type": "color"
+        }
+    },
+    "surface": {
+        "base": {
+            "$value": "{color.white}",
+            "$type": "color"
+        },
+        "muted": {
+            "$value": "{color.gray.100}",
+            "$type": "color"
+        }
+    },
+    "text": {
+        "base": {
+            "$value": "{color.gray.700}",
+            "$type": "color"
+        },
+        "muted": {
+            "$value": "{color.gray.500}",
+            "$type": "color"
+        },
+        "on-brand": {
+            "$value": "{color.white}",
+            "$type": "color"
+        }
+    },
+    "border": {
+        "default": {
+            "$value": "{color.gray.200}",
+            "$type": "color"
+        }
+    }
+}

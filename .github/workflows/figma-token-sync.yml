@@ -1,6 +1,11 @@
 name: Figma Token Sync (On-Demand)
 
 on:
+  push:
+    paths:
+      - 'libs/tokens/design-tokens/src/tokens/figma.json'
+    branches-ignore:
+      - main
   workflow_dispatch:
     inputs:
       branch_name:
@@ -14,8 +19,7 @@ permissions:
 
 jobs:
   sync-tokens:
-    if: false # temporarily disabled; figma secrets commented out
-    name: Sync Tokens from Figma
+    name: Transform and Sync Tokens
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -68,16 +72,19 @@ jobs:
           echo "hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
           echo "Current commit: $COMMIT_HASH"
 
-      - name: Fetch Tokens from Figma (disabled)
-        run: echo "Figma sync disabled; secrets commented out."
-        # env:
-        #   FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
-        #   FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
+      - name: Transform Figma JSON to Style Dictionary format
+        run: node libs/tokens/design-tokens/scripts/transform-figma-tokens.mjs
+
+      - name: Build Tokens (Style Dictionary)
+        run: |
+          rm -rf libs/tokens/design-tokens/src/generated/css \
+                 libs/tokens/design-tokens/src/generated/ts
+          node libs/tokens/design-tokens/scripts/build-tokens.mjs
 
       - name: Check for Changes
         id: check_changes
         run: |
-          if git diff --quiet libs/shared/tokens/src/tokens/; then
+          if git diff --quiet libs/tokens/design-tokens/src/generated/; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
             echo "No token changes detected"
           else
@@ -94,10 +101,9 @@ jobs:
       - name: Create Commit with Git Hash
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
-          git add libs/shared/tokens/src/tokens/
-          git add -f .figma-violations.json 2>/dev/null || true
+          git add libs/tokens/design-tokens/src/generated/
 
-          COMMIT_MSG="chore(tokens): sync from Figma
+          COMMIT_MSG="chore(tokens): transform Figma export and rebuild
 
           Synced at: $(date -u +%Y-%m-%dT%H:%M:%SZ)
           Git commit hash: ${{ steps.commit_hash.outputs.hash }}"
@@ -111,26 +117,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Read Violations
-        id: violations
-        if: steps.check_changes.outputs.has_changes == 'true'
-        run: |
-          if [ -f ".figma-violations.json" ]; then
-            VIOLATIONS=$(cat .figma-violations.json)
-            echo "violations<<EOF" >> $GITHUB_OUTPUT
-            echo "$VIOLATIONS" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          fi
-
       - name: Create Pull Request
         if: steps.check_changes.outputs.has_changes == 'true'
         id: create_pr
         run: |
-          VIOLATION_COUNT=$(if [ -f ".figma-violations.json" ]; then jq 'length' .figma-violations.json; else echo 0; fi)
-
           PR_BODY="# 🎨 Figma Token Sync
 
-          **Source**: Figma
+          **Source**: \`src/tokens/figma.json\` (Figma plugin export)
           **Triggered**: On-demand sync
           **Timestamp**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
 
@@ -143,38 +136,17 @@ jobs:
 
           ## Changes
 
-          - Updated design tokens from Figma
-          - Generated new CSS variables and TypeScript constants
-          - Violations found: **$VIOLATION_COUNT**
+          - Transformed Figma plugin JSON (DTCG format) to Style Dictionary format
+          - Rebuilt CSS custom properties (\`generated/css/variables.css\`)
+          - Rebuilt TypeScript constants (\`generated/ts/tokens.ts\`)
 
           ## Instructions
 
           1. **Review the changes** in the Files tab
-          2. **Check for violations** below (if any)
-          3. **Approve and merge** when ready
+          2. **Approve and merge** when ready
 
           > ⚠️ **Merge before next sync**: The next Figma sync will close this PR. Ensure all changes are merged before triggering another sync.
-
-          ---
-
-          ## Naming Convention Violations
-
           "
-
-          if [ "$VIOLATION_COUNT" -gt 0 ]; then
-            PR_BODY+="The following tokens don't follow the naming convention (kebab-case with groups):
-
-          \`\`\`json
-          ${{ steps.violations.outputs.violations }}
-          \`\`\`
-
-          💡 **Next steps**:
-          - Fix these tokens in Figma, or
-          - Approve this PR to accept as-is
-          "
-          else
-            PR_BODY+="✅ All tokens follow naming conventions!"
-          fi
 
           PR_URL=$(gh pr create \
             --head tokens/figma-sync \
@@ -198,8 +170,6 @@ jobs:
             --json number \
             --jq '.[0].number')
 
-          # Request review from design team (via CODEOWNERS)
-          # CODEOWNERS will auto-assign, but we can also explicitly request
           gh pr edit "$PR_NUMBER" \
             --add-assignee "@design-team" 2>/dev/null || true
 
@@ -218,3 +188,4 @@ jobs:
           else
             echo "ℹ️ **No changes detected** - Figma tokens are already in sync" >> $GITHUB_STEP_SUMMARY
           fi
+

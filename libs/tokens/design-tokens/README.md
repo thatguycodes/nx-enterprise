@@ -174,10 +174,12 @@ This means a rebrand or theme change only requires updating semantic token mappi
 
 ## Updating Tokens
 
-Tokens are managed in Figma. Changes flow automatically via the sync pipeline:
+Tokens are managed in Figma via the **Variables to JSON** free plugin. Changes flow into code through a two-step process:
 
 ```
-Figma → GitHub Actions (on-demand sync) → PR review → Merge → Rebuild
+Figma (Variables to JSON plugin export)
+  → commit src/tokens/figma.json → GitHub Actions (auto-triggered)
+  → PR review → Merge → Rebuild
 ```
 
-Do not edit the generated files directly. See the [Designer Guide](../../docs/DESIGNER_GUIDE.md) to trigger a sync.
+See the [Designer Guide](../../docs/DESIGNER_GUIDE.md) for full step-by-step instructions.
