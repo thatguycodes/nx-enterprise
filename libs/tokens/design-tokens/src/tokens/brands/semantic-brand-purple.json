@@ -1,10 +1,10 @@
 {
     "brand": {
         "primary": {
-            "value": "{color.blue.600}"
+            "value": "{color.purple.600}"
         },
         "hover": {
-            "value": "{color.blue.700}"
+            "value": "{color.purple.700}"
         }
     },
     "surface": {

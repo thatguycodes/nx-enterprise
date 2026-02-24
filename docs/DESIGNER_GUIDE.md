@@ -9,10 +9,48 @@ As a designer, Figma is your workspace. You own the design tokens — the colour
 ## Token Workflow
 
 ```
-Figma (your changes) → Sync (GitHub Actions) → PR review → Merge → Live in the product
+Figma (your changes)
+  → Export JSON with free plugin
+  → Commit figma.json to a branch
+  → GitHub Actions auto-transforms and builds tokens
+  → PR review → Merge → Live in the product
 ```
 
-You never touch code. Everything starts in Figma.
+You never write code. Everything starts in Figma.
+
+---
+
+## Exporting Tokens from Figma
+
+Use the free **Variables to JSON** plugin (no subscription required).
+
+### Step-by-step
+
+1. Open your Figma file.
+2. Go to **Plugins → Variables to JSON**.
+3. Click **Export** to download `figma.json`.
+4. In the repository, replace the file at:
+   ```
+   libs/tokens/design-tokens/src/generated/figma.json
+   ```
+5. Commit the file to a new branch (e.g. `tokens/my-update`) and push it.
+
+GitHub Actions will detect the change, run the transformation and build scripts automatically, and open a pull request for review.
+
+> **Tip:** Do not edit any other files under `src/tokens/` or `src/generated/` manually — those are generated automatically from `figma.json`.
+
+---
+
+## Triggering a Sync Manually
+
+If you need to trigger the token sync without pushing a new `figma.json`:
+
+1. Go to the repository on GitHub.
+2. Click the **Actions** tab.
+3. Select **"Figma Token Sync (On-Demand)"**.
+4. Click **"Run workflow"** → **"Run workflow"**.
+
+A pull request will be created automatically and assigned to you for review.
 
 ---
 
@@ -44,6 +82,22 @@ Components use semantic tokens. A rebrand means updating the semantic layer only
 
 ---
 
+## Multi-Brand Support
+
+The `figma.json` export supports multiple semantic modes (brands). Add additional top-level keys using the `semantic/<brand-name>` pattern:
+
+```json
+{
+  "global": { ... },
+  "semantic/default": { ... },
+  "semantic/brand-purple": { ... }
+}
+```
+
+Each brand mode is written to `src/tokens/brands/` and can be used as a source for a per-brand Style Dictionary build configuration.
+
+---
+
 ## Available Token Categories
 
 | Category | Example tokens |
@@ -57,28 +111,13 @@ Components use semantic tokens. A rebrand means updating the semantic layer only
 
 ---
 
-## Triggering a Token Sync
-
-When you're happy with your token changes in Figma:
-
-1. Go to the repository on GitHub
-2. Click the **Actions** tab
-3. Select **"Figma Token Sync (On-Demand)"**
-4. Click **"Run workflow"** → **"Run workflow"**
-
-A pull request will be created automatically and assigned to you for review.
-
----
-
 ## Reviewing the Sync PR
 
-After triggering a sync you'll receive a GitHub notification. In the PR you'll find:
+After the sync runs you'll receive a GitHub notification. In the PR you'll find:
 
 - A diff of every changed token
-- The git commit hash for audit purposes
-- A list of any naming convention violations (if found)
-
-**If violations appear:** They are warnings, not blockers. You can either fix the token names in Figma and re-trigger, or approve the PR as-is.
+- Updated CSS variables (`generated/css/variables.css`)
+- Updated TypeScript constants (`generated/ts/tokens.ts`)
 
 **When ready:** Approve and merge. The tokens will be live in the next deployment.
 
@@ -87,8 +126,7 @@ After triggering a sync you'll receive a GitHub notification. In the PR you'll f
 ## Merge Policy
 
 - A new sync **closes the previous open PR** and creates a fresh one
-- PRs that are open for more than **7 days** are automatically closed with an explanatory comment
-- If a PR is auto-closed, just trigger a new sync
+- If a PR is auto-closed, just push a new `figma.json` or trigger a manual sync
 
 ---
 
@@ -96,9 +134,9 @@ After triggering a sync you'll receive a GitHub notification. In the PR you'll f
 
 Reverting is done through Figma — not through git.
 
-1. Update the token in Figma to its previous value
-2. Trigger a new sync from GitHub Actions
-3. A new PR will be created — review and merge it
+1. Update the token in Figma to its previous value.
+2. Export a new `figma.json` and commit it.
+3. A new PR will be created — review and merge it.
 
 ---
 
