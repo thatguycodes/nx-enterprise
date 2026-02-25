@@ -16,6 +16,13 @@ const preview: Preview = {
     docs: {
       toc: true,
     },
+    themes: {
+      default: 'Default Light',
+      list: [
+        { name: 'Default Light', value: 'dark' },
+        { name: 'Default Dark', value: 'light' },
+      ],
+    },
   },
   decorators: [
     withThemeByDataAttribute({
