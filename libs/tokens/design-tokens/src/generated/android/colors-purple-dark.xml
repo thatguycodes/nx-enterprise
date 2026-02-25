@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <color name="color_obsidian">#ff080808</color>
+  <color name="color_deep_obsidian">#ff0d0d0d</color>
+  <color name="color_midnight_gray">#ff121212</color>
+  <color name="color_charcoal">#ff1a1a1a</color>
+  <color name="color_steel_gray">#ff262626</color>
+  <color name="color_dark_gray">#ff555555</color>
+  <color name="color_muted_silver">#ffa3a3a3</color>
+  <color name="color_gainsboro">#fff5f5f5</color>
+  <color name="color_white">#ffffffff</color>
+  <color name="color_electric_cyan">#ff00f0ff</color>
+  <color name="color_vivid_purple">#ff7000ff</color>
+  <color name="color_background_primary">#ff7000ff</color>
+  <color name="color_background_secondary">#ff121212</color>
+  <color name="color_text_primary">#ffffffff</color>
+  <color name="color_text_secondary">#ffa3a3a3</color>
+  <color name="color_border_primary">#ff262626</color>
+</resources>

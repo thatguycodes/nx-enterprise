@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <dimen name="border_width_sm">1.00dp</dimen>
+  <dimen name="border_width_md">2.00dp</dimen>
+  <dimen name="border_radius_sm">4.00dp</dimen>
+  <dimen name="border_radius_md">8.00dp</dimen>
+  <dimen name="border_radius_lg">16.00dp</dimen>
+  <dimen name="border_radius_full">15984.00dp</dimen>
+  <dimen name="font_size_xs">12.00dp</dimen>
+  <dimen name="font_size_sm">14.00dp</dimen>
+  <dimen name="font_size_base">17.00dp</dimen>
+  <dimen name="font_size_lg">20.00dp</dimen>
+  <dimen name="font_size_xl">24.00dp</dimen>
+  <dimen name="font_size_2xl">28.00dp</dimen>
+  <dimen name="font_size_3xl">34.00dp</dimen>
+  <dimen name="font_size_4xl">40.00dp</dimen>
+  <dimen name="line_height_none">16.00dp</dimen>
+  <dimen name="line_height_tight">19.20dp</dimen>
+  <dimen name="line_height_normal">24.00dp</dimen>
+  <dimen name="line_height_loose">28.80dp</dimen>
+  <dimen name="spacing_0">0.00dp</dimen>
+  <dimen name="spacing_1">4.00dp</dimen>
+  <dimen name="spacing_2">8.00dp</dimen>
+  <dimen name="spacing_3">12.00dp</dimen>
+  <dimen name="spacing_4">16.00dp</dimen>
+  <dimen name="spacing_5">24.00dp</dimen>
+  <dimen name="spacing_6">32.00dp</dimen>
+  <dimen name="spacing_7">48.00dp</dimen>
+  <dimen name="spacing_8">64.00dp</dimen>
+</resources>

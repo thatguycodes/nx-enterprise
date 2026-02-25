@@ -1,0 +1,11 @@
+{
+    "imports": ["../../semantic/light.json"],
+    "color": {
+        "background": {
+            "primary": { "$type": "color", "$value": "{color.vivid-purple}" }
+        },
+        "text": {
+            "primary": { "$type": "color", "$value": "{color.white}" }
+        }
+    }
+}

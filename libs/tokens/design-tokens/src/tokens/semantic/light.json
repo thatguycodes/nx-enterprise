@@ -1,0 +1,15 @@
+{
+  "color": {
+    "background": {
+      "primary": { "$type": "color", "$value": "{color.white}" },
+      "secondary": { "$type": "color", "$value": "{color.gainsboro}" }
+    },
+    "text": {
+      "primary": { "$type": "color", "$value": "{color.charcoal}" },
+      "secondary": { "$type": "color", "$value": "{color.dark-gray}" }
+    },
+    "border": {
+      "primary": { "$type": "color", "$value": "{color.muted-silver}" }
+    }
+  }
+}

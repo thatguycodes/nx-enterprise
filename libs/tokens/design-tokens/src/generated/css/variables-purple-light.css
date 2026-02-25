@@ -2,7 +2,7 @@
  * Do not edit directly, this file was auto-generated.
  */
 
-:root {
+[data-theme="purple-light"] {
   --border-width-sm: 0.0625rem;
   --border-width-md: 0.125rem;
   --border-radius-sm: 0.25rem;
@@ -20,9 +20,9 @@
   --color-white: #ffffff;
   --color-electric-cyan: #00f0ff;
   --color-vivid-purple: #7000ff;
-  --color-background-primary: #ffffff;
+  --color-background-primary: #7000ff;
   --color-background-secondary: #f5f5f5;
-  --color-text-primary: #1a1a1a;
+  --color-text-primary: #ffffff;
   --color-text-secondary: #555555;
   --color-border-primary: #a3a3a3;
   --font-family-sans: 'SF Pro', sans-serif;

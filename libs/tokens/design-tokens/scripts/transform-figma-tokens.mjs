@@ -32,7 +32,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const projectRoot = join(__dirname, '..');
-const figmaJsonPath = join(projectRoot, 'src/tokens/figma.json');
+const figmaJsonPath = join(projectRoot, 'src/tokens/*/*.json');
 const generatedDir = join(projectRoot, 'src/generated');
 
 /**
