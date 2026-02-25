@@ -72,6 +72,7 @@
         },
         "releaseTagPattern": "{projectName}@{version}",
         "changelog": {
+          "automaticFromRef": true,
           "workspaceChangelog": false,
           "projectChangelogs": true
         }
