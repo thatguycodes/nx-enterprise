@@ -1,3 +1,9 @@
+## 0.0.7 (2026-02-25)
+
+### 🧱 Updated Dependencies
+
+- Updated design-tokens to 0.2.3
+
 ## 0.0.6 (2026-02-25)
 
 ### 🩹 Fixes
