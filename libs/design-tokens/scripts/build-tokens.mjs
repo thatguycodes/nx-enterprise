@@ -119,14 +119,19 @@ function applyUnitIfNeeded(token, value) {
   return value;
 }
 
+function getThemeKey(theme, brand = 'default') {
+  return brand === 'default' ? theme : `${brand}-${theme}`;
+}
+
 async function buildTheme(theme, brand = 'default') {
+  const themeKey = getThemeKey(theme, brand);
   const cssFiles = [
     {
-      destination: `variables-${brand}-${theme}.css`,
+      destination: `variables-${themeKey}.css`,
       format: 'css/variables-path',
       options: {
-        selector: `[data-theme="${brand}-${theme}"]`
-      }
+        selector: `[data-theme="${themeKey}"]`,
+      },
     },
   ];
 
@@ -135,8 +140,8 @@ async function buildTheme(theme, brand = 'default') {
       destination: 'variables.css',
       format: 'css/variables-path',
       options: {
-        selector: ':root'
-      }
+        selector: ':root',
+      },
     });
   }
 
@@ -294,7 +299,7 @@ async function buildTheme(theme, brand = 'default') {
         buildPath: join(outputPath, 'generated/scss/'),
         files: [
           {
-            destination: `variables-${brand}-${theme}.scss`,
+            destination: `variables-${themeKey}.scss`,
             format: 'scss/variables-path',
           },
         ],
@@ -304,11 +309,11 @@ async function buildTheme(theme, brand = 'default') {
         buildPath: join(outputPath, 'generated/ts/'),
         files: [
           {
-            destination: `tokens-${brand}-${theme}.ts`,
+            destination: `tokens-${themeKey}.ts`,
             format: 'ts/es6-safe',
           },
           {
-            destination: `tokens-${brand}-${theme}.d.ts`,
+            destination: `tokens-${themeKey}.d.ts`,
             format: 'ts/es6-declarations-safe',
           },
         ],
@@ -325,12 +330,12 @@ async function buildTheme(theme, brand = 'default') {
         buildPath: join(outputPath, 'generated/android/'),
         files: [
           {
-            destination: `colors-${brand}-${theme}.xml`,
+            destination: `colors-${themeKey}.xml`,
             format: 'android/colors',
             filter: (token) => token.$type === 'color',
           },
           {
-            destination: `dimens-${brand}-${theme}.xml`,
+            destination: `dimens-${themeKey}.xml`,
             format: 'android/dimens',
             filter: (token) => token.$type === 'dimension',
           }
@@ -349,9 +354,15 @@ async function buildTheme(theme, brand = 'default') {
         buildPath: join(outputPath, 'generated/ios/'),
         files: [
           {
-            destination: `Tokens-${brand.charAt(0).toUpperCase() + brand.slice(1)}${theme.charAt(0).toUpperCase() + theme.slice(1)}.swift`,
+            destination: `Tokens-${themeKey
+              .split('-')
+              .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+              .join('')}.swift`,
             format: 'ios-swift/class.swift',
-            className: `Tokens${brand.charAt(0).toUpperCase() + brand.slice(1)}${theme.charAt(0).toUpperCase() + theme.slice(1)}`,
+            className: `Tokens${themeKey
+              .split('-')
+              .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+              .join('')}`,
           },
         ],
       },
@@ -371,8 +382,8 @@ async function buildTheme(theme, brand = 'default') {
     await buildTheme('dark', 'purple');
 
     // Expose the default light tokens at the package root for consumers.
-    const sourceTs = join(outputPath, 'generated/ts/tokens-default-light.ts');
-    const sourceDts = join(outputPath, 'generated/ts/tokens-default-light.d.ts');
+    const sourceTs = join(outputPath, 'generated/ts/tokens-light.ts');
+    const sourceDts = join(outputPath, 'generated/ts/tokens-light.d.ts');
     const targetTs = join(outputPath, 'generated/ts/tokens.ts');
     const targetDts = join(outputPath, 'generated/ts/tokens.d.ts');
     await copyFile(sourceTs, targetTs);

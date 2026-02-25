@@ -1,7 +1,7 @@
 {
   "name": "design-tokens",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/tokens/design-tokens/src",
+  "sourceRoot": "libs/design-tokens/src",
   "projectType": "library",
   "tags": ["type:tokens", "scope:shared"],
   "// targets": "to see all targets run: nx show project design-tokens --web",
@@ -9,7 +9,7 @@
     "generate": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "rm -rf libs/tokens/design-tokens/src/generated/* && node libs/tokens/design-tokens/scripts/build-tokens.mjs --verbose"
+        "command": "rm -rf libs/design-tokens/src/generated/* && node libs/design-tokens/scripts/build-tokens.mjs --verbose"
       }
     },
     "build": {
@@ -17,18 +17,18 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/tokens/design-tokens",
-        "main": "libs/tokens/design-tokens/src/index.ts",
-        "tsConfig": "libs/tokens/design-tokens/tsconfig.lib.json",
+        "outputPath": "dist/libs/design-tokens",
+        "main": "libs/design-tokens/src/index.ts",
+        "tsConfig": "libs/design-tokens/tsconfig.lib.json",
         "assets": [
-          "libs/tokens/design-tokens/README.md",
+          "libs/design-tokens/README.md",
           {
-            "input": "libs/tokens/design-tokens",
+            "input": "libs/design-tokens",
             "glob": "package.json",
             "output": "."
           },
           {
-            "input": "libs/tokens/design-tokens/src/generated",
+            "input": "libs/design-tokens/src/generated",
             "glob": "**/*",
             "output": "generated"
           }
@@ -42,7 +42,7 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "npm publish --access public --otp=$NPM_OTP",
-        "cwd": "dist/libs/tokens/design-tokens"
+        "cwd": "dist/libs/design-tokens"
       },
       "configurations": {},
       "parallelism": true

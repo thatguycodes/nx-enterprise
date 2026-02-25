@@ -1,6 +1,6 @@
 
 //
-// Tokens-DefaultLight.swift
+// Tokens-Light.swift
 //
 
 // Do not edit directly, this file was auto-generated.

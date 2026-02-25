@@ -91,7 +91,7 @@ To maintain a consistent and beautiful design system:
 3. **Review PR**: Design team reviews the token sync PR
 4. **Merge**: After approval, merge to `main` to trigger build
 
-⚠️ **Do not manually edit** `libs/tokens/design-tokens/src/tokens/core.json` or `semantic.json` - these are auto-generated from Figma
+⚠️ **Do not manually edit** `libs/design-tokens/src/tokens/core.json` or files under `libs/design-tokens/src/tokens/{global,mode,components}` - these are auto-generated from Figma
 
 ### Level 2: UI Library (The Components)
 *Use this when: You need to build a new reusable UI element or update an existing one.*

@@ -15,26 +15,64 @@
 
     &:hover {
       background-color: var(--button-typical-primary-bg-hover);
+      color: var(--button-typical-primary-label-hover);
+    }
+
+    &:active {
+      background-color: var(--button-typical-primary-bg-active);
+      color: var(--button-typical-primary-label-active);
+    }
+
+    &:disabled {
+      background-color: var(--button-typical-primary-bg-disabled);
+      color: var(--button-typical-primary-label-disabled);
     }
   }
 
   &.secondary {
     background-color: var(--button-typical-secondary-bg-default);
     color: var(--button-typical-secondary-label-default);
+    border: var(--global-borderwidth-xs) solid var(--button-typical-secondary-border-default);
 
     &:hover {
       background-color: var(--button-typical-secondary-bg-hover);
+      color: var(--button-typical-secondary-label-hover);
+      border-color: var(--button-typical-secondary-border-hover);
+    }
+
+    &:active {
+      background-color: var(--button-typical-secondary-bg-active);
+      color: var(--button-typical-secondary-label-active);
+      border-color: var(--button-typical-secondary-border-active);
+    }
+
+    &:disabled {
+      color: var(--button-typical-secondary-label-disabled);
+      border-color: var(--button-typical-secondary-border-disabled);
     }
   }
 
   &.outline {
-    background-color: transparent;
-    border: var(--global-borderwidth-xs) solid var(--button-typical-secondary-border-default);
-    color: var(--button-typical-secondary-label-default);
+    background-color: var(--button-typical-tertiary-bg-default);
+    border: var(--global-borderwidth-xs) solid var(--button-typical-tertiary-border-default);
+    color: var(--button-typical-tertiary-label-default);
 
     &:hover {
-      border-color: var(--button-typical-secondary-border-hover);
-      color: var(--button-typical-secondary-label-hover);
+      background-color: var(--button-typical-tertiary-bg-hover);
+      border-color: var(--button-typical-tertiary-border-hover);
+      color: var(--button-typical-tertiary-label-hover);
+    }
+
+    &:active {
+      background-color: var(--button-typical-tertiary-bg-active);
+      border-color: var(--button-typical-tertiary-border-active);
+      color: var(--button-typical-tertiary-label-active);
+    }
+
+    &:disabled {
+      background-color: var(--button-typical-tertiary-bg-default);
+      border-color: var(--button-typical-tertiary-border-disabled);
+      color: var(--button-typical-tertiary-label-disabled);
     }
   }
 
@@ -54,7 +92,6 @@
   }
 
   &:disabled {
-    opacity: 0.5;
     cursor: not-allowed;
   }
 }

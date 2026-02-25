@@ -22,7 +22,7 @@ This Nx Enterprise monorepo implements a **token-first design system** architect
 
 ### Key Components
 
-- **Design Tokens Layer** (`libs/tokens/design-tokens`): Source of truth for all design decisions
+- **Design Tokens Layer** (`libs/design-tokens`): Source of truth for all design decisions
 - **UI Component Library** (`libs/ui/quartz-ui`): Reusable React components styled with CSS Modules
 - **Applications Layer** (`apps/`): Reserved for future applications (not yet implemented)
 - **Testing Infrastructure**: Unit tests (Jest)
@@ -56,10 +56,11 @@ Our architecture addresses these challenges through:
 
 ```mermaid
 graph TD
-    A["Base Tokens<br/>(base/*.json)"] -->|defines values| B["Semantic Tokens<br/>(semantic/light.json, dark.json)"]
-    B -->|composed into| E["Brand Tokens<br/>(brands/default/, brands/purple/)"]
-    E -->|used by| C["UI Components<br/>(Button, Card, etc.)"]
-    C -->|consumed by| D["Applications<br/>(Web, Mobile, etc.)"]
+    A["Core Tokens<br/>(core.json)"] -->|defines values| B["Global Tokens<br/>(global/*.json)"]
+    B -->|feeds| C["Mode Tokens<br/>(mode/light.json, dark.json)"]
+    C -->|feeds| E["Component Tokens<br/>(components/*.json)"]
+    E -->|used by| F["UI Components<br/>(Button, Card, etc.)"]
+    F -->|consumed by| D["Applications<br/>(Web, Mobile, etc.)"]
 ```
 
 #### 3. **Monorepo Benefits**
@@ -175,9 +176,10 @@ graph TD
             end
 
             subgraph source["Source Tokens (JSON — auto-generated from Figma)"]
-                base["base/*.json (Primitives)"]
-                semantic["semantic/light.json, dark.json"]
-                brands["brands/default/, brands/purple/"]
+                core["core.json (Primitives)"]
+                global["global/*.json (Scales)"]
+                mode["mode/light.json, dark.json"]
+                components["components/*.json"]
             end
 
             source -->|processes| generated
@@ -198,7 +200,7 @@ graph TD
    - Trigger "Figma Token Sync" from GitHub Actions
 
 2. **Build Process** (Style Dictionary)
-   - Parse JSON token files (base, semantic, brand layers)
+   - Parse JSON token files (core, global, mode, component layers)
    - Apply transformations (kebab-case for CSS, camelCase for TS)
    - Generate output files for CSS, SCSS, TypeScript, Android, iOS
 
@@ -223,37 +225,35 @@ The token system is built on **Style Dictionary v5**, a build-time tool that tra
 ### Token Layers
 
 ```
-libs/tokens/design-tokens/src/tokens/
-├── base/               # Primitive values — auto-generated from Figma
-│   ├── border.json
-│   ├── color.json
-│   ├── font-family.json
-│   ├── font-size.json
-│   ├── font-weight.json
-│   ├── line-height.json
+libs/design-tokens/src/tokens/
+├── core.json            # Primitive values — auto-generated from Figma
+├── global/              # Shared scales and primitives
+│   ├── borderwidth.json
+│   ├── breakpoint.json
+│   ├── font.json
+│   ├── modifier.json
+│   ├── radius.json
 │   ├── shadow.json
-│   └── spacing.json
-├── semantic/           # Theme-aware aliases — auto-generated from Figma
+│   ├── size.json
+│   └── space.json
+├── mode/                # Theme-aware aliases (light/dark)
 │   ├── light.json
 │   └── dark.json
-└── brands/             # Brand overrides per theme
-    ├── default/
-    │   ├── light.json
-    │   └── dark.json
-    └── purple/
-        ├── light.json
-        └── dark.json
+└── components/          # Component-specific tokens
+    ├── button.json
+    ├── input.json
+    └── ...
 ```
 
 > **Never manually edit these JSON files.** They are auto-generated from Figma via the token sync workflow.
 
-#### Layer 1: Base Tokens (Primitives)
+#### Layer 1: Core Tokens (Primitives)
 
-**Files**: `libs/tokens/design-tokens/src/tokens/base/*.json`
+**Files**: `libs/design-tokens/src/tokens/core.json`
 
 **Purpose**: Define raw, context-agnostic values.
 
-**Example** (`base/color.json`):
+**Example** (`core.json`):
 
 ```json
 {
@@ -272,13 +272,13 @@ libs/tokens/design-tokens/src/tokens/
 - Platform-agnostic
 - Named by physical properties
 
-#### Layer 2: Semantic Tokens (Theme Aliases)
+#### Layer 2: Mode Tokens (Theme Aliases)
 
-**Files**: `libs/tokens/design-tokens/src/tokens/semantic/light.json`, `dark.json`
+**Files**: `libs/design-tokens/src/tokens/mode/light.json`, `dark.json`
 
-**Purpose**: Create meaningful, context-aware aliases to base tokens, split by light/dark theme.
+**Purpose**: Create meaningful, context-aware aliases to core/global tokens, split by light/dark theme.
 
-**Example** (`semantic/light.json`):
+**Example** (`mode/light.json`):
 
 ```json
 {
@@ -295,24 +295,26 @@ libs/tokens/design-tokens/src/tokens/
 
 **Characteristics**:
 
-- Reference base tokens using `{token.path}` syntax
+- Reference core/global tokens using `{token.path}` syntax
 - Named by purpose/intent
 - Separate files per theme (light, dark)
 - Enable theming and customization
 
-#### Layer 3: Brand Tokens (Overrides)
+#### Layer 3: Component Tokens
 
-**Files**: `libs/tokens/design-tokens/src/tokens/brands/<brand>/<theme>.json`
+**Files**: `libs/design-tokens/src/tokens/components/*.json`
 
-**Purpose**: Override semantic tokens for a specific brand identity.
+**Purpose**: Provide component-facing tokens that map to mode/global values.
 
-**Example** (`brands/purple/light.json`):
+**Example** (`components/button.json`):
 
 ```json
 {
   "color": {
-    "background": {
-      "primary": { "$type": "color", "$value": "{color.vivid-purple}" }
+    "typical": {
+      "primary": {
+        "bg-default": { "$type": "color", "$value": "{mode.color.action.main.default}" }
+      }
     }
   }
 }
@@ -332,7 +334,7 @@ libs/tokens/design-tokens/src/tokens/
 3. Tokens processed through transforms (kebab-case → CSS, camelCase → TS)
 4. Output files generated per platform
 
-**Themes built**: `default-light`, `default-dark`, `purple-light`, `purple-dark`
+**Themes built**: `light`, `dark`, `purple-light`, `purple-dark`
 
 **Output** (`src/generated/`):
 
@@ -346,10 +348,10 @@ libs/tokens/design-tokens/src/tokens/
 | Android                | `android/colors-*.xml`, `android/dimens-*.xml` | —                                |
 | iOS                    | `ios/Tokens-*.swift`                           | —                                |
 
-**CSS output example** (`variables-default-light.css`):
+**CSS output example** (`variables-light.css`):
 
 ```css
-[data-theme='default-light'] {
+[data-theme='light'] {
   --color-charcoal: #1a1a1a;
   --color-background-primary: #ffffff;
   --color-text-primary: #1a1a1a;
@@ -534,8 +536,8 @@ Future applications will use **Next.js App Router** architecture, consuming `@th
 
 ```typescript
 // apps/<name>/src/app/layout.tsx
-import '@thatguycodes/design-tokens/generated/css/variables-default-light.css';
-import '@thatguycodes/design-tokens/generated/css/variables-default-dark.css';
+import '@thatguycodes/design-tokens/generated/css/variables-light.css';
+import '@thatguycodes/design-tokens/generated/css/variables-dark.css';
 // ... etc for all themes
 ```
 
@@ -775,7 +777,7 @@ gh workflow run figma-token-sync.yml --repo your-org/nx-enterprise
 1. **Fetch from Figma API**: Retrieves all tokens from Figma file
 2. **Validate Naming**: Checks conventions, logs violations as warnings
 3. **Check for Existing PRs**: Closes any open `tokens/figma-sync` PR
-4. **Generate Token Files**: Creates updated `core.json` and `semantic.json`
+4. **Generate Token Files**: Creates updated `core.json`, `global/*.json`, `mode/*.json`, and `components/*.json`
 5. **Create PR**: Opens pull request on `tokens/figma-sync` branch with:
    - Detailed changes and violations (if any)
    - Git commit hash for audit trail
@@ -925,7 +927,7 @@ Edit in Figma → Trigger sync from GitHub UI → Design team reviews PR → Mer
 ```
 
 **Key differences**:
-- ❌ **Never manually edit** `libs/tokens/design-tokens/src/tokens/*.json` - these are now auto-generated
+- ❌ **Never manually edit** `libs/design-tokens/src/tokens/*.json` - these are now auto-generated
 - ✅ **All changes start in Figma**
 - ✅ **Automatic PR creation** with design team auto-assigned
 - ✅ **Non-blocking validation** of naming conventions

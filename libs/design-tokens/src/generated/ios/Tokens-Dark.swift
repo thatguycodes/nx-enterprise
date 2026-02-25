@@ -1,6 +1,6 @@
 
 //
-// Tokens-DefaultDark.swift
+// Tokens-Dark.swift
 //
 
 // Do not edit directly, this file was auto-generated.

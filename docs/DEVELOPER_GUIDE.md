@@ -72,26 +72,25 @@ Tokens are built using [Style Dictionary](https://styledictionary.com/) in [DTCG
 ### Token Structure
 
 ```
-libs/tokens/design-tokens/src/tokens/
-├── base/          # Primitive/core values (color, spacing, typography, etc.)
-├── semantic/      # Theme-aware mappings (light.json, dark.json)
-└── brands/        # Brand overrides per theme
-    ├── default/   # Default brand (light.json, dark.json)
-    └── purple/    # Purple brand (light.json, dark.json)
+libs/design-tokens/src/tokens/
+├── core.json       # Primitive/core values (color, spacing, typography, etc.)
+├── global/         # Shared scales (space, radius, border, size, etc.)
+├── mode/           # Theme-aware mappings (light.json, dark.json)
+└── components/     # Component-level tokens (button, input, etc.)
 ```
 
-**Never edit base or semantic JSON files manually** — they are auto-generated from Figma.
+**Never edit token JSON files manually** — they are auto-generated from Figma.
 
 ### Themes
 
 The build produces 4 theme combinations, applied via a `data-theme` attribute:
 
-| Theme         | Selector                     |
-| ------------- | ---------------------------- |
-| Default Light | `data-theme="default-light"` |
-| Default Dark  | `data-theme="default-dark"`  |
-| Purple Light  | `data-theme="purple-light"`  |
-| Purple Dark   | `data-theme="purple-dark"`   |
+| Theme        | Selector                    |
+| ------------ | --------------------------- |
+| Light        | `data-theme="light"`        |
+| Dark         | `data-theme="dark"`         |
+| Purple Light | `data-theme="purple-light"` |
+| Purple Dark  | `data-theme="purple-dark"`  |
 
 The default light theme variables are also output as `:root` in `variables.css` for backwards compatibility.
 
@@ -105,7 +104,7 @@ Running `npx nx run design-tokens:build` generates the following under `src/gene
 | CSS (default)        | `generated/css/variables.css`                   | Web (`:root` fallback)      |
 | SCSS variables       | `generated/scss/variables-<brand>-<theme>.scss` | SCSS-based projects         |
 | TypeScript           | `generated/ts/tokens-<brand>-<theme>.ts`        | JS/TS consumers             |
-| TypeScript (default) | `generated/ts/tokens.ts`                        | Shorthand for default-light |
+| TypeScript (default) | `generated/ts/tokens.ts`                        | Shorthand for light |
 | Android XML          | `generated/android/`                            | Android native              |
 | iOS Swift            | `generated/ios/`                                | iOS native                  |
 
@@ -123,7 +122,7 @@ Use `generate` when iterating on token files locally. Use `build` before publish
 **In CSS Modules (Web):**
 
 ```css
-/* Always use semantic tokens, not core tokens */
+/* Always use mode/component tokens, not core tokens */
 .button {
   background-color: var(--color-background-primary);
 }
@@ -144,8 +143,8 @@ import '@thatguycodes/design-tokens/css';
 **Per-theme CSS imports:**
 
 ```ts
-import '@thatguycodes/design-tokens/generated/css/variables-default-light.css';
-import '@thatguycodes/design-tokens/generated/css/variables-default-dark.css';
+import '@thatguycodes/design-tokens/generated/css/variables-light.css';
+import '@thatguycodes/design-tokens/generated/css/variables-dark.css';
 import '@thatguycodes/design-tokens/generated/css/variables-purple-light.css';
 import '@thatguycodes/design-tokens/generated/css/variables-purple-dark.css';
 ```
@@ -235,7 +234,7 @@ Use the project name from `project.json` as the scope.
 
 | Scope           | Project                     |
 | --------------- | --------------------------- |
-| `design-tokens` | `libs/tokens/design-tokens` |
+| `design-tokens` | `libs/design-tokens` |
 | `quartz-ui`     | `libs/ui/quartz-ui`         |
 
 ### Examples
@@ -337,10 +336,10 @@ npx nx run quartz-ui:storybook
 Confirm all four theme CSS files are imported in `libs/ui/quartz-ui/.storybook/preview.ts`:
 
 ```ts
-import '../../../tokens/design-tokens/src/generated/css/variables-default-light.css';
-import '../../../tokens/design-tokens/src/generated/css/variables-default-dark.css';
-import '../../../tokens/design-tokens/src/generated/css/variables-purple-light.css';
-import '../../../tokens/design-tokens/src/generated/css/variables-purple-dark.css';
+import '../../../design-tokens/src/generated/css/variables-light.css';
+import '../../../design-tokens/src/generated/css/variables-dark.css';
+import '../../../design-tokens/src/generated/css/variables-purple-light.css';
+import '../../../design-tokens/src/generated/css/variables-purple-dark.css';
 ```
 
 If the CSS files are missing, run `npx nx run design-tokens:generate` first.

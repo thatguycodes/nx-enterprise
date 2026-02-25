@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../../dist/libs/tokens/design-tokens",
+    "outDir": "../../dist/libs/design-tokens",
     "declaration": true,
     "types": [
       "node"

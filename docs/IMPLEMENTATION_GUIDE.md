@@ -63,20 +63,14 @@ nx-enterprise/
 
 ### Understanding the Token Structure
 
-Tokens have three layers:
+Tokens are organised into core, global, mode, and component layers:
 
 ```
 src/tokens/
-├── base/          # Primitive values (auto-generated from Figma)
-│   ├── color.json
-│   ├── spacing.json
-│   └── ...
-├── semantic/      # Theme-aware aliases (auto-generated from Figma)
-│   ├── light.json
-│   └── dark.json
-└── brands/        # Brand overrides
-    ├── default/
-    └── purple/
+├── core.json       # Primitive values (auto-generated from Figma)
+├── global/         # Shared scales and primitives
+├── mode/           # Theme-aware aliases (light.json, dark.json)
+└── components/     # Component-level tokens
 ```
 
 > **Never edit these JSON files manually.** They are auto-generated from Figma via the token sync workflow.
@@ -129,10 +123,10 @@ Always use **semantic tokens** in component styles — never base/primitive toke
 Themes are applied via a `data-theme` attribute on a parent element:
 
 ```html
-<html data-theme="default-light">
+<html data-theme="light">
   ...
 </html>
-<html data-theme="default-dark">
+<html data-theme="dark">
   ...
 </html>
 <html data-theme="purple-light">
@@ -301,7 +295,7 @@ Tokens automatically reflect the active theme — no extra work needed in compon
 To switch themes programmatically, set `data-theme` on the `<html>` element:
 
 ```typescript
-document.documentElement.setAttribute('data-theme', 'default-dark');
+document.documentElement.setAttribute('data-theme', 'dark');
 ```
 
 In Storybook, themes are controlled via the theme switcher toolbar (powered by `@storybook/addon-themes`).
@@ -355,10 +349,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 Confirm all 4 theme CSS files are imported in `libs/ui/quartz-ui/.storybook/preview.ts`:
 
 ```ts
-import '../../../tokens/design-tokens/src/generated/css/variables-default-light.css';
-import '../../../tokens/design-tokens/src/generated/css/variables-default-dark.css';
-import '../../../tokens/design-tokens/src/generated/css/variables-purple-light.css';
-import '../../../tokens/design-tokens/src/generated/css/variables-purple-dark.css';
+import '../../../design-tokens/src/generated/css/variables-light.css';
+import '../../../design-tokens/src/generated/css/variables-dark.css';
+import '../../../design-tokens/src/generated/css/variables-purple-light.css';
+import '../../../design-tokens/src/generated/css/variables-purple-dark.css';
 ```
 
 If the CSS files are missing, run `npx nx run design-tokens:generate` first.

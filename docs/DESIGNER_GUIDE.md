@@ -53,15 +53,16 @@ Tokens must follow **kebab-case with at least one group**. This is required for 
 
 ## Token Layers
 
-Tokens are organised in three layers. As a designer, you work primarily in the **semantic** layer.
+Tokens are organised in four layers. As a designer, you work primarily in the **mode** and **components** layers.
 
-| Layer        | Location                                  | Rule                                                        |
-| ------------ | ----------------------------------------- | ----------------------------------------------------------- |
-| **Base**     | `tokens/base/*.json`                      | Raw values (hex, rem, etc.). Auto-generated. Rarely change. |
-| **Semantic** | `tokens/semantic/light.json`, `dark.json` | Purpose-driven names per theme. This is what you edit.      |
-| **Brand**    | `tokens/brands/<brand>/<theme>.json`      | Overrides for specific brands (default, purple).            |
+| Layer          | Location                     | Rule                                                           |
+| -------------- | ---------------------------- | -------------------------------------------------------------- |
+| **Core**       | `tokens/core.json`           | Raw values (hex, rem, etc.). Auto-generated. Rarely change.    |
+| **Global**     | `tokens/global/*.json`       | Shared scales and primitives (space, radius, border, etc.).    |
+| **Mode**       | `tokens/mode/light.json`     | Theme-specific tokens (light/dark). This is what you edit.     |
+| **Components** | `tokens/components/*.json`   | Component tokens that map to mode/global values.               |
 
-Components reference semantic tokens only — never base tokens directly. A rebrand means updating the semantic or brand layer without touching any component.
+Components reference mode/global tokens only — never core tokens directly. A rebrand means updating mode/global tokens without touching components.
 
 ---
 
@@ -69,14 +70,14 @@ Components reference semantic tokens only — never base tokens directly. A rebr
 
 The system supports multiple theme/brand combinations. Each combination is built separately:
 
-| Theme         | Applied via                  |
-| ------------- | ---------------------------- |
-| Default Light | `data-theme="default-light"` |
-| Default Dark  | `data-theme="default-dark"`  |
-| Purple Light  | `data-theme="purple-light"`  |
-| Purple Dark   | `data-theme="purple-dark"`   |
+| Theme         | Applied via              |
+| ------------ | ------------------------ |
+| Light        | `data-theme="light"`     |
+| Dark         | `data-theme="dark"`      |
+| Purple Light | `data-theme="purple-light"` |
+| Purple Dark  | `data-theme="purple-dark"`  |
 
-To add a new brand, the development team creates a new folder under `tokens/brands/` and adds it to the build script.
+To add a new brand, the development team adds a new brand entry and provides a brand-mode file under `tokens/mode/`.
 
 ---
 
@@ -106,8 +107,8 @@ After the sync runs you'll receive a GitHub notification. The PR includes:
 
 - A diff of every changed token
 - Updated CSS variable files for all 4 theme combinations:
-  - `generated/css/variables-default-light.css`
-  - `generated/css/variables-default-dark.css`
+  - `generated/css/variables-light.css`
+  - `generated/css/variables-dark.css`
   - `generated/css/variables-purple-light.css`
   - `generated/css/variables-purple-dark.css`
 - Updated TypeScript constants (one file per theme + a `tokens.ts` shorthand)

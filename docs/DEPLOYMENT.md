@@ -49,17 +49,17 @@ npm view @thatguycodes/design-tokens
 npx nx run design-tokens:build
 ```
 
-Verify key files were generated under `libs/tokens/design-tokens/src/generated/`:
+Verify key files were generated under `libs/design-tokens/src/generated/`:
 
 - `css/variables.css` (`:root` fallback)
-- `css/variables-default-light.css`, `css/variables-default-dark.css`, `css/variables-purple-light.css`, `css/variables-purple-dark.css`
-- `ts/tokens.ts` and `ts/tokens.d.ts` (default-light shorthand)
-- `ts/tokens-default-light.ts`, `ts/tokens-default-dark.ts`, etc.
+- `css/variables-light.css`, `css/variables-dark.css`, `css/variables-purple-light.css`, `css/variables-purple-dark.css`
+- `ts/tokens.ts` and `ts/tokens.d.ts` (light shorthand)
+- `ts/tokens-light.ts`, `ts/tokens-dark.ts`, etc.
 - `scss/`, `android/`, `ios/` — additional platform outputs
 
 #### 2. Bump the version
 
-Edit `libs/tokens/design-tokens/package.json` and increment the version following semver:
+Edit `libs/design-tokens/package.json` and increment the version following semver:
 
 | Change type       | Example           |
 | ----------------- | ----------------- |
@@ -70,7 +70,7 @@ Edit `libs/tokens/design-tokens/package.json` and increment the version followin
 Or use npm from the tokens directory:
 
 ```bash
-cd libs/tokens/design-tokens
+cd libs/design-tokens
 
 # pick one:
 npm version patch   # 0.0.2 → 0.0.3
@@ -81,7 +81,7 @@ npm version major   # 0.0.2 → 1.0.0
 #### 3. Dry run (recommended)
 
 ```bash
-cd libs/tokens/design-tokens
+cd libs/design-tokens
 npm publish --access public --dry-run
 ```
 
@@ -90,14 +90,14 @@ Expected files in the tarball:
 ```
 README.md
 generated/css/variables.css
-generated/css/variables-default-light.css
-generated/css/variables-default-dark.css
+generated/css/variables-light.css
+generated/css/variables-dark.css
 generated/css/variables-purple-light.css
 generated/css/variables-purple-dark.css
 generated/ts/tokens.ts
 generated/ts/tokens.d.ts
-generated/ts/tokens-default-light.ts
-generated/ts/tokens-default-light.d.ts
+generated/ts/tokens-light.ts
+generated/ts/tokens-light.d.ts
 ... (+ scss, android, ios files)
 package.json
 ```
@@ -109,7 +109,7 @@ Open your authenticator app and get the current 6-digit OTP for npm. **You have 
 #### 5. Publish
 
 ```bash
-cd libs/tokens/design-tokens
+cd libs/design-tokens
 npm publish --access public --otp=<your-otp>
 ```
 
@@ -129,8 +129,8 @@ After the emergency is resolved, open a PR to restore the pipeline so future rel
 
 | Error                                                       | Fix                                                                            |
 | ----------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `You cannot publish over the previously published versions` | Bump the version in `libs/tokens/design-tokens/package.json`                   |
+| `You cannot publish over the previously published versions` | Bump the version in `libs/design-tokens/package.json`                   |
 | `EOTP` / OTP invalid or expired                             | Get a fresh OTP and re-run immediately                                         |
 | `403 Forbidden`                                             | Ensure you are logged in (`npm login`) and own `@thatguycodes`                 |
-| Wrong files published                                       | Check the `files` field in `libs/tokens/design-tokens/package.json`            |
+| Wrong files published                                       | Check the `files` field in `libs/design-tokens/package.json`            |
 | Pipeline not publishing                                     | Check `NPM_TOKEN` secret is set in repository **Settings → Secrets → Actions** |
