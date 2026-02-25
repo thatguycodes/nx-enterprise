@@ -1,3 +1,13 @@
+## 0.0.6 (2026-02-25)
+
+### 🩹 Fixes
+
+- **quartz-ui:** align design-tokens dependency ([0660a49](https://github.com/thatguycodes/nx-enterprise/commit/0660a49))
+
+### ❤️ Thank You
+
+- obonye_t
+
 ## 0.0.5 (2026-02-25)
 
 ### 🧱 Updated Dependencies
