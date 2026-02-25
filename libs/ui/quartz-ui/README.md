@@ -5,7 +5,7 @@ A lightweight React component library backed by the `@thatguycodes/design-tokens
 ## Installation
 
 ```bash
-npm install @thatguycodes/quartz-ui @thatguycodes/design-tokens
+npm install @thatguycodes/quartz-ui
 ```
 
 Peer deps (not auto-installed):
