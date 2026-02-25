@@ -378,8 +378,6 @@ async function buildTheme(theme, brand = 'default') {
     console.log('Build started...');
     await buildTheme('light', 'default');
     await buildTheme('dark', 'default');
-    await buildTheme('light', 'purple');
-    await buildTheme('dark', 'purple');
 
     // Expose the default light tokens at the package root for consumers.
     const sourceTs = join(outputPath, 'generated/ts/tokens-light.ts');

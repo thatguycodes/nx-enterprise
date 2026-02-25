@@ -22,12 +22,6 @@
     "./generated/css/variables-dark.css": {
       "default": "./src/generated/css/variables-dark.css"
     },
-    "./generated/css/variables-purple-light.css": {
-      "default": "./src/generated/css/variables-purple-light.css"
-    },
-    "./generated/css/variables-purple-dark.css": {
-      "default": "./src/generated/css/variables-purple-dark.css"
-    },
     "./css": {
       "default": "./src/generated/css/variables.css"
     }

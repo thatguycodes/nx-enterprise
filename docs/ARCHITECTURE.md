@@ -260,7 +260,7 @@ libs/design-tokens/src/tokens/
   "color": {
     "charcoal": { "$type": "color", "$value": "#1a1a1a" },
     "gainsboro": { "$type": "color", "$value": "#f5f5f5" },
-    "vivid-purple": { "$type": "color", "$value": "#7000ff" }
+    "vivid-teal": { "$type": "color", "$value": "#7000ff" }
   }
 }
 ```
@@ -334,7 +334,7 @@ libs/design-tokens/src/tokens/
 3. Tokens processed through transforms (kebab-case → CSS, camelCase → TS)
 4. Output files generated per platform
 
-**Themes built**: `light`, `dark`, `purple-light`, `purple-dark`
+**Themes built**: `light`, `dark`, `light`, `dark`
 
 **Output** (`src/generated/`):
 

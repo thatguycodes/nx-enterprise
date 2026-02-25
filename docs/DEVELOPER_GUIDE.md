@@ -89,8 +89,6 @@ The build produces 4 theme combinations, applied via a `data-theme` attribute:
 | ------------ | --------------------------- |
 | Light        | `data-theme="light"`        |
 | Dark         | `data-theme="dark"`         |
-| Purple Light | `data-theme="purple-light"` |
-| Purple Dark  | `data-theme="purple-dark"`  |
 
 The default light theme variables are also output as `:root` in `variables.css` for backwards compatibility.
 
@@ -145,8 +143,8 @@ import '@thatguycodes/design-tokens/css';
 ```ts
 import '@thatguycodes/design-tokens/generated/css/variables-light.css';
 import '@thatguycodes/design-tokens/generated/css/variables-dark.css';
-import '@thatguycodes/design-tokens/generated/css/variables-purple-light.css';
-import '@thatguycodes/design-tokens/generated/css/variables-purple-dark.css';
+import '@thatguycodes/design-tokens/generated/css/';
+import '@thatguycodes/design-tokens/generated/css/';
 ```
 
 ### Token Workflow (Figma-first)
@@ -338,8 +336,8 @@ Confirm all four theme CSS files are imported in `libs/ui/quartz-ui/.storybook/p
 ```ts
 import '../../../design-tokens/src/generated/css/variables-light.css';
 import '../../../design-tokens/src/generated/css/variables-dark.css';
-import '../../../design-tokens/src/generated/css/variables-purple-light.css';
-import '../../../design-tokens/src/generated/css/variables-purple-dark.css';
+import '../../../design-tokens/src/generated/css/';
+import '../../../design-tokens/src/generated/css/';
 ```
 
 If the CSS files are missing, run `npx nx run design-tokens:generate` first.

@@ -129,10 +129,10 @@ Themes are applied via a `data-theme` attribute on a parent element:
 <html data-theme="dark">
   ...
 </html>
-<html data-theme="purple-light">
+<html data-theme="light">
   ...
 </html>
-<html data-theme="purple-dark">
+<html data-theme="dark">
   ...
 </html>
 ```
@@ -351,8 +351,8 @@ Confirm all 4 theme CSS files are imported in `libs/ui/quartz-ui/.storybook/prev
 ```ts
 import '../../../design-tokens/src/generated/css/variables-light.css';
 import '../../../design-tokens/src/generated/css/variables-dark.css';
-import '../../../design-tokens/src/generated/css/variables-purple-light.css';
-import '../../../design-tokens/src/generated/css/variables-purple-dark.css';
+import '../../../design-tokens/src/generated/css/';
+import '../../../design-tokens/src/generated/css/';
 ```
 
 If the CSS files are missing, run `npx nx run design-tokens:generate` first.

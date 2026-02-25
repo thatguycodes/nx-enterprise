@@ -74,8 +74,6 @@ The system supports multiple theme/brand combinations. Each combination is built
 | ------------ | ------------------------ |
 | Light        | `data-theme="light"`     |
 | Dark         | `data-theme="dark"`      |
-| Purple Light | `data-theme="purple-light"` |
-| Purple Dark  | `data-theme="purple-dark"`  |
 
 To add a new brand, the development team adds a new brand entry and provides a brand-mode file under `tokens/mode/`.
 
@@ -109,8 +107,8 @@ After the sync runs you'll receive a GitHub notification. The PR includes:
 - Updated CSS variable files for all 4 theme combinations:
   - `generated/css/variables-light.css`
   - `generated/css/variables-dark.css`
-  - `generated/css/variables-purple-light.css`
-  - `generated/css/variables-purple-dark.css`
+  - `generated/css/`
+  - `generated/css/`
 - Updated TypeScript constants (one file per theme + a `tokens.ts` shorthand)
 - Any naming convention violations logged as warnings
 

@@ -52,7 +52,7 @@ npx nx run design-tokens:build
 Verify key files were generated under `libs/design-tokens/src/generated/`:
 
 - `css/variables.css` (`:root` fallback)
-- `css/variables-light.css`, `css/variables-dark.css`, `css/variables-purple-light.css`, `css/variables-purple-dark.css`
+- `css/variables-light.css`, `css/variables-dark.css`, `css/`, `css/`
 - `ts/tokens.ts` and `ts/tokens.d.ts` (light shorthand)
 - `ts/tokens-light.ts`, `ts/tokens-dark.ts`, etc.
 - `scss/`, `android/`, `ios/` — additional platform outputs
@@ -92,9 +92,7 @@ README.md
 generated/css/variables.css
 generated/css/variables-light.css
 generated/css/variables-dark.css
-generated/css/variables-purple-light.css
-generated/css/variables-purple-dark.css
-generated/ts/tokens.ts
+generated/css/generated/css/generated/ts/tokens.ts
 generated/ts/tokens.d.ts
 generated/ts/tokens-light.ts
 generated/ts/tokens-light.d.ts
