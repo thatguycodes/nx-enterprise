@@ -2,55 +2,55 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--border-radius-md);
-  font-weight: var(--font-weight-medium);
+  border-radius: var(--global-radius-action-xl);
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
   border: none;
   font-family: inherit;
 
   &.primary {
-    background-color: var(--color-background-primary);
-    color: var(--color-text-primary);
+    background-color: var(--button-typical-primary-bg-default);
+    color: var(--button-typical-primary-label-default);
 
     &:hover {
-      background-color: var(--color-background-secondary);
+      background-color: var(--button-typical-primary-bg-hover);
     }
   }
 
   &.secondary {
-    background-color: var(--color-background-secondary);
-    color: var(--color-text-primary);
+    background-color: var(--button-typical-secondary-bg-default);
+    color: var(--button-typical-secondary-label-default);
 
     &:hover {
-      background-color: var(--color-background-secondary);
+      background-color: var(--button-typical-secondary-bg-hover);
     }
   }
 
   &.outline {
     background-color: transparent;
-    border: var(--border-width-sm) solid var(--color-border-primary);
-    color: var(--color-text-secondary);
+    border: var(--global-borderwidth-xs) solid var(--button-typical-secondary-border-default);
+    color: var(--button-typical-secondary-label-default);
 
     &:hover {
-      border-color: var(--color-background-primary);
-      color: var(--color-text-primary);
+      border-color: var(--button-typical-secondary-border-hover);
+      color: var(--button-typical-secondary-label-hover);
     }
   }
 
   &.small {
-    padding: var(--spacing-1) var(--spacing-2);
-    font-size: var(--font-size-xs);
+    padding: var(--global-space-comp-xs) var(--global-space-comp-s);
+    font-size: var(--core-font-size-static-small-step0);
   }
 
   &.medium {
-    padding: var(--spacing-2) var(--spacing-4);
-    font-size: var(--font-size-sm);
+    padding: var(--global-space-comp-s) var(--global-space-comp-l);
+    font-size: var(--core-font-size-static-small-step1);
   }
 
   &.large {
-    padding: var(--spacing-4) var(--spacing-6);
-    font-size: var(--font-size-base);
+    padding: var(--global-space-comp-l) var(--global-space-comp-2-xl);
+    font-size: var(--core-font-size-static-small-step2);
   }
 
   &:disabled {

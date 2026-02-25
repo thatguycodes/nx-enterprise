@@ -1,0 +1,92 @@
+{
+  "table": {
+    "header": {
+      "subtle": {
+        "bg-alt": {
+          "$type": "color",
+          "$value": "{mode.color.generic.bg.faint}",
+          "$description": "header alt"
+        },
+        "bg-default": {
+          "$type": "color",
+          "$value": "{mode.color.none}"
+        },
+        "border-default": {
+          "$type": "color",
+          "$value": "{mode.color.generic.fg.soft}",
+          "$description": "Header borders"
+        },
+        "label-default": {
+          "$type": "color",
+          "$value": "{mode.color.generic.txt.severe}"
+        }
+      },
+      "harsh": {
+        "bg-alt": {
+          "$type": "color",
+          "$value": "{mode.color.generic.surface.severe}",
+          "$description": "header alt"
+        },
+        "bg-default": {
+          "$type": "color",
+          "$value": "{mode.color.generic.surface.harsh}"
+        },
+        "border-default": {
+          "$type": "color",
+          "$value": "{mode.color.generic.fg.soft}"
+        },
+        "label-default": {
+          "$type": "color",
+          "$value": "{mode.color.generic.txt.inverse.severe}"
+        }
+      }
+    },
+    "row": {
+      "bg-default": {
+        "$type": "color",
+        "$value": "{mode.color.generic.bg.nought}"
+      },
+      "bg-alt": {
+        "$type": "color",
+        "$value": "{mode.color.generic.bg.delicate}",
+        "$description": "Zebra stripes"
+      },
+      "bg-alt2": {
+        "$type": "color",
+        "$value": "{mode.color.generic.bg.faint}",
+        "$description": "Child rows"
+      },
+      "bg-selected": {
+        "$type": "color",
+        "$value": "{mode.color.generic.bg.soft}"
+      },
+      "border-default": {
+        "$type": "color",
+        "$value": "{mode.color.generic.fg.soft}"
+      },
+      "label-default": {
+        "$type": "color",
+        "$value": "{mode.color.generic.txt.severe}"
+      },
+      "label-selected": {
+        "$type": "color",
+        "$value": "{mode.color.generic.txt.extreme}"
+      }
+    },
+    "footer": {
+      "bg-default": {
+        "$type": "color",
+        "$value": "{mode.color.generic.bg.soft}"
+      },
+      "border-default": {
+        "$type": "color",
+        "$value": "{mode.color.generic.fg.soft}",
+        "$description": "Header borders"
+      },
+      "label-default": {
+        "$type": "color",
+        "$value": "{mode.color.generic.txt.severe}"
+      }
+    }
+  }
+}

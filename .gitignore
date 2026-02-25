@@ -66,3 +66,6 @@ opencode.json
 
 # npm auth
 .npmrc
+
+# Ignore local token scratch folder only
+libs/tokens/design-tokens/src/tokens ignore/

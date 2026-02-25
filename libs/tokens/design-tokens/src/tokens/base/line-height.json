@@ -1,8 +1,0 @@
-{
-  "line-height": {
-    "none": { "$type": "dimension", "$value": "1" },
-    "tight": { "$type": "dimension", "$value": "1.2" },
-    "normal": { "$type": "dimension", "$value": "1.5" },
-    "loose": { "$type": "dimension", "$value": "1.8" }
-  }
-}

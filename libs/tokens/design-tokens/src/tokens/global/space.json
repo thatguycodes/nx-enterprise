@@ -1,0 +1,83 @@
+{
+  "global": {
+    "space": {
+      "none": {
+        "$type": "spacing",
+        "$value": "{core.dimension.0}"
+      },
+      "layout": {
+        "3XS": {
+          "$type": "spacing",
+          "$value": "{core.dimension.100}"
+        },
+        "2XS": {
+          "$type": "spacing",
+          "$value": "{core.dimension.200}"
+        },
+        "XS": {
+          "$type": "spacing",
+          "$value": "{core.dimension.300}"
+        },
+        "S": {
+          "$type": "spacing",
+          "$value": "{core.dimension.400}"
+        },
+        "M": {
+          "$type": "spacing",
+          "$value": "{core.dimension.500}"
+        },
+        "L": {
+          "$type": "spacing",
+          "$value": "{core.dimension.600}"
+        },
+        "XL": {
+          "$type": "spacing",
+          "$value": "{core.dimension.700}"
+        },
+        "2XL": {
+          "$type": "spacing",
+          "$value": "{core.dimension.800}"
+        },
+        "3XL": {
+          "$type": "spacing",
+          "$value": "{core.dimension.900}"
+        },
+        "4XL": {
+          "$type": "spacing",
+          "$value": "{core.dimension.1000}"
+        }
+      },
+      "comp": {
+        "2XS": {
+          "$type": "spacing",
+          "$value": "{core.dimension.25}"
+        },
+        "XS": {
+          "$type": "spacing",
+          "$value": "{core.dimension.50}"
+        },
+        "S": {
+          "$type": "spacing",
+          "$value": "{core.dimension.100}"
+        },
+        "M": {
+          "$type": "spacing",
+          "$value": "{core.dimension.150}",
+          "$description": "Padding inside Medium Inputs"
+        },
+        "L": {
+          "$type": "spacing",
+          "$value": "{core.dimension.200}"
+        },
+        "XL": {
+          "$type": "spacing",
+          "$value": "{core.dimension.300}"
+        },
+        "2XL": {
+          "$type": "spacing",
+          "$value": "{core.dimension.400}"
+        }
+      }
+    }
+  }
+}

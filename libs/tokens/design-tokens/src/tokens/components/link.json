@@ -1,0 +1,66 @@
+{
+  "link": {
+    "destructive": {
+      "label-default": {
+        "$type": "color",
+        "$value": "{mode.color.action.danger.defaultAlt}",
+        "$description": "."
+      },
+      "label-hover": {
+        "$type": "color",
+        "$value": "{mode.color.action.danger.hoverAlt2}"
+      },
+      "inverse": {
+        "label-default": {
+          "$type": "color",
+          "$value": "{mode.color.action.danger.inverse.defaultAlt}",
+          "$description": "."
+        },
+        "label-hover": {
+          "$type": "color",
+          "$value": "{mode.color.action.danger.inverse.hoverAlt2}"
+        }
+      }
+    },
+    "typical": {
+      "label-default": {
+        "$type": "color",
+        "$value": "{mode.color.action.main.defaultAlt2}"
+      },
+      "label-hover": {
+        "$type": "color",
+        "$value": "{mode.color.action.main.hoverAlt2}"
+      },
+      "inverse": {
+        "label-default": {
+          "$type": "color",
+          "$value": "{mode.color.action.main.inverse.defaultAlt2}"
+        },
+        "label-hover": {
+          "$type": "color",
+          "$value": "{mode.color.action.main.inverse.hoverAlt2}"
+        }
+      }
+    },
+    "subtle": {
+      "label-default": {
+        "$type": "color",
+        "$value": "{mode.color.action.grayscale.default}"
+      },
+      "label-hover": {
+        "$type": "color",
+        "$value": "{mode.color.action.grayscale.active}"
+      },
+      "inverse": {
+        "label-default": {
+          "$type": "color",
+          "$value": "{mode.color.action.grayscale.inverse.default}"
+        },
+        "label-hover": {
+          "$type": "color",
+          "$value": "{mode.color.action.grayscale.inverse.active}"
+        }
+      }
+    }
+  }
+}
