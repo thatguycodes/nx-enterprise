@@ -18,7 +18,7 @@
   "files": ["src", "README.md", "lib"],
   "sideEffects": false,
   "dependencies": {
-    "@thatguycodes/design-tokens": "^0.2.0"
+    "@thatguycodes/design-tokens": "^0.1.0"
   },
   "peerDependencies": {
     "react": ">=18",
