@@ -42,7 +42,7 @@ jobs:
 
       - name: Release Design Tokens (dry-run)
         if: inputs.dry_run
-        run: npx nx release --dry-run --first-release --projects=design-tokens
+        run: npx nx release --dry-run --projects=design-tokens
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
