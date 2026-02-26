@@ -10,6 +10,7 @@ import react from '@vitejs/plugin-react';
 const config: StorybookConfig = {
   stories: ['../src/lib/**/*.@(mdx|stories.@(js|jsx|ts|tsx))'],
   addons: ['@storybook/addon-docs', '@storybook/addon-themes'],
+  staticDirs: [{ from: './assets', to: '/assets' }],
   framework: {
     name: getAbsolutePath('@storybook/react-vite'),
     options: {},

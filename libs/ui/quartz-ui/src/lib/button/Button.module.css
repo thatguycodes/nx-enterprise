@@ -5,34 +5,58 @@
   border-radius: var(--global-radius-action-xl);
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   font-family: inherit;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--mode-color-action-focus-default),
+      0 0 0 4px var(--mode-color-action-focus-withDefault);
+  }
 
   &.primary {
     background-color: var(--button-typical-primary-bg-default);
     color: var(--button-typical-primary-label-default);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
     &:hover {
       background-color: var(--button-typical-primary-bg-hover);
       color: var(--button-typical-primary-label-hover);
+      box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
 
     &:active {
       background-color: var(--button-typical-primary-bg-active);
       color: var(--button-typical-primary-label-active);
+      box-shadow:
+        0 1px 3px 0 rgba(0, 0, 0, 0.1),
+        0 1px 2px 0 rgba(0, 0, 0, 0.06);
     }
 
     &:disabled {
       background-color: var(--button-typical-primary-bg-disabled);
       color: var(--button-typical-primary-label-disabled);
+      box-shadow: none;
     }
   }
 
   &.secondary {
     background-color: var(--button-typical-secondary-bg-default);
     color: var(--button-typical-secondary-label-default);
-    border: var(--global-borderwidth-xs) solid var(--button-typical-secondary-border-default);
+    border: var(--global-borderwidth-xs) solid
+      var(--button-typical-secondary-border-default);
 
     &:hover {
       background-color: var(--button-typical-secondary-bg-hover);
@@ -54,7 +78,8 @@
 
   &.outline {
     background-color: var(--button-typical-tertiary-bg-default);
-    border: var(--global-borderwidth-xs) solid var(--button-typical-tertiary-border-default);
+    border: var(--global-borderwidth-xs) solid
+      var(--button-typical-tertiary-border-default);
     color: var(--button-typical-tertiary-label-default);
 
     &:hover {
@@ -79,19 +104,23 @@
   &.small {
     padding: var(--global-space-comp-xs) var(--global-space-comp-s);
     font-size: var(--core-font-size-static-small-step0);
+    height: 32px;
   }
 
   &.medium {
     padding: var(--global-space-comp-s) var(--global-space-comp-l);
     font-size: var(--core-font-size-static-small-step1);
+    height: 40px;
   }
 
   &.large {
     padding: var(--global-space-comp-l) var(--global-space-comp-2-xl);
     font-size: var(--core-font-size-static-small-step2);
+    height: 48px;
   }
 
   &:disabled {
     cursor: not-allowed;
+    opacity: 0.6;
   }
 }

@@ -4,9 +4,19 @@ import { withThemeByDataAttribute } from '@storybook/addon-themes';
 // Import design tokens CSS variables
 import '../../../design-tokens/src/generated/css/variables-light.css';
 import '../../../design-tokens/src/generated/css/variables-dark.css';
+import '../../../design-tokens/src/generated/css/variables-quartz-light.css';
+import '../../../design-tokens/src/generated/css/variables-quartz-dark.css';
+import '../../../design-tokens/src/generated/css/variables-ruby-light.css';
+import '../../../design-tokens/src/generated/css/variables-ruby-dark.css';
+import '../src/lib/Introduction.css';
 
 const preview: Preview = {
   parameters: {
+    options: {
+      storySort: {
+        order: ['Introduction', 'Showcase', '*'],
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -16,21 +26,14 @@ const preview: Preview = {
     docs: {
       toc: true,
     },
-    themes: {
-      default: 'Default Light',
-      list: [
-        { name: 'Default Light', value: 'dark' },
-        { name: 'Default Dark', value: 'light' },
-      ],
-    },
   },
   decorators: [
     withThemeByDataAttribute({
       themes: {
-        'Default Light': 'light',
-        'Default Dark': 'dark',
+        'Light Mode': 'light',
+        'Dark Mode': 'dark',
       },
-      defaultTheme: 'Default Light',
+      defaultTheme: 'Light Mode',
       attributeName: 'data-theme',
     }),
   ],

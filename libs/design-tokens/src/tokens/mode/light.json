@@ -1214,7 +1214,7 @@
           },
           "default": {
             "$type": "color",
-            "$value": "{core.color.brand.60}"
+            "$value": "{core.color.brands.quartz.primary}"
           },
           "defaultAlt": {
             "$extensions": {
@@ -1305,7 +1305,7 @@
             },
             "default": {
               "$type": "color",
-              "$value": "{core.color.brand.40}"
+              "$value": "{core.color.brands.quartz.secondary}"
             },
             "defaultAlt": {
               "$extensions": {
@@ -1323,7 +1323,7 @@
             },
             "defaultAlt2": {
               "$type": "color",
-              "$value": "{core.color.brand.30}",
+              "$value": "{core.color.brands.quartz.tertiary}",
               "$description": "default color for links"
             },
             "defaultAlt3": {

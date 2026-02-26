@@ -1,6 +1,6 @@
 
 //
-// Tokens-Light.swift
+// Tokens-RubyLight.swift
 //
 
 // Do not edit directly, this file was auto-generated.

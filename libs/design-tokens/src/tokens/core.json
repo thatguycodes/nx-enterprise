@@ -58,225 +58,221 @@
       "azure": {
         "5": {
           "$type": "color",
-          "$value": "#f5f8ff"
+          "$value": "#eff6ff"
         },
         "10": {
           "$type": "color",
-          "$value": "#e4eeff"
+          "$value": "#dbeafe"
         },
         "20": {
           "$type": "color",
-          "$value": "#58a2ff"
+          "$value": "#bfdbfe"
         },
         "30": {
           "$type": "color",
-          "$value": "#008ef4"
+          "$value": "#93c5fd"
         },
         "40": {
           "$type": "color",
-          "$value": "#007fd9",
-          "$description": "Base status color for dark surfaces. AA txt  on dark. Luminosity 51.9."
+          "$value": "#60a5fa"
         },
         "60": {
           "$type": "color",
-          "$value": "#0071c3",
-          "$description": "Base status color for light surface. AAA txt on white."
+          "$value": "#2563eb",
+          "$description": "Base status color for light surface. Modern Blue."
         },
         "70": {
           "$type": "color",
-          "$value": "#0063ad"
+          "$value": "#1d4ed8"
         },
         "80": {
           "$type": "color",
-          "$value": "#00528f"
+          "$value": "#1e40af"
         },
         "90": {
           "$type": "color",
-          "$value": "#001932"
+          "$value": "#1e3a8a"
         },
         "95": {
           "$type": "color",
-          "$value": "#000b1c"
+          "$value": "#172554"
         }
       },
       "brand": {
         "5": {
           "$type": "color",
-          "$value": "#e0ffe2"
+          "$value": "#f5f3ff"
         },
         "10": {
           "$type": "color",
-          "$value": "#b7ffbd"
+          "$value": "#ede9fe"
         },
         "20": {
           "$type": "color",
-          "$value": "#8fff98"
+          "$value": "#ddd6fe"
         },
         "30": {
           "$type": "color",
-          "$value": "#46fb5e"
+          "$value": "#c4b5fd"
         },
         "40": {
           "$type": "color",
-          "$value": "#00f142"
+          "$value": "#a78bfa"
         },
         "50": {
           "$type": "color",
-          "$value": "#00d639",
-          "$description": "Sage Logo color Primary buttons on dark backgrounds"
+          "$value": "#8b5cf6",
+          "$description": "Core Brand color. Vibrant and modern."
         },
         "60": {
           "$type": "color",
-          "$value": "#00811f",
-          "$description": "Primary buttons on light backgrounds. Was #008047 Jade. Luminosity 46.8."
+          "$value": "#7c3aed",
+          "$description": "Primary action color. Sophisticated Indigo/Violet."
         },
         "70": {
           "$type": "color",
-          "$value": "#007219"
+          "$value": "#6d28d9"
         },
         "80": {
           "$type": "color",
-          "$value": "#005e14"
+          "$value": "#5b21b6"
         },
         "90": {
           "$type": "color",
-          "$value": "#001e03"
+          "$value": "#4c1d95"
         },
         "95": {
           "$type": "color",
-          "$value": "#001001"
+          "$value": "#2e1065"
         }
       },
       "blush": {
         "5": {
           "$type": "color",
-          "$value": "#fff5f6"
+          "$value": "#fff1f2"
         },
         "10": {
           "$type": "color",
-          "$value": "#ffe8ea"
+          "$value": "#ffe4e6"
         },
         "20": {
           "$type": "color",
-          "$value": "#ff728d"
+          "$value": "#fecdd3"
         },
         "30": {
           "$type": "color",
-          "$value": "#ff3e6a"
+          "$value": "#fda4af"
         },
         "40": {
           "$type": "color",
-          "$value": "#f50059",
-          "$description": "Base status color for dark surfaces. AA txt  on dark. Luminosity 51.9."
+          "$value": "#fb7185"
         },
         "60": {
           "$type": "color",
-          "$value": "#db004e",
-          "$description": "Base status color for light surface. AA txt on white. Color taken from brand portal."
+          "$value": "#e11d48",
+          "$description": "Base status color for light surface. Modern Rose/Red."
         },
         "70": {
           "$type": "color",
-          "$value": "#c40044"
+          "$value": "#be123c"
         },
         "80": {
           "$type": "color",
-          "$value": "#a30037"
+          "$value": "#9f1239"
         },
         "90": {
           "$type": "color",
-          "$value": "#3c000f"
+          "$value": "#881337"
         },
         "95": {
           "$type": "color",
-          "$value": "#1e0005"
+          "$value": "#4c0519"
         }
       },
       "tangerine": {
         "5": {
           "$type": "color",
-          "$value": "#fff7eb"
+          "$value": "#fff7ed"
         },
         "10": {
           "$type": "color",
-          "$value": "#ffeaca"
+          "$value": "#ffedd5"
         },
         "20": {
           "$type": "color",
-          "$value": "#f68029"
+          "$value": "#fed7aa"
         },
         "30": {
           "$type": "color",
-          "$value": "#e5631c"
+          "$value": "#fdba74"
         },
         "40": {
           "$type": "color",
-          "$value": "#e24300",
-          "$description": "Base status color for dark surfaces. AA txt  on dark. Luminosity 51.9."
+          "$value": "#fb923c"
         },
         "60": {
           "$type": "color",
-          "$value": "#d64309",
-          "$description": "Base status color for light surface. AA txt on white. Not taken from brand portal as previous orange wasn't accessible."
+          "$value": "#ea580c",
+          "$description": "Base status color for light surface. Modern Orange."
         },
         "70": {
           "$type": "color",
-          "$value": "#b33400"
+          "$value": "#c2410c"
         },
         "80": {
           "$type": "color",
-          "$value": "#952a00"
+          "$value": "#9a3412"
         },
         "90": {
           "$type": "color",
-          "$value": "#360900"
+          "$value": "#7c2d12"
         },
         "95": {
           "$type": "color",
-          "$value": "#1d0300"
+          "$value": "#431407"
         }
       },
       "emerald": {
         "5": {
           "$type": "color",
-          "$value": "#EEFCEF"
+          "$value": "#ecfdf5"
         },
         "10": {
           "$type": "color",
-          "$value": "#D1F6D6"
+          "$value": "#d1fae5"
         },
         "20": {
           "$type": "color",
-          "$value": "#30b843"
+          "$value": "#a7f3d0"
         },
         "30": {
           "$type": "color",
-          "$value": "#1BA12B"
+          "$value": "#6ee7b7"
         },
         "40": {
           "$type": "color",
-          "$value": "#019127",
-          "$description": "Base status color for dark surfaces. AA txt  on dark. Luminosity 51.9."
+          "$value": "#34d399"
         },
         "60": {
           "$type": "color",
-          "$value": "#00811F",
-          "$description": "Primary buttons on light backgrounds. Was #008047 Jade. Luminosity 46.8."
+          "$value": "#059669",
+          "$description": "Primary action color. Modern Emerald/Green."
         },
         "70": {
           "$type": "color",
-          "$value": "#007219"
+          "$value": "#047857"
         },
         "80": {
           "$type": "color",
-          "$value": "#005e14"
+          "$value": "#065f46"
         },
         "90": {
           "$type": "color",
-          "$value": "#001f03"
+          "$value": "#064e3b"
         },
         "95": {
           "$type": "color",
-          "$value": "#001001"
+          "$value": "#022c22"
         }
       },
       "flamingo": {
@@ -420,45 +416,44 @@
       "plum": {
         "5": {
           "$type": "color",
-          "$value": "#f9f6ff"
+          "$value": "#f5f3ff"
         },
         "10": {
           "$type": "color",
-          "$value": "#F3EBFE"
+          "$value": "#ede9fe"
         },
         "20": {
           "$type": "color",
-          "$value": "#b190e8"
+          "$value": "#ddd6fe"
         },
         "30": {
           "$type": "color",
-          "$value": "#a375dd"
+          "$value": "#c4b5fd"
         },
         "40": {
           "$type": "color",
-          "$value": "#9463d7",
-          "$description": "Ligthness 51.9, 4.5:1 against #0E0E0E."
+          "$value": "#a78bfa"
         },
         "60": {
           "$type": "color",
-          "$value": "#8f4bd7",
-          "$description": "Ligthness 51.9, 4.5:1 against #0E0E0E."
+          "$value": "#7c3aed",
+          "$description": "Base status color for light surface. Modern Violet."
         },
         "70": {
           "$type": "color",
-          "$value": "#803ec5"
+          "$value": "#6d28d9"
         },
         "80": {
           "$type": "color",
-          "$value": "#6a32a6"
+          "$value": "#5b21b6"
         },
         "90": {
           "$type": "color",
-          "$value": "#220c3a"
+          "$value": "#4c1d95"
         },
         "95": {
           "$type": "color",
-          "$value": "#10041f"
+          "$value": "#2e1065"
         }
       },
       "pewter": {
@@ -600,83 +595,109 @@
       "storm": {
         "5": {
           "$type": "color",
-          "$value": "#f4f5f6"
+          "$value": "#f8fafc"
         },
         "10": {
           "$type": "color",
-          "$value": "#e8eaec"
+          "$value": "#f1f5f9"
         },
         "15": {
           "$type": "color",
-          "$value": "#dde0e3"
+          "$value": "#eef2f6"
         },
         "20": {
           "$type": "color",
-          "$value": "#d1d6da"
+          "$value": "#e2e8f0"
         },
         "25": {
           "$type": "color",
-          "$value": "#c6ccd1"
+          "$value": "#d1d5db"
         },
         "30": {
           "$type": "color",
-          "$value": "#bac1c7"
+          "$value": "#cbd5e1"
         },
         "35": {
           "$type": "color",
-          "$value": "#afb7be"
+          "$value": "#b1b7c1"
         },
         "40": {
           "$type": "color",
-          "$value": "#a3adb5",
-          "$description": "Base status color for dark surfaces. AA txt  on dark. Luminosity 51.9."
+          "$value": "#94a3b8"
         },
         "45": {
           "$type": "color",
-          "$value": "#98a2ab",
-          "$description": "Base status color for dark surfaces. AA txt  on dark. Luminosity 51.9."
+          "$value": "#7c889a"
         },
         "50": {
           "$type": "color",
-          "$value": "#8c98a2"
+          "$value": "#64748b"
         },
         "55": {
           "$type": "color",
-          "$value": "#818e99"
+          "$value": "#556477"
         },
         "60": {
           "$type": "color",
-          "$value": "#75838f",
-          "$description": "Base status color for light surface. AA txt on white. Luminosity 46.8."
+          "$value": "#475569"
         },
         "65": {
           "$type": "color",
-          "$value": "#6a7986",
-          "$description": "Base status color for light surface. AA txt on white. Luminosity 46.8."
+          "$value": "#3d4a5e"
         },
         "70": {
           "$type": "color",
-          "$value": "#5e6f7d"
+          "$value": "#334155"
         },
         "75": {
           "$type": "color",
-          "$value": "#536574"
+          "$value": "#283448"
         },
         "80": {
           "$type": "color",
-          "$value": "#475a6a"
+          "$value": "#1e293b"
         },
         "85": {
           "$type": "color",
-          "$value": "#3c5061"
+          "$value": "#162031"
         },
         "90": {
           "$type": "color",
-          "$value": "#304658"
+          "$value": "#0f172a"
         },
         "95": {
           "$type": "color",
-          "$value": "#253b4e"
+          "$value": "#020617"
+        }
+      },
+      "brands": {
+        "quartz": {
+          "primary": {
+            "$type": "color",
+            "$value": "{core.color.brand.60}"
+          },
+          "secondary": {
+            "$type": "color",
+            "$value": "{core.color.brand.40}"
+          },
+          "tertiary": {
+            "$type": "color",
+            "$value": "{core.color.brand.10}"
+          }
+        },
+        "ruby": {
+          "primary": {
+            "$type": "color",
+            "$value": "{core.color.blush.60}"
+          },
+          "secondary": {
+            "$type": "color",
+            "$value": "{core.color.blush.40}"
+          },
+          "tertiary": {
+            "$type": "color",
+            "$value": "{core.color.blush.10}"
+          }
         }
       }
     },
