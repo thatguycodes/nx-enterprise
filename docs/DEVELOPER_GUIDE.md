@@ -233,7 +233,7 @@ Use the project name from `project.json` as the scope.
 | Scope           | Project                     |
 | --------------- | --------------------------- |
 | `design-tokens` | `libs/design-tokens` |
-| `quartz-ui`     | `libs/ui/quartz-ui`         |
+| `quartz-ui`     | `libs/quartz-ui`         |
 
 ### Examples
 
@@ -299,7 +299,7 @@ Local release commands should **only** be used by maintainers in emergency situa
 #### Important Publishing Rules
 
 - **Nx publish uses npm** under the hood. Switching to `pnpm` or `bun` does not change the publish behavior.
-- **Local `file:` dependencies cannot be published with npm.** Make sure `libs/ui/quartz-ui/package.json` uses a **semver** version for `@thatguycodes/design-tokens` (for example `^0.2.2`) before publishing.
+- **Local `file:` dependencies cannot be published with npm.** Make sure `libs/quartz-ui/package.json` uses a **semver** version for `@thatguycodes/design-tokens` (for example `^0.2.2`) before publishing.
 - **Publish order**: publish `design-tokens` first, then `quartz-ui`, since `quartz-ui` depends on it.
 
 > **Note**: You must have a valid `NPM_TOKEN` or be logged in to npm with access to the `@thatguycodes` organization.
@@ -331,7 +331,7 @@ npx nx run quartz-ui:storybook
 ```
 
 **CSS variables not defined in Storybook**
-Confirm all four theme CSS files are imported in `libs/ui/quartz-ui/.storybook/preview.ts`:
+Confirm all four theme CSS files are imported in `libs/quartz-ui/.storybook/preview.ts`:
 
 ```ts
 import '../../../design-tokens/src/generated/css/variables-light.css';

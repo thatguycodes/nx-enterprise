@@ -1,6 +1,6 @@
 {
   "buildCommand": "npm exec nx run quartz-ui:build-storybook",
-  "outputDirectory": "libs/ui/quartz-ui/storybook-static",
+  "outputDirectory": "libs/quartz-ui/storybook-static",
   "installCommand": "npm ci --legacy-peer-deps",
   "framework": null
 }

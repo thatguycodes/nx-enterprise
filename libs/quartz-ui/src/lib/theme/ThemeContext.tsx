@@ -25,7 +25,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     document.documentElement.setAttribute('data-theme', mode);
   }, [mode]);
 
-  const toggleMode = () => setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  const toggleMode = () =>
+    setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
 
   return (
     <ThemeContext.Provider value={{ mode, setMode, toggleMode }}>

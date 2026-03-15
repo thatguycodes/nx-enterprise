@@ -29,9 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        <ThemeProvider initialMode="light">
-          {children}
-        </ThemeProvider>
+        <ThemeProvider initialMode="light">{children}</ThemeProvider>
       </body>
     </html>
   );
@@ -52,20 +50,16 @@ import { useTheme } from '@thatguycodes/quartz-ui';
 function ThemeToggle() {
   const { mode, setMode } = useTheme();
 
-  return (
-    <button onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}>
-      Switch to {mode === 'light' ? 'dark' : 'light'} mode
-    </button>
-  );
+  return <button onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}>Switch to {mode === 'light' ? 'dark' : 'light'} mode</button>;
 }
 ```
 
 `ThemeProvider` props:
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
+| Prop          | Type                | Default   | Description         |
+| ------------- | ------------------- | --------- | ------------------- |
 | `initialMode` | `'light' \| 'dark'` | `'light'` | Starting theme mode |
-| `children` | `ReactNode` | — | App content |
+| `children`    | `ReactNode`         | —         | App content         |
 
 ---
 
@@ -78,19 +72,19 @@ import { Button } from '@thatguycodes/quartz-ui';
 
 <Button variant="primary" size="medium" onClick={handleClick}>
   Save changes
-</Button>
+</Button>;
 ```
 
 #### Props
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `variant` | `'primary' \| 'secondary' \| 'outline'` | `'primary'` | Visual style |
-| `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Height and padding |
-| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | HTML button type |
-| `disabled` | `boolean` | `false` | Disables interaction |
-| `aria-label` | `string` | — | Accessible name for icon-only buttons |
-| `...rest` | `ButtonHTMLAttributes` | — | All standard button attributes |
+| Prop         | Type                                    | Default     | Description                           |
+| ------------ | --------------------------------------- | ----------- | ------------------------------------- |
+| `variant`    | `'primary' \| 'secondary' \| 'outline'` | `'primary'` | Visual style                          |
+| `size`       | `'small' \| 'medium' \| 'large'`        | `'medium'`  | Height and padding                    |
+| `type`       | `'button' \| 'submit' \| 'reset'`       | `'button'`  | HTML button type                      |
+| `disabled`   | `boolean`                               | `false`     | Disables interaction                  |
+| `aria-label` | `string`                                | —           | Accessible name for icon-only buttons |
+| `...rest`    | `ButtonHTMLAttributes`                  | —           | All standard button attributes        |
 
 #### Accessibility
 
@@ -103,11 +97,11 @@ import { Button } from '@thatguycodes/quartz-ui';
 
 #### Variants
 
-| Variant | Use case |
-|---|---|
-| `primary` | Main call to action |
+| Variant     | Use case                               |
+| ----------- | -------------------------------------- |
+| `primary`   | Main call to action                    |
 | `secondary` | Supporting actions, less visual weight |
-| `outline` | Tertiary / ghost style |
+| `outline`   | Tertiary / ghost style                 |
 
 ---
 
@@ -138,7 +132,7 @@ The Storybook toolbar includes a light/dark toggle powered by `@storybook/addon-
 1. Generate scaffold: `npx nx g @nx/react:component MyComponent --project=quartz-ui`
 2. Style with `MyComponent.module.css` — use only `var(--color-*)` semantic tokens
 3. Add stories in `MyComponent.stories.tsx`
-4. Export from `libs/ui/quartz-ui/src/index.ts`
+4. Export from `libs/quartz-ui/src/index.ts`
 
 Do not use primitive token variables (`--brand-*`, `--storm-*`, `--smoke-*`) directly in components. They are implementation details of the token layer.
 

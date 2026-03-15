@@ -20,7 +20,7 @@ const withBackground = (Story: React.ComponentType) => (
 
 const meta: Meta<typeof Button> = {
   component: Button,
-  title: 'Shared/Button',
+  title: 'Components/Button',
   tags: ['autodocs'],
   decorators: [withBackground],
   argTypes: {

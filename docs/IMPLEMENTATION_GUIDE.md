@@ -49,10 +49,8 @@ This guide provides step-by-step instructions for implementing common tasks in t
 nx-enterprise/
 ├── apps/                  # Reserved for future applications
 ├── libs/
-│   ├── tokens/
-│   │   └── design-tokens/ # Design tokens (@thatguycodes/design-tokens)
-│   └── ui/
-│       └── quartz-ui/     # Component library (@thatguycodes/quartz-ui)
+│   ├── design-tokens/ # Design tokens (@thatguycodes/design-tokens)
+│   └── quartz-ui/     # Component library (@thatguycodes/quartz-ui)
 ├── docs/                  # All project documentation
 └── package.json
 ```
@@ -152,7 +150,7 @@ npx nx g @nx/react:component Card --project=quartz-ui
 This creates:
 
 ```
-libs/ui/quartz-ui/src/lib/card/
+libs/quartz-ui/src/lib/card/
   ├── Card.tsx
   ├── Card.module.css
   ├── Card.spec.tsx
@@ -212,7 +210,7 @@ export default Card;
 
 ### Exporting Components
 
-Add the export to `libs/ui/quartz-ui/src/index.ts`:
+Add the export to `libs/quartz-ui/src/index.ts`:
 
 ```typescript
 export * from './lib/button/Button';
@@ -341,12 +339,12 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 ### Component Not Found
 
-1. Verify the export in `libs/ui/quartz-ui/src/index.ts`
+1. Verify the export in `libs/quartz-ui/src/index.ts`
 2. Check the import: `import { Component } from '@thatguycodes/quartz-ui'`
 
 ### CSS Variables Undefined
 
-Confirm all 4 theme CSS files are imported in `libs/ui/quartz-ui/.storybook/preview.ts`:
+Confirm all 4 theme CSS files are imported in `libs/quartz-ui/.storybook/preview.ts`:
 
 ```ts
 import '../../../design-tokens/src/generated/css/variables-light.css';

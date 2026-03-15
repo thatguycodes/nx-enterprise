@@ -22,10 +22,9 @@ libs/
   design-tokens/       @thatguycodes/design-tokens
     src/tokens/        Source JSON (edit here)
     src/generated/     Auto-generated CSS/JS (never edit)
-  ui/
-    quartz-ui/         @thatguycodes/quartz-ui
-      src/lib/         React components + CSS Modules
-      .storybook/      Storybook config
+  quartz-ui/           @thatguycodes/quartz-ui
+    src/lib/           React components + CSS Modules
+    .storybook/        Storybook config
 ```
 
 ## Tech Stack
@@ -83,7 +82,7 @@ Source files are in `libs/design-tokens/src/tokens/`. They are edited manually â
 1. Generate: `npx nx g @nx/react:component MyComponent --project=quartz-ui`
 2. Style with `MyComponent.module.css` â€” use only `var(--color-*)` semantic tokens
 3. Document with `MyComponent.stories.tsx`
-4. Export from `libs/ui/quartz-ui/src/index.ts`
+4. Export from `libs/quartz-ui/src/index.ts`
 5. Test: `npx nx run quartz-ui:test`
 
 ### Using components in an app

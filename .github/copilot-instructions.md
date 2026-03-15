@@ -8,8 +8,8 @@ This is an **Nx Enterprise monorepo** implementing a token-first design system. 
 
 | Package | Path |
 |---|---|
-| `@thatguycodes/design-tokens` | `libs/tokens/design-tokens` |
-| `@thatguycodes/quartz-ui` | `libs/ui/quartz-ui` |
+| `@thatguycodes/design-tokens` | `libs/design-tokens` |
+| `@thatguycodes/quartz-ui` | `libs/quartz-ui` |
 
 ---
 
@@ -20,7 +20,7 @@ This is an **Nx Enterprise monorepo** implementing a token-first design system. 
 - **Framework**: [Next.js](https://nextjs.org/) 16 App Router (`apps/docs`)
 - **Design Tokens**: JSON → [Style Dictionary](https://styledictionary.com/) → CSS + TypeScript
 - **Styling**: Vanilla CSS Modules (`*.module.css`); no Tailwind, no CSS-in-JS
-- **Components**: React 19 (`libs/ui/quartz-ui`)
+- **Components**: React 19 (`libs/quartz-ui`)
 - **Component Docs**: [Storybook](https://storybook.js.org/) (Vite-based)
 - **Unit Tests**: [Jest](https://jestjs.io/) + Testing Library
 - **E2E Tests**: [Playwright](https://playwright.dev/)
@@ -35,10 +35,8 @@ nx-enterprise/
 │   ├── docs/             # Next.js documentation site
 │   └── docs-e2e/         # Playwright E2E tests
 ├── libs/
-│   ├── tokens/
-│   │   └── design-tokens/ # Design tokens (@thatguycodes/design-tokens)
-│   └── ui/
-│       └── quartz-ui/     # React component library (@thatguycodes/quartz-ui)
+│   ├── design-tokens/    # Design tokens (@thatguycodes/design-tokens)
+│   └── quartz-ui/        # React component library (@thatguycodes/quartz-ui)
 └── docs/                 # Project documentation (ARCHITECTURE, DEVELOPER_GUIDE, etc.)
 ```
 
@@ -94,14 +92,14 @@ npx nx run design-tokens:build
 Each component lives in its own folder with four co-located files:
 
 ```
-libs/ui/quartz-ui/src/lib/<component>/
+libs/quartz-ui/src/lib/<component>/
   ├── <Component>.tsx           # Implementation
   ├── <Component>.module.css    # Scoped styles
   ├── <Component>.spec.tsx      # Unit tests
   └── <Component>.stories.tsx   # Storybook stories
 ```
 
-Export components explicitly from `libs/ui/quartz-ui/src/index.ts` — no barrel re-exports inside lib folders.
+Export components explicitly from `libs/quartz-ui/src/index.ts` — no barrel re-exports inside lib folders.
 
 ### Commit Messages
 

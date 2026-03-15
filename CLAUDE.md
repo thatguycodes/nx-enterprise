@@ -9,7 +9,7 @@ Read this before making any changes to design tokens, UI components, or theme in
 
 ```
 libs/design-tokens/     → @thatguycodes/design-tokens  (npm, public)
-libs/ui/quartz-ui/      → @thatguycodes/quartz-ui       (npm, public)
+libs/quartz-ui/         → @thatguycodes/quartz-ui       (npm, public)
 apps/                   → empty — future consumer applications
 ```
 
@@ -74,7 +74,7 @@ data-theme="dark"   →  activates [data-theme="dark"] CSS variables
 
 ### ThemeContext
 
-`libs/ui/quartz-ui/src/lib/theme/ThemeContext.tsx` manages this:
+`libs/quartz-ui/src/lib/theme/ThemeContext.tsx` manages this:
 - Sets `document.documentElement.setAttribute('data-theme', mode)` on mode change
 - Exposes `mode: 'light' | 'dark'`, `setMode`, `toggleMode`
 - **No brand dimension** — only `quartz` brand exists; context was simplified when `ruby` was removed

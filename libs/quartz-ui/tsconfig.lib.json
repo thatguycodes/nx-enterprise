@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../../dist/libs/ui/quartz-ui",
+    "outDir": "../../dist/libs/quartz-ui",
     "types": [
       "node",
       "@nx/react/typings/cssmodule.d.ts",

@@ -1,0 +1,237 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  font-family: inherit;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--color-background-base),
+      0 0 0 4px var(--color-border-focus);
+  }
+
+  /* ── Primary ────────────────────────────────── */
+  &.primary {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-primary-default) 82%, white) 0%,
+      var(--color-primary-default) 100%
+    );
+    color: var(--color-text-on-primary);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, white 20%, transparent),
+      0 1px 2px color-mix(in srgb, var(--color-primary-default) 25%, transparent),
+      0 4px 14px -2px color-mix(in srgb, var(--color-primary-default) 45%, transparent);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(
+        180deg,
+        var(--color-primary-default) 0%,
+        var(--color-primary-hover) 100%
+      );
+      box-shadow:
+        inset 0 1px 0 color-mix(in srgb, white 12%, transparent),
+        0 1px 3px color-mix(in srgb, var(--color-primary-default) 30%, transparent),
+        0 6px 18px -2px color-mix(in srgb, var(--color-primary-default) 50%, transparent);
+    }
+
+    &:active:not(:disabled) {
+      background: var(--color-primary-active);
+      box-shadow:
+        inset 0 1px 3px color-mix(in srgb, black 18%, transparent),
+        0 1px 2px color-mix(in srgb, var(--color-primary-active) 20%, transparent);
+    }
+
+    &:disabled {
+      background: var(--color-primary-disabled);
+      color: var(--color-text-disabled);
+      box-shadow: none;
+    }
+  }
+
+  /* ── Secondary ──────────────────────────────── */
+  &.secondary {
+    background-color: var(--color-surface-base);
+    color: var(--color-text-base);
+    border: 1px solid var(--color-border-default); /* no border-width token exists */
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.05), /* no black shadow token exists */
+      inset 0 1px 0 rgba(255, 255, 255, 0.8); /* no white highlight token exists */
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-background-subtle);
+      border-color: var(--color-border-default);
+      box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.09),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    &:active:not(:disabled) {
+      background-color: var(--color-background-faint);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+
+    &:disabled {
+      color: var(--color-text-disabled);
+      border-color: var(--color-border-disabled);
+      box-shadow: none;
+    }
+  }
+
+  /* ── Outline ────────────────────────────────── */
+  &.outline {
+    background-color: transparent;
+    border: 2px solid var(--color-primary-default); /* no border-width token exists */
+    color: var(--color-primary-default);
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--color-primary-default) 10%, transparent);
+      border-color: var(--color-primary-hover);
+      color: var(--color-primary-hover);
+    }
+
+    &:active:not(:disabled) {
+      background-color: color-mix(in srgb, var(--color-primary-default) 16%, transparent);
+      border-color: var(--color-primary-active);
+      color: var(--color-primary-active);
+    }
+
+    &:disabled {
+      background-color: transparent;
+      border-color: var(--color-border-disabled);
+      color: var(--color-text-disabled);
+    }
+  }
+
+  /* ── Sizes ──────────────────────────────────── */
+  &.small {
+    padding: 6px 12px;
+    font-size: 0.8125rem;
+    height: 32px;
+  }
+
+  &.medium {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    height: 40px;
+  }
+
+  &.large {
+    padding: 10px 20px;
+    font-size: 1rem;
+    height: 48px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  /* WCAG 2.3.3 — disable animation for users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:active {
+      transform: none;
+    }
+  }
+
+  /* WCAG 1.4.3 — box-shadow suppressed in forced-colors; use real outline for focus */
+  @media (forced-colors: active) {
+    &:focus-visible {
+      outline: 2px solid ButtonText;
+      box-shadow: none;
+    }
+  }
+}
+
+/* ── Dark mode: Primary ─────────────────────────────────────────────────────
+   In dark mode --color-primary-default is the same hex (#7c3aed) as light,
+   so mixing with `white` produces an identical gradient. Override to use a
+   dark-directional gradient and stronger coloured shadow on the dark canvas. */
+:global([data-theme='dark']) .button.primary {
+  background: linear-gradient(
+    180deg,
+    var(--color-primary-default) 0%,
+    color-mix(in srgb, var(--color-primary-default) 80%, black) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 10%, transparent),
+    0 1px 3px rgba(0, 0, 0, 0.5),
+    0 4px 16px -2px color-mix(in srgb, var(--color-primary-default) 65%, transparent);
+
+  &:hover:not(:disabled) {
+    /* dark mode hover token is lighter (brand-50), gradient goes light→default */
+    background: linear-gradient(
+      180deg,
+      var(--color-primary-hover) 0%,
+      var(--color-primary-default) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, white 8%, transparent),
+      0 1px 4px rgba(0, 0, 0, 0.6),
+      0 6px 22px -2px color-mix(in srgb, var(--color-primary-default) 75%, transparent);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--color-primary-active);
+    box-shadow:
+      inset 0 1px 3px rgba(0, 0, 0, 0.4),
+      0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ── Dark mode: Secondary ───────────────────────────────────────────────────
+   White inset highlight looks wrong on a near-black surface; remove it and
+   use surface-muted as the resting background for visible contrast. */
+:global([data-theme='dark']) .button.secondary {
+  background-color: var(--color-surface-muted);
+  border-color: var(--color-border-default);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-background-faint);
+    border-color: var(--color-border-default);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--color-background-faint);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ── Dark mode: Outline ─────────────────────────────────────────────────────
+   brand.60 (#7c3aed) only gives 3.54:1 on the dark canvas.
+   Shift to brand.40 (#a78bfa) → 8.06:1, brand.30 (#c4b5fd) on hover → 10.22:1 */
+:global([data-theme='dark']) .button.outline {
+  border-color: var(--brand-40);
+  color: var(--brand-40);
+
+  &:hover:not(:disabled) {
+    border-color: var(--brand-30);
+    color: var(--brand-30);
+    background-color: color-mix(in srgb, var(--brand-40) 12%, transparent);
+  }
+
+  &:active:not(:disabled) {
+    border-color: var(--brand-40);
+    color: var(--brand-40);
+    background-color: color-mix(in srgb, var(--brand-40) 18%, transparent);
+  }
+}

@@ -1,7 +1,7 @@
 {
   "name": "quartz-ui",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/ui/quartz-ui/src",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/quartz-ui/src",
   "projectType": "library",
   "tags": ["type:ui", "scope:shared"],
   "targets": {
@@ -10,18 +10,18 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/ui/quartz-ui",
-        "main": "libs/ui/quartz-ui/src/index.ts",
-        "tsConfig": "libs/ui/quartz-ui/tsconfig.lib.json",
+        "outputPath": "dist/libs/quartz-ui",
+        "main": "libs/quartz-ui/src/index.ts",
+        "tsConfig": "libs/quartz-ui/tsconfig.lib.json",
         "assets": [
-          "libs/ui/quartz-ui/*.md",
+          "libs/quartz-ui/*.md",
           {
-            "input": "libs/ui/quartz-ui",
+            "input": "libs/quartz-ui",
             "glob": "package.json",
             "output": "."
           },
           {
-            "input": "libs/ui/quartz-ui/src/lib",
+            "input": "libs/quartz-ui/src/lib",
             "glob": "*.css",
             "output": "src/lib"
           }
@@ -33,7 +33,7 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "npm publish --access public --otp=$NPM_OTP",
-        "cwd": "dist/libs/ui/quartz-ui"
+        "cwd": "dist/libs/quartz-ui"
       }
     },
     "nx-release-publish": {

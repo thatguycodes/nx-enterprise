@@ -1,0 +1,31 @@
+.card {
+  background-color: var(--color-surface-base);
+  border: 1px solid var(--color-border-default); /* no border-width token exists */
+  border-radius: 10px; /* no border-radius token exists */
+  padding: 1.5rem; /* no spacing token exists */
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04), /* no shadow token exists */
+    0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.card.elevated {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 4px 16px -2px rgba(0, 0, 0, 0.10),
+    0 8px 32px -4px rgba(0, 0, 0, 0.06);
+}
+
+.title {
+  margin: 0 0 0.625rem 0; /* no spacing token exists */
+  color: var(--color-text-base);
+  font-size: 1rem; /* no font-size token exists */
+  font-weight: 600; /* no font-weight token exists */
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.content {
+  color: var(--color-text-muted);
+  font-size: 0.875rem; /* no font-size token exists */
+  line-height: 1.6;
+}

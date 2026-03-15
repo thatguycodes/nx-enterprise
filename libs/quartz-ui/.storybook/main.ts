@@ -25,7 +25,9 @@ const config: StorybookConfig = {
         alias: [
           {
             find: /^@thatguycodes\/design-tokens\/css\/(.+)$/,
-            replacement: resolve(__dirname, '../../../design-tokens/src/generated/css') + '/$1',
+            replacement:
+              resolve(__dirname, '../../design-tokens/src/generated/css') +
+              '/$1',
           },
         ],
       },
