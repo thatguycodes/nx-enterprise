@@ -56,33 +56,4 @@ declare const tokens: {
     "90": DesignToken;
     "95": DesignToken;
   };
-  color: {
-    primary: {
-      default: DesignToken;
-      hover: DesignToken;
-      active: DesignToken;
-      disabled: DesignToken;
-    };
-    text: {
-      "on-primary": DesignToken;
-      base: DesignToken;
-      muted: DesignToken;
-      disabled: DesignToken;
-      inverse: DesignToken;
-    };
-    background: {
-      base: DesignToken;
-      subtle: DesignToken;
-      faint: DesignToken;
-    };
-    border: {
-      default: DesignToken;
-      focus: DesignToken;
-      disabled: DesignToken;
-    };
-    surface: {
-      base: DesignToken;
-      muted: DesignToken;
-    };
-  };
 };
