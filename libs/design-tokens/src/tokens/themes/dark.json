@@ -1,0 +1,24 @@
+{
+  "theme": {
+    "dark": {
+      "txt": {
+        "extreme": { "$type": "color", "$value": "#ffffff" },
+        "severe": { "$type": "color", "$value": "#f2f2f2" },
+        "moderate": { "$type": "color", "$value": "#ababab" },
+        "soft": { "$type": "color", "$value": "#8c8c8c" },
+        "delicate": { "$type": "color", "$value": "#6b6b6b" },
+        "inverse": {
+          "extreme": { "$type": "color", "$value": "#000000" }
+        }
+      },
+      "bg": {
+        "nought": { "$type": "color", "$value": "#000000" },
+        "faint": { "$type": "color", "$value": "rgba(255,255,255,0.05)" },
+        "delicate": { "$type": "color", "$value": "rgba(255,255,255,0.10)" }
+      },
+      "surface": {
+        "harsh": { "$type": "color", "$value": "{global.storm.20}" }
+      }
+    }
+  }
+}

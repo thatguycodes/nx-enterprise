@@ -1,0 +1,28 @@
+{
+  "quartz": {
+    "semantics": {
+      "primary": {
+        "action": {
+          "$type": "color",
+          "$value": "{quartz.brand.60}"
+        },
+        "default": {
+          "$type": "color",
+          "$value": "{quartz.brand.60}"
+        }
+      },
+      "secondary": {
+        "default": {
+          "$type": "color",
+          "$value": "{quartz.brand.40}"
+        }
+      },
+      "tertiary": {
+        "default": {
+          "$type": "color",
+          "$value": "{quartz.brand.10}"
+        }
+      }
+    }
+  }
+}
