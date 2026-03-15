@@ -1,0 +1,14 @@
+{
+  "moss": {
+    "50":  { "$type": "color", "$value": "#F4F6EE" },
+    "100": { "$type": "color", "$value": "#DDE5C4" },
+    "200": { "$type": "color", "$value": "#BCCF91" },
+    "300": { "$type": "color", "$value": "#8FAF51" },
+    "400": { "$type": "color", "$value": "#658A2E" },
+    "500": { "$type": "color", "$value": "#4E6D22", "$description": "Primary action colour" },
+    "600": { "$type": "color", "$value": "#3A5218", "$description": "Hover" },
+    "700": { "$type": "color", "$value": "#273810", "$description": "Pressed" },
+    "800": { "$type": "color", "$value": "#16230A" },
+    "900": { "$type": "color", "$value": "#0B1205" }
+  }
+}

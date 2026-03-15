@@ -1,24 +1,34 @@
-/*
-Copyright © 2025 The Sage Group plc or its licensors. All Rights reserved
- */
+import * as fs from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+import { StyleDictionary, groups } from './style-dictionary.js';
 
-import * as fs from "fs"
-import { dirname, join } from "path"
-import { fileURLToPath } from "url"
-import { StyleDictionary, groups } from "./style-dictionary.js"
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+const projectRoot = join(__dirname, '..');
+const tokensRoot = join(projectRoot, 'src/tokens');
+const outputPath = join(projectRoot, 'src/generated');
 
-const projectRoot = join(__dirname, "..")
-const tokensRoot = join(projectRoot, "src/tokens")
-const outputPath = join(projectRoot, "src/generated")
+// ── Source layers ────────────────────────────────────────────────────────────
+// Load order is critical: primitives → scale → semantic base → theme override
 
-// Shared primitive sources (raw color palette)
 const primitiveSources = [
-  join(tokensRoot, "brands/quartz/primitives.json"),
-  join(tokensRoot, "global/*.json"),
-]
+  join(tokensRoot, 'primitive/color/*.json'),
+  join(tokensRoot, 'primitive/spacing.json'),
+  join(tokensRoot, 'primitive/radius.json'),
+  join(tokensRoot, 'primitive/typography.json'),
+  join(tokensRoot, 'primitive/shadow.json'),
+  join(tokensRoot, 'primitive/motion.json'),
+];
+
+const scaleSources = [
+  join(tokensRoot, 'scale/*.json'),
+];
+
+const semanticBase = join(tokensRoot, 'semantic/brands/quartz/tokens.json');
+
+// ── Build config factory ─────────────────────────────────────────────────────
 
 /**
  * Build a Style Dictionary config for a named token set.
@@ -26,139 +36,149 @@ const primitiveSources = [
  * @param {string[]} sources - Source JSON file paths
  * @param {string} selector - CSS selector for custom properties
  */
-function buildConfig({ name, sources, selector = ":root" }) {
+function buildConfig({ name, sources, selector = ':root' }) {
   return {
     source: sources,
     platforms: {
       css: {
-        buildPath: join(outputPath, "css/"),
+        buildPath: join(outputPath, 'css/'),
         transforms: groups.css,
         files: [
           {
             destination: `${name}.css`,
-            format: "css/variables",
+            format: 'css/variables',
             options: { outputReferences: false, selector },
           },
         ],
       },
       scss: {
-        buildPath: join(outputPath, "scss/"),
+        buildPath: join(outputPath, 'scss/'),
         transforms: groups.scss,
         files: [
           {
             destination: `${name}.scss`,
-            format: "scss/variables",
+            format: 'scss/variables',
             options: { outputReferences: false },
           },
         ],
       },
       js: {
-        buildPath: join(outputPath, "js/"),
+        buildPath: join(outputPath, 'js/'),
         transforms: groups.js,
         files: [
           {
             destination: `es6/${name}.js`,
-            format: "javascript/es6",
+            format: 'javascript/es6',
             options: { outputReferences: false },
           },
           {
             destination: `es6/${name}.d.ts`,
-            format: "typescript/es6-declarations",
+            format: 'typescript/es6-declarations',
             options: { outputReferences: false },
           },
           {
             destination: `common/${name}.js`,
-            format: "javascript/module",
+            format: 'javascript/module',
             options: { outputReferences: false },
           },
           {
             destination: `common/${name}.d.ts`,
-            format: "typescript/module-declarations",
+            format: 'typescript/module-declarations',
             options: { outputReferences: false },
           },
         ],
       },
       json: {
-        buildPath: join(outputPath, "json/"),
+        buildPath: join(outputPath, 'json/'),
         transforms: groups.json,
         files: [
           {
             destination: `${name}.json`,
-            format: "json/flat",
+            format: 'json/flat',
             options: { outputReferences: false },
           },
         ],
       },
     },
     log: {
-      warnings: "warn",
-      verbosity: "verbose",
-      errors: { brokenReferences: "throw" },
+      warnings: 'warn',
+      verbosity: 'verbose',
+      errors: { brokenReferences: 'throw' },
     },
-  }
+  };
 }
 
-// 1. Build primitives — raw color palette (brand + storm + smoke)
-const primitivesSD = new StyleDictionary(
-  buildConfig({ name: "primitives", sources: primitiveSources, selector: ":root" })
-)
-await primitivesSD.buildAllPlatforms()
+// ── Build 1: Primitives (:root) ──────────────────────────────────────────────
+// Outputs raw primitive vars: --ember-500, --storm-20, --spacing-step-4, etc.
 
-// 2. Build light theme — primitives + semantics + light overrides
+const primitivesSD = new StyleDictionary(
+  buildConfig({ name: 'primitives', sources: primitiveSources, selector: ':root' })
+);
+await primitivesSD.buildAllPlatforms();
+
+// ── Build 2: Light theme ([data-theme="light"]) ──────────────────────────────
+// Outputs all layers: primitives + scale vars + semantic light overrides
+
 const lightSD = new StyleDictionary(
   buildConfig({
-    name: "light",
+    name: 'light',
     sources: [
       ...primitiveSources,
-      join(tokensRoot, "brands/quartz/semantics.json"),
-      join(tokensRoot, "themes/light.json"),
+      ...scaleSources,
+      semanticBase,
+      join(tokensRoot, 'semantic/themes/light.json'),
     ],
-    selector: "[data-theme=\"light\"]",
+    selector: '[data-theme="light"]',
   })
-)
-await lightSD.buildAllPlatforms()
+);
+await lightSD.buildAllPlatforms();
 
-// 3. Build dark theme — primitives + semantics + dark overrides
+// ── Build 3: Dark theme ([data-theme="dark"]) ────────────────────────────────
+// Outputs all layers: primitives + scale vars + semantic dark overrides
+
 const darkSD = new StyleDictionary(
   buildConfig({
-    name: "dark",
+    name: 'dark',
     sources: [
       ...primitiveSources,
-      join(tokensRoot, "brands/quartz/semantics.json"),
-      join(tokensRoot, "themes/dark.json"),
+      ...scaleSources,
+      semanticBase,
+      join(tokensRoot, 'semantic/themes/dark.json'),
     ],
-    selector: "[data-theme=\"dark\"]",
+    selector: '[data-theme="dark"]',
   })
-)
-await darkSD.buildAllPlatforms()
+);
+await darkSD.buildAllPlatforms();
 
-// Generate CSS bundle that imports all token files
+// ── Bundle CSS ───────────────────────────────────────────────────────────────
+
 try {
   const bundleContent = [
-    "/** Auto-generated CSS bundle — import this to get all token layers */",
+    '/** Auto-generated CSS bundle — import this to get all token layers */',
     '@import "./primitives.css";',
     '@import "./light.css";',
     '@import "./dark.css";',
-  ].join("\n")
+  ].join('\n');
 
-  fs.writeFileSync(join(outputPath, "css/bundle.css"), bundleContent)
-  console.log("Generated CSS bundle at generated/css/bundle.css")
+  fs.writeFileSync(join(outputPath, 'css/bundle.css'), bundleContent);
+  console.log('Generated CSS bundle at generated/css/bundle.css');
 } catch (e) {
-  console.warn("Failed to generate CSS bundle:", e.message)
+  console.warn('Failed to generate CSS bundle:', e.message);
 }
 
-// Expose light tokens as the default package entry point
+// ── Default JS entry (light tokens) ─────────────────────────────────────────
+
 try {
-  const sourceJs = join(outputPath, "js/es6/light.js")
-  const sourceDts = join(outputPath, "js/es6/light.d.ts")
-  const targetJs = join(outputPath, "js/es6/tokens.js")
-  const targetDts = join(outputPath, "js/es6/tokens.d.ts")
+  const sourceJs  = join(outputPath, 'js/es6/light.js');
+  const sourceDts = join(outputPath, 'js/es6/light.d.ts');
+  const targetJs  = join(outputPath, 'js/es6/tokens.js');
+  const targetDts = join(outputPath, 'js/es6/tokens.d.ts');
 
   if (fs.existsSync(sourceJs)) {
-    fs.copyFileSync(sourceJs, targetJs)
-    fs.copyFileSync(sourceDts, targetDts)
-    console.log("Exposed light tokens at generated/js/es6/tokens.js")
+    fs.copyFileSync(sourceJs, targetJs);
+    fs.copyFileSync(sourceDts, targetDts);
+    console.log('Exposed light tokens at generated/js/es6/tokens.js');
   }
 } catch (e) {
-  console.warn("Failed to expose light tokens:", e.message)
+  console.warn('Failed to expose light tokens:', e.message);
 }

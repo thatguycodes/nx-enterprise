@@ -1,6 +1,6 @@
 {
   "storm": {
-    "5": { "$type": "color", "$value": "#f8fafc" },
+    "5":  { "$type": "color", "$value": "#f8fafc" },
     "10": { "$type": "color", "$value": "#f1f5f9" },
     "15": { "$type": "color", "$value": "#eef2f6" },
     "20": { "$type": "color", "$value": "#e2e8f0" },

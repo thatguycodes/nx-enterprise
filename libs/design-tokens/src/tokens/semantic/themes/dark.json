@@ -1,0 +1,19 @@
+{
+  "color": {
+    "surface": {
+      "page":    { "$type": "color", "$value": "{scale.color.neutral.900}" },
+      "default": { "$type": "color", "$value": "{scale.color.neutral.800}" },
+      "raised":  { "$type": "color", "$value": "{scale.color.neutral.700}" },
+      "sunken":  { "$type": "color", "$value": "{scale.color.neutral.900}" }
+    },
+    "text": {
+      "primary":   { "$type": "color", "$value": "{scale.color.neutral.50}" },
+      "secondary": { "$type": "color", "$value": "{scale.color.neutral.400}" }
+    },
+    "border": {
+      "default":  { "$type": "color", "$value": "{scale.color.neutral.700}" },
+      "strong":   { "$type": "color", "$value": "{scale.color.neutral.600}" },
+      "disabled": { "$type": "color", "$value": "{scale.color.neutral.800}" }
+    }
+  }
+}

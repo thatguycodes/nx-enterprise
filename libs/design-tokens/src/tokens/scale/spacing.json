@@ -1,0 +1,14 @@
+{
+  "scale": {
+    "spacing": {
+      "2xs": { "$type": "dimension", "$value": "{spacing.step-1}" },
+      "xs":  { "$type": "dimension", "$value": "{spacing.step-2}" },
+      "sm":  { "$type": "dimension", "$value": "{spacing.step-3}" },
+      "md":  { "$type": "dimension", "$value": "{spacing.step-4}" },
+      "lg":  { "$type": "dimension", "$value": "{spacing.step-6}" },
+      "xl":  { "$type": "dimension", "$value": "{spacing.step-8}" },
+      "2xl": { "$type": "dimension", "$value": "{spacing.step-12}" },
+      "3xl": { "$type": "dimension", "$value": "{spacing.step-16}" }
+    }
+  }
+}

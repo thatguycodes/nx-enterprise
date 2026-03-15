@@ -3,26 +3,25 @@
  */
 
 [data-theme="dark"] {
-  --brand-5: #f5f3ff;
-  --brand-10: #ede9fe;
-  --brand-20: #ddd6fe;
-  --brand-30: #c4b5fd;
-  --brand-40: #a78bfa;
-  --brand-50: #8b5cf6;
-  --brand-60: #7c3aed;
-  --brand-70: #6d28d9;
-  --brand-80: #5b21b6;
-  --brand-90: #4c1d95;
-  --brand-95: #2e1065;
+  --moss-50: #f4f6ee;
+  --moss-100: #dde5c4;
+  --moss-200: #bccf91;
+  --moss-300: #8faf51;
+  --moss-400: #658a2e;
+  --moss-500: #4e6d22; /** Primary action colour */
+  --moss-600: #3a5218; /** Hover */
+  --moss-700: #273810; /** Pressed */
+  --moss-800: #16230a;
+  --moss-900: #0b1205;
   --smoke-5: #f8f8f8;
   --smoke-10: #eeeeee;
-  --smoke-20: #a0a0a0;
-  --smoke-30: #8b8b8b;
-  --smoke-40: #7c7c7c;
-  --smoke-50: #747474;
+  --smoke-20: #d4d4d4;
+  --smoke-30: #b8b8b8;
+  --smoke-40: #9e9e9e;
+  --smoke-50: #878787;
   --smoke-60: #6f6f6f;
-  --smoke-70: #616161;
-  --smoke-80: #505050;
+  --smoke-70: #575757;
+  --smoke-80: #3d3d3d;
   --smoke-90: #181818;
   --smoke-95: #0b0b0b;
   --storm-5: #f8fafc;
@@ -38,21 +37,140 @@
   --storm-80: #1e293b;
   --storm-90: #0f172a;
   --storm-95: #020617;
-  --color-primary-default: #7c3aed;
-  --color-primary-hover: #8b5cf6;
-  --color-primary-active: #a78bfa;
-  --color-primary-disabled: #4c1d95;
-  --color-text-on-primary: #f8f8f8;
-  --color-text-base: #f8f8f8;
-  --color-text-muted: #8b8b8b;
-  --color-text-disabled: #6f6f6f;
-  --color-text-inverse: #0b0b0b;
-  --color-background-base: #020617;
-  --color-background-subtle: #0f172a;
-  --color-background-faint: #1e293b;
-  --color-border-default: #334155;
-  --color-border-focus: #a78bfa;
-  --color-border-disabled: #1e293b;
-  --color-surface-base: #020617;
-  --color-surface-muted: #0f172a;
+  --spacing-step-1: 4px;
+  --spacing-step-2: 8px;
+  --spacing-step-3: 12px;
+  --spacing-step-4: 16px;
+  --spacing-step-5: 20px;
+  --spacing-step-6: 24px;
+  --spacing-step-7: 28px;
+  --spacing-step-8: 32px;
+  --spacing-step-10: 40px;
+  --spacing-step-12: 48px;
+  --spacing-step-14: 56px;
+  --spacing-step-16: 64px;
+  --spacing-2xs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --radius-none: 0;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+  --typography-size-xs: 12px;
+  --typography-size-sm: 14px;
+  --typography-size-base: 16px;
+  --typography-size-lg: 18px;
+  --typography-size-xl: 20px;
+  --typography-size-2xl: 24px;
+  --typography-size-3xl: 30px;
+  --typography-size-4xl: 36px;
+  --typography-weight-regular: 400;
+  --typography-weight-medium: 500;
+  --typography-weight-semibold: 600;
+  --typography-weight-bold: 700;
+  --typography-line-height-none: 1;
+  --typography-line-height-tight: 1.25;
+  --typography-line-height-snug: 1.375;
+  --typography-line-height-normal: 1.5;
+  --typography-line-height-relaxed: 1.625;
+  --typography-line-height-loose: 2;
+  --shadow-sm: 0px 1px 2px 0px rgba(0,0,0,0.05);
+  --shadow-md: 0px 4px 6px -1px rgba(0,0,0,0.1), 0px 2px 4px -2px rgba(0,0,0,0.1);
+  --shadow-lg: 0px 10px 15px -3px rgba(0,0,0,0.1), 0px 4px 6px -4px rgba(0,0,0,0.1);
+  --motion-duration-instant: 0;
+  --motion-duration-fast: 100;
+  --motion-duration-normal: 200;
+  --motion-duration-slow: 300;
+  --motion-duration-slower: 500;
+  --motion-easing-default: 1;
+  --motion-easing-in: 1;
+  --motion-easing-out: 1;
+  --motion-easing-spring: 1.275;
+  --scale-color-brand-50: #f4f6ee;
+  --scale-color-brand-100: #dde5c4;
+  --scale-color-brand-200: #bccf91;
+  --scale-color-brand-300: #8faf51;
+  --scale-color-brand-400: #658a2e;
+  --scale-color-brand-500: #4e6d22;
+  --scale-color-brand-600: #3a5218;
+  --scale-color-brand-700: #273810;
+  --scale-color-brand-800: #16230a;
+  --scale-color-brand-900: #0b1205;
+  --scale-color-neutral-50: #f8f8f8;
+  --scale-color-neutral-100: #eeeeee;
+  --scale-color-neutral-200: #d4d4d4;
+  --scale-color-neutral-300: #b8b8b8;
+  --scale-color-neutral-400: #9e9e9e;
+  --scale-color-neutral-500: #878787;
+  --scale-color-neutral-600: #6f6f6f;
+  --scale-color-neutral-700: #575757;
+  --scale-color-neutral-800: #3d3d3d;
+  --scale-color-neutral-900: #181818;
+  --scale-color-feedback-error: #ef4444;
+  --scale-color-feedback-warning: #f59e0b;
+  --scale-color-feedback-success: #22c55e;
+  --scale-color-feedback-info: #3b82f6;
+  --scale-radius-none: 0;
+  --scale-radius-sm: 4;
+  --scale-radius-md: 6;
+  --scale-radius-lg: 8;
+  --scale-radius-xl: 12;
+  --scale-radius-full: 9999;
+  --scale-spacing-2xs: 4;
+  --scale-spacing-xs: 8;
+  --scale-spacing-sm: 12;
+  --scale-spacing-md: 16;
+  --scale-spacing-lg: 24;
+  --scale-spacing-xl: 32;
+  --scale-spacing-2xl: 48;
+  --scale-spacing-3xl: 64;
+  --scale-typography-size-xs: 12;
+  --scale-typography-size-sm: 14;
+  --scale-typography-size-base: 16;
+  --scale-typography-size-lg: 18;
+  --scale-typography-size-xl: 20;
+  --scale-typography-size-2xl: 24;
+  --scale-typography-size-3xl: 30;
+  --scale-typography-size-4xl: 36;
+  --scale-typography-weight-regular: 400;
+  --scale-typography-weight-medium: 500;
+  --scale-typography-weight-semibold: 600;
+  --scale-typography-weight-bold: 700;
+  --color-brand-200: #bccf91;
+  --color-brand-300: #8faf51;
+  --color-surface-page: #181818;
+  --color-surface-default: #3d3d3d;
+  --color-surface-raised: #575757;
+  --color-surface-sunken: #181818;
+  --color-surface-overlay: #ffffff; /** Overlay/modal backdrop base */
+  --color-text-primary: #f8f8f8;
+  --color-text-secondary: #9e9e9e;
+  --color-text-placeholder: #9e9e9e; /** Placeholder text */
+  --color-text-disabled: #b8b8b8; /** Disabled text */
+  --color-text-on-brand: #ffffff; /** Text on amber action backgrounds */
+  --color-text-on-surface: #181818; /** Text on default surfaces */
+  --color-border-default: #575757;
+  --color-border-strong: #6f6f6f;
+  --color-border-focus: #4e6d22; /** Focus ring color for interactive elements */
+  --color-border-error: #ef4444; /** Error state border */
+  --color-border-disabled: #3d3d3d;
+  --color-action-bg-default: #4e6d22; /** Primary action background */
+  --color-action-bg-hover: #3a5218; /** Hover action background */
+  --color-action-bg-pressed: #273810; /** Pressed/active action background */
+  --color-action-bg-disabled: #d4d4d4; /** Disabled action background */
+  --color-action-text: #ffffff; /** Text on primary action backgrounds */
+  --color-action-text-disabled: #9e9e9e; /** Disabled action text */
+  --color-feedback-error: #ef4444;
+  --color-feedback-warning: #f59e0b;
+  --color-feedback-success: #22c55e;
+  --color-feedback-info: #3b82f6;
 }

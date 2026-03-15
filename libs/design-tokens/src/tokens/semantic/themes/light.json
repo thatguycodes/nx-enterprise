@@ -1,0 +1,16 @@
+{
+  "color": {
+    "surface": {
+      "page":    { "$type": "color", "$value": "{scale.color.neutral.50}" },
+      "default": { "$type": "color", "$value": "{scale.color.neutral.100}" },
+      "sunken":  { "$type": "color", "$value": "{scale.color.neutral.200}" }
+    },
+    "text": {
+      "primary":   { "$type": "color", "$value": "{scale.color.neutral.900}" },
+      "secondary": { "$type": "color", "$value": "{scale.color.neutral.600}" }
+    },
+    "border": {
+      "default": { "$type": "color", "$value": "{scale.color.neutral.200}" }
+    }
+  }
+}

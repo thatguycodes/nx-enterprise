@@ -1,0 +1,17 @@
+{
+  "motion": {
+    "duration": {
+      "instant": { "$type": "number", "$value": 0 },
+      "fast":    { "$type": "number", "$value": 100 },
+      "normal":  { "$type": "number", "$value": 200 },
+      "slow":    { "$type": "number", "$value": 300 },
+      "slower":  { "$type": "number", "$value": 500 }
+    },
+    "easing": {
+      "default": { "$type": "cubicBezier", "$value": [0.4, 0, 0.2, 1] },
+      "in":      { "$type": "cubicBezier", "$value": [0.4, 0, 1, 1] },
+      "out":     { "$type": "cubicBezier", "$value": [0, 0, 0.2, 1] },
+      "spring":  { "$type": "cubicBezier", "$value": [0.175, 0.885, 0.32, 1.275] }
+    }
+  }
+}
