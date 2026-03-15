@@ -38,7 +38,7 @@
 
 ### 🚀 Features
 
-- **storbook:** make storybook our documentation of choice to deploy to vercel. delete nextjs. update docs with storybook configs ([730f984](https://github.com/thatguycodes/quartz-xp/commit/730f984))
+- **storybook:** make storybook our documentation of choice to deploy to vercel. delete nextjs. update docs with storybook configs ([730f984](https://github.com/thatguycodes/quartz-xp/commit/730f984))
 - refactor design tokens and quartz-ui build, remove codeowners, update ci ([0c1a53f](https://github.com/thatguycodes/quartz-xp/commit/0c1a53f))
 
 ### 🧱 Updated Dependencies
