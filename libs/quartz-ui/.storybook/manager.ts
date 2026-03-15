@@ -7,20 +7,29 @@ const theme = create({
   // Brand
   brandTitle: 'Quartz UI',
   brandUrl: '/',
-  brandImage: '/assets/quartz-logo.png',
+  brandImage: '/assets/quartz-logo.svg',
   brandTarget: '_self',
 
+  // Colors
+  colorPrimary: '#4e6d22',   // moss-500
+  colorSecondary: '#3a5218', // moss-600
+
   // UI
-  appBg: '#f8fafc', // storm.5
+  appBg: '#f5f5f5',          // smoke-10 adjacent
   appContentBg: '#ffffff',
-  appPreviewBg: '#ffffff',
-  appBorderColor: '#e2e8f0', // storm.20
+  appPreviewBg: '#f8f8f8',   // smoke-5
+  appBorderColor: '#d4d4d4', // smoke-20
   appBorderRadius: 8,
 
-  // Toolbar default and active colors
-  barTextColor: '#64748b', // storm.50
-  barSelectedColor: '#7c3aed', // brand.60
+  // Toolbar
+  barTextColor: '#6f6f6f',    // smoke-60
+  barHoverColor: '#4e6d22',   // moss-500
+  barSelectedColor: '#4e6d22', // moss-500
   barBg: '#ffffff',
+
+  // Text
+  textColor: '#181818',       // smoke-90
+  textInverseColor: '#ffffff',
 });
 
 addons.setConfig({

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 36" fill="none">
+  <!-- Gem: 4 facets forming a diamond -->
+  <polygon points="18,2 2,18 18,18" fill="#8faf51"/>
+  <polygon points="18,2 34,18 18,18" fill="#4e6d22"/>
+  <polygon points="2,18 18,18 18,34" fill="#3a5218"/>
+  <polygon points="34,18 18,18 18,34" fill="#16230a"/>
+
+  <!-- Wordmark -->
+  <text
+    x="44" y="25"
+    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+    font-size="18"
+    font-weight="700"
+    fill="#181818"
+    letter-spacing="-0.4"
+  >Quartz</text>
+
+  <text
+    x="126" y="25"
+    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+    font-size="13"
+    font-weight="500"
+    fill="#4e6d22"
+    letter-spacing="1.5"
+  >UI</text>
+</svg>

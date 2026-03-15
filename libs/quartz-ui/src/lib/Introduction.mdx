@@ -1,0 +1,395 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+<div data-theme="light" className="sb-unstyled">{/* ── Hero ─────────────────────────────────────────────────────────────────── */}
+<div style={{
+  background: 'linear-gradient(150deg, #0b1205 0%, #16230a 45%, #273810 100%)',
+  borderRadius: '12px',
+  padding: '64px 48px',
+  marginBottom: '48px',
+  position: 'relative',
+  overflow: 'hidden',
+}}>
+
+  {/* Background texture — subtle radial glow */}
+  <div style={{
+    position: 'absolute',
+    top: '-80px',
+    right: '-80px',
+    width: '400px',
+    height: '400px',
+    background: 'radial-gradient(circle, rgba(143, 175, 81, 0.12) 0%, transparent 70%)',
+    pointerEvents: 'none',
+  }} />
+
+  {/* Gem icon */}
+  <svg width="56" height="56" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom: '24px', display: 'block' }}>
+    <polygon points="18,2 2,18 18,18" fill="#8faf51"/>
+    <polygon points="18,2 34,18 18,18" fill="#4e6d22"/>
+    <polygon points="2,18 18,18 18,34" fill="#3a5218"/>
+    <polygon points="34,18 18,18 18,34" fill="#16230a"/>
+  </svg>
+
+  <h1 style={{
+    color: '#ffffff',
+    fontSize: '42px',
+    fontWeight: '700',
+    lineHeight: '1.1',
+    margin: '0 0 12px 0',
+    letterSpacing: '-0.8px',
+  }}>Quartz UI</h1>
+
+  <p style={{
+    color: '#8faf51',
+    fontSize: '18px',
+    fontWeight: '500',
+    margin: '0 0 20px 0',
+    letterSpacing: '0.01em',
+  }}>A premium, token-first React design system</p>
+
+  <div style={{
+    color: '#ffffff',
+    fontSize: '15px',
+    lineHeight: '1.7',
+    maxWidth: '540px',
+    margin: '0 0 36px 0',
+  }}>
+    Quartz UI gives product teams a systematic, accessible foundation for building
+    high-quality interfaces — shipped as versioned npm packages with full light and
+    dark theme support out of the box.
+  </div>
+
+  <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+    <code style={{
+      background: 'rgba(143, 175, 81, 0.12)',
+      border: '1px solid rgba(143, 175, 81, 0.25)',
+      color: '#bccf91',
+      padding: '10px 18px',
+      borderRadius: '8px',
+      fontSize: '13px',
+      fontFamily: "'SF Mono', 'Fira Code', 'Cascadia Code', monospace",
+      letterSpacing: '0.02em',
+    }}>npm install @thatguycodes/quartz-ui</code>
+
+    <code style={{
+      background: 'rgba(143, 175, 81, 0.12)',
+      border: '1px solid rgba(143, 175, 81, 0.25)',
+      color: '#bccf91',
+      padding: '10px 18px',
+      borderRadius: '8px',
+      fontSize: '13px',
+      fontFamily: "'SF Mono', 'Fira Code', 'Cascadia Code', monospace",
+      letterSpacing: '0.02em',
+    }}>npm install @thatguycodes/design-tokens</code>
+  </div>
+</div>
+
+{/* ── What is Quartz UI ─────────────────────────────────────────────────────── */}
+<div style={{ marginBottom: '48px' }}>
+  <h2 style={{
+    fontSize: '26px',
+    fontWeight: '700',
+    color: 'var(--color-text-primary)',
+    margin: '0 0 12px 0',
+    letterSpacing: '-0.4px',
+  }}>What is Quartz UI?</h2>
+
+  <div style={{
+    width: '40px',
+    height: '3px',
+    background: '#4e6d22',
+    borderRadius: '2px',
+    marginBottom: '20px',
+  }} />
+
+  <p style={{
+    fontSize: '15px',
+    lineHeight: '1.75',
+    color: 'var(--color-text-secondary)',
+    maxWidth: '680px',
+    margin: '0 0 16px 0',
+  }}>
+    Quartz UI is a systematic React component library built on a semantic design token
+    architecture. Every visual decision — colour, spacing, radius, shadow — is expressed
+    as a CSS custom property that responds to the active theme. Components consume only
+    semantic tokens, keeping implementation details out of the component layer.
+  </p>
+
+  <p style={{
+    fontSize: '15px',
+    lineHeight: '1.75',
+    color: 'var(--color-text-secondary)',
+    maxWidth: '680px',
+    margin: '0',
+  }}>
+    The name <strong style={{ color: 'var(--color-text-primary)' }}>Quartz</strong> reflects
+    the system's core values: precision, clarity, and structural integrity — the same properties
+    that make quartz crystal one of the most reliable materials on earth.
+  </p>
+</div>
+
+{/* ── Feature Cards ─────────────────────────────────────────────────────────── */}
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+  gap: '16px',
+  marginBottom: '48px',
+}}>
+
+  {[
+    {
+      icon: '⬡',
+      title: 'Token-First',
+      desc: 'Every design decision lives in a semantic token. Swap themes without touching component code.',
+    },
+    {
+      icon: '⬡',
+      title: 'WCAG 2.1 AA',
+      desc: 'Accessibility is non-negotiable. Every component ships contrast-verified and keyboard-navigable.',
+    },
+    {
+      icon: '⬡',
+      title: 'Light & Dark',
+      desc: 'Dual-theme support via data-theme attribute. No runtime overhead — pure CSS variable switching.',
+    },
+    {
+      icon: '⬡',
+      title: 'Composable',
+      desc: 'Focused, single-responsibility components that compose into any interface pattern you need.',
+    },
+  ].map((card) => (
+    <div key={card.title} style={{
+      background: 'var(--color-surface-raised)',
+      border: '1px solid var(--color-border-default)',
+      borderRadius: '10px',
+      padding: '24px',
+      boxShadow: 'var(--shadow-sm)',
+    }}>
+      <div style={{
+        width: '36px',
+        height: '36px',
+        marginBottom: '14px',
+      }}>
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="18,2 2,18 18,18" fill="#8faf51" opacity="0.8"/>
+          <polygon points="18,2 34,18 18,18" fill="#4e6d22"/>
+          <polygon points="2,18 18,18 18,34" fill="#3a5218"/>
+          <polygon points="34,18 18,18 18,34" fill="#16230a"/>
+        </svg>
+      </div>
+      <h3 style={{
+        fontSize: '14px',
+        fontWeight: '700',
+        color: 'var(--color-text-primary)',
+        margin: '0 0 8px 0',
+        letterSpacing: '0.01em',
+      }}>{card.title}</h3>
+      <p style={{
+        fontSize: '13px',
+        lineHeight: '1.65',
+        color: 'var(--color-text-secondary)',
+        margin: '0',
+      }}>{card.desc}</p>
+    </div>
+  ))}
+</div>
+
+{/* ── Who It's For ─────────────────────────────────────────────────────────── */}
+<div style={{
+  background: 'var(--color-surface-page)',
+  border: '1px solid var(--color-border-default)',
+  borderRadius: '12px',
+  padding: '40px',
+  marginBottom: '48px',
+}}>
+  <h2 style={{
+    fontSize: '22px',
+    fontWeight: '700',
+    color: 'var(--color-text-primary)',
+    margin: '0 0 8px 0',
+    letterSpacing: '-0.3px',
+  }}>Who it's built for</h2>
+
+  <div style={{
+    width: '32px',
+    height: '3px',
+    background: '#4e6d22',
+    borderRadius: '2px',
+    marginBottom: '28px',
+  }} />
+
+  <div style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: '24px',
+  }}>
+    {[
+      {
+        audience: 'Frontend Engineers',
+        description:
+          'React developers who want a well-typed, composable component library — without writing CSS from scratch or fighting accessibility edge cases.',
+      },
+      {
+        audience: 'Design Systems Teams',
+        description:
+          'Teams establishing a shared visual language between design and code. Tokens published to npm; Figma variables sync directly from the same source of truth.',
+      },
+      {
+        audience: 'Product Organisations',
+        description:
+          'Startups and scale-ups building B2B SaaS or internal tools who need a consistent, production-ready UI foundation without the overhead of building one.',
+      },
+    ].map((item) => (
+      <div key={item.audience}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          marginBottom: '10px',
+        }}>
+          <div style={{
+            width: '6px',
+            height: '6px',
+            background: '#4e6d22',
+            borderRadius: '50%',
+            flexShrink: '0',
+          }} />
+          <h3 style={{
+            fontSize: '14px',
+            fontWeight: '700',
+            color: 'var(--color-text-primary)',
+            margin: '0',
+          }}>{item.audience}</h3>
+        </div>
+        <p style={{
+          fontSize: '13px',
+          lineHeight: '1.7',
+          color: 'var(--color-text-secondary)',
+          margin: '0',
+          paddingLeft: '14px',
+        }}>{item.description}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+{/* ── Quick Start ───────────────────────────────────────────────────────────── */}
+<div style={{ marginBottom: '48px' }}>
+  <h2 style={{
+    fontSize: '22px',
+    fontWeight: '700',
+    color: 'var(--color-text-primary)',
+    margin: '0 0 8px 0',
+    letterSpacing: '-0.3px',
+  }}>Quick start</h2>
+
+  <div style={{
+    width: '32px',
+    height: '3px',
+    background: '#4e6d22',
+    borderRadius: '2px',
+    marginBottom: '24px',
+  }} />
+
+  <p style={{
+    fontSize: '14px',
+    color: 'var(--color-text-secondary)',
+    margin: '0 0 16px 0',
+  }}>Install both packages — design tokens ship separately so teams can adopt the token layer independently.</p>
+
+  {[
+    { label: '1. Install packages', code: 'npm install @thatguycodes/quartz-ui @thatguycodes/design-tokens' },
+    { label: '2. Import the CSS bundle at your app root', code: "import '@thatguycodes/design-tokens/css/bundle.css';" },
+    { label: '3. Set the theme attribute on your root element', code: 'document.documentElement.setAttribute(\'data-theme\', \'light\');' },
+    { label: '4. Use components', code: "import { Button } from '@thatguycodes/quartz-ui';\n\n<Button variant=\"primary\">Get started</Button>" },
+  ].map((step) => (
+    <div key={step.label} style={{ marginBottom: '16px' }}>
+      <p style={{
+        fontSize: '12px',
+        fontWeight: '600',
+        color: '#4e6d22',
+        margin: '0 0 6px 0',
+        letterSpacing: '0.06em',
+        textTransform: 'uppercase',
+      }}>{step.label}</p>
+      <pre style={{
+        background: 'var(--color-surface-page)',
+        border: '1px solid var(--color-border-default)',
+        borderLeft: '3px solid #4e6d22',
+        borderRadius: '0 8px 8px 0',
+        padding: '14px 18px',
+        margin: '0',
+        overflowX: 'auto',
+        fontSize: '13px',
+        fontFamily: "'SF Mono', 'Fira Code', 'Cascadia Code', monospace",
+        color: 'var(--color-text-primary)',
+        lineHeight: '1.6',
+      }}><code>{step.code}</code></pre>
+    </div>
+  ))}
+</div>
+
+{/* ── Package Info ──────────────────────────────────────────────────────────── */}
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+  gap: '16px',
+  marginBottom: '48px',
+}}>
+  {[
+    {
+      pkg: '@thatguycodes/quartz-ui',
+      description: 'React component library — Button, Card, and more. Peer-depends on design-tokens.',
+    },
+    {
+      pkg: '@thatguycodes/design-tokens',
+      description: 'CSS custom property bundle. Primitive scales, semantic mappings, light and dark themes.',
+    },
+  ].map((p) => (
+    <div key={p.pkg} style={{
+      background: 'var(--color-surface-raised)',
+      border: '1px solid var(--color-border-default)',
+      borderRadius: '10px',
+      padding: '20px 24px',
+    }}>
+      <code style={{
+        display: 'block',
+        fontSize: '12px',
+        color: '#4e6d22',
+        fontFamily: "'SF Mono', 'Fira Code', 'Cascadia Code', monospace",
+        fontWeight: '600',
+        marginBottom: '8px',
+      }}>{p.pkg}</code>
+      <p style={{
+        fontSize: '13px',
+        color: 'var(--color-text-secondary)',
+        lineHeight: '1.6',
+        margin: '0',
+      }}>{p.description}</p>
+    </div>
+  ))}
+</div>
+
+{/* ── Footer ────────────────────────────────────────────────────────────────── */}
+<div style={{
+  borderTop: '1px solid var(--color-border-default)',
+  paddingTop: '24px',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
+}}>
+  <svg width="16" height="16" viewBox="0 0 36 36" fill="none">
+    <polygon points="18,2 2,18 18,18" fill="#8faf51"/>
+    <polygon points="18,2 34,18 18,18" fill="#4e6d22"/>
+    <polygon points="2,18 18,18 18,34" fill="#3a5218"/>
+    <polygon points="34,18 18,18 18,34" fill="#16230a"/>
+  </svg>
+  <span style={{
+    fontSize: '13px',
+    color: 'var(--color-text-secondary)',
+  }}>
+    Quartz UI · MIT License · <a href="https://github.com/thatguycodes/quartz-xp" style={{ color: '#4e6d22', textDecoration: 'none' }}>github.com/thatguycodes/quartz-xp</a>
+  </span>
+</div>
+</div>
